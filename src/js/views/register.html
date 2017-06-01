@@ -1,1 +1,24 @@
 {{ register.title }}
+
+<form class="" ng-submit="register.register()">
+
+  <label for="username">Username</label>
+  <input type="text" name="username" value="" ng-model="register.user.username" placeholder="Username">
+
+  <label for="email">Email</label>
+  <input type="text" name="email" value="" ng-model="register.user.email" placeholder="Email">
+
+  <label for="password">Password</label>
+  <input type="text" name="password" value="" ng-model="register.user.password" placeholder="Password">
+
+  <label for="password_confirmation">Confirm Password</label>
+  <input type="text" name="password_confirmation" value="" ng-model="register.user.password_confirmation" placeholder="Confirm Password">
+
+  <input type="submit" name="" value="Register">
+
+  <div class="">
+    <p>Already have an account?</p>
+    <p><a ui-sref="login">Login</a></p>
+  </div>
+
+</form>

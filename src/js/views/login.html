@@ -1,1 +1,18 @@
 {{ login.title }}
+
+
+<form class="" ng-submit="login.login()" method="post">
+
+  <label for="email">Email</label>
+  <input type="email" name="email" value="" ng-model="login.user.email" placeholder="Email">
+
+  <label for="password">Password</label>
+  <input type="password" name="password" value="" ng-model="login.user.password" placeholder="Password">
+
+  <input type="submit" name="" value="Submit">
+
+  <div class="">
+    <p>Not registered yet?</p>
+    <p>Sign up <a ui-sref="register">here</a>.</p>
+  </div>
+</form>
