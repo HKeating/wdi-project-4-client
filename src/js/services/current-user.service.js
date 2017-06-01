@@ -8,7 +8,7 @@ function CurrentUserService(TokenService, $rootScope, User) {
 
   self.getUser = () => {
     const decoded = TokenService.decodeToken();
-
+    console.log('Get User is firing');
     if (decoded) {
       User
         .get({ id: decoded.id })

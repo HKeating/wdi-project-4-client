@@ -6,6 +6,10 @@ MainCtrl.$inject = ['$rootScope', 'CurrentUserService', '$state'];
 function MainCtrl($rootScope, CurrentUserService, $state) {
   const vm = this;
   vm.test = 'Hello';
+
+  CurrentUserService.getUser();
+
+
   $rootScope.$on('loggedIn', () => {
     vm.user = CurrentUserService.currentUser;
   });
