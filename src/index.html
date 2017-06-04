@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html ng-app="ProjectFour">
-  <head>
-    <base href="/">
-    <meta charset="utf-8">
-    <title>Fck It Shp It</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  </head>
-  <body ng-controller="MainCtrl as main">
-    <h1><a ui-sref="home">Fck It Shp It</a></h1>
-    <nav>
-      <ul>
-        <li ng-hide="main.user"><a ui-sref="login">Login</a></li>
-        <li ng-hide="main.user"><a ui-sref="register">Register</a></li>
-        <li><a ui-sref="dashboard">Dashboard</a></li>
-        <li ng-show="main.user"><a ng-click="main.logout()" ui-sref="login">Logout</a></li>
-        <li ng-show="main.user"><a ui-sref="usersIndex">Users</a></li>
-      </ul>
-    </nav>
-    {{ 1 + 1 }}
-    <main ui-view>
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <title>Fck It Shp It</title>
+  <!-- inject:js -->
+  <!-- endinject -->
+  <!-- inject:css -->
+  <!-- endinject -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body ng-controller="MainCtrl as main">
+  <h1><a ui-sref="home">Fck It Shp It</a></h1>
+  <nav>
+    <ul>
+      <li ng-hide="main.user"><a ui-sref="login">Login</a></li>
+      <li ng-hide="main.user"><a ui-sref="register">Register</a></li>
+      <li><a ui-sref="dashboard">Dashboard</a></li>
+      <li ng-show="main.user"><a ng-click="main.logout()" ui-sref="login">Logout</a></li>
+      <li ng-show="main.user"><a ui-sref="usersIndex">Users</a></li>
+    </ul>
+  </nav>
+  {{ 1 + 1 }}
+  <main ui-view>
 
-    </main>
-  </body>
+  </main>
+</body>
 </html>
