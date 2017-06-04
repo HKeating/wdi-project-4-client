@@ -1,0 +1,9 @@
+<h1>Welcome {{ dashboard.user.username }}</h1>
+
+<h2>Your Projects:</h2>
+
+<div class="" ng-repeat="project in dashboard.user.projects track by $index">
+  <h3>{{ project.title }}</h3>
+  <p>Milestones: {{ project.milestones.length }}</p>
+  <p>Tasks: {{ project.tasks.length }}</p>
+</div>
