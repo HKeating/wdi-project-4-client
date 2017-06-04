@@ -7,3 +7,18 @@
   <p>Milestones: {{ project.milestones.length }}</p>
   <p>Tasks: {{ project.tasks.length }}</p>
 </div>
+
+
+<div class="">
+  <form ng-submit="dashboard.createProject()">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" ng-model="dashboard.newProject.title" name="title" value="">
+    </div>
+
+    <div class="form-group">
+      <input type="submit" name="submit" value="Create Project">
+    </div>
+  </form>
+
+</div>
