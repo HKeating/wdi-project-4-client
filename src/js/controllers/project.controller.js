@@ -3,10 +3,14 @@ angular
   .controller('ProjectCtrl', ProjectCtrl);
 
 ProjectCtrl.$inject = [];
+
 function ProjectCtrl() {
+
   const vm = this;
+
   vm.title = 'Project page';
-  vm.days = 7;
+
+  vm.deadline = 7;
 
   vm.milestones = [
     {
@@ -19,6 +23,6 @@ function ProjectCtrl() {
     }
   ];
 
-  
+  vm.currentDay = 2;
 
 }
