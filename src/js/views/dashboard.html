@@ -4,21 +4,29 @@
 
 <div class="" ng-repeat="project in dashboard.user.projects track by $index">
   <h3>{{ project.title }}</h3>
+  <p>Duration: {{ project.duration }} days</p>
   <p>Milestones: {{ project.milestones.length }}</p>
   <p>Tasks: {{ project.tasks.length }}</p>
+  <button type="button" name="button">Edit Project</button>
+  <button type="button" ng-click="dashboard.deleteProject(project)" name="button">Delete Project</button>
 </div>
 
 
 <div class="">
-  <form ng-submit="dashboard.createProject()">
+  <form ng-submit="dashboard.createProject()" id="projectForm" name="dashboard.projectForm">
     <div class="form-group">
       <label for="title">Title</label>
       <input type="text" ng-model="dashboard.newProject.title" name="title" value="">
+    </div>
+    <div class="form-group">
+      <label for="duration">Duration</label>
+      <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="dashboard.newProject.duration" name="duration" value="">
     </div>
 
     <div class="form-group">
       <input type="submit" name="submit" value="Create Project">
     </div>
   </form>
+
 
 </div>
