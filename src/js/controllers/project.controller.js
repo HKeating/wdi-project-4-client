@@ -24,6 +24,7 @@ function ProjectCtrl($scope) {
   vm.currentDay = 5;
 
   $scope.$line = $('.line');
+  $scope.$dayLabel = $('#dayLabel');
 
   // This function draws dots on the line
   function drawLine() {
@@ -53,12 +54,24 @@ function ProjectCtrl($scope) {
         $(dayDot).attr('id', `lineDot${i}`);
       }
 
+      $(dayDot).attr('index', `${i}`);
+
       // Finding the current dot
       if (i === vm.currentDay) {
-        $(dayDot).css({'border-color': 'blue',
-          'border-width': '3px',
-          'border-style': 'solid'});
+        $(dayDot).css('background-color', 'orange');
       }
+
+      $(dayDot).hover(
+
+        function() {
+          console.log('HOVER!');
+          // $(this).removeClass();
+          // $(this).addClass('lineDotSelected');
+          $scope.$dayLabel.html(`Day ${$(this).attr('index')}`);
+        }, function() {
+        // $(this).removeClass('lineDotSelected');
+        $scope.$dayLabel.html('');
+      });
 
       // Adding connection lines
       if (i < vm.currentDay) {
@@ -69,8 +82,8 @@ function ProjectCtrl($scope) {
       }
 
       $(connectionLine).css('width', `${distanceBetweenDots}px`);
-      $(connectionLine).css('height', `5px`);
-      $(connectionLine).css('margin', `7px 0`);
+      $(connectionLine).css('height', `3px`);
+      $(connectionLine).css('margin', `6px 0`);
 
       // Inserting all new elements in HTML
       $scope.$line.append(dayDot);

@@ -10,35 +10,50 @@
   background-color: black;
   //border-style: solid;
   border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+}
+
+.lineDayDot:hover {
+  background-color: blue;
+  //border-style: solid;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+}
+
+// .lineDotSelected {
+//   background-color: blue;
+// }
+
+#lineStartDot {
+  background-color: green;
+  //border-style: solid;
+  // border-style: solid;
+  // border-color: green;
+  // border-width: 1px;
+  border-radius: 50%;
   width: 20px;
   height: 20px;
-  display: inline-block;
+}
+
+#lineDeadlineDot {
+  background-color: red;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
 }
 
 .linePast {
   background-color: green;
-  height: 5px;
+  height: 3px;
   display: inline-block;
 }
 
 .lineFuture {
   background-color: black;
-  height: 5px;
+  height: 3px;
   display: inline-block;
-}
-
-#lineStartDot {
-  background-color: green;
-  //border-style: solid;
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-}
-
-#lineDeadlineDot {
-  background-color: red;
-  //border-style: solid;
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
 }
