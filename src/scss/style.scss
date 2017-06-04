@@ -3,6 +3,7 @@
 
 .line {
   background-color: lightGrey;
+  margin: 0px 20px;
 }
 
 .lineDayDot {
@@ -11,6 +12,18 @@
   border-radius: 50%;
   width: 20px;
   height: 20px;
+  display: inline-block;
+}
+
+.linePast {
+  background-color: green;
+  height: 5px;
+  display: inline-block;
+}
+
+.lineFuture {
+  background-color: black;
+  height: 5px;
   display: inline-block;
 }
 
