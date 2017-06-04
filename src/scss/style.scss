@@ -1,13 +1,19 @@
 // Import all of your scss files here
 
+$blue:  #0074D9;
+$green: #01FF70;
+$darkGreen: #2ecc40;
+$black: #111111;
+$grey: #AAAAAA;
+$red: #FF4136;
 
 .line {
-  background-color: lightGrey;
+  background-color: $grey;
   margin: 0px 20px;
 }
 
 .lineDayDot {
-  background-color: black;
+  background-color: $black;
   //border-style: solid;
   border-radius: 50%;
   width: 15px;
@@ -16,7 +22,25 @@
 }
 
 .lineDayDot:hover {
-  background-color: blue;
+  background-color: $blue;
+  //border-style: solid;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+}
+
+.linePastDayDot {
+  background-color: $green;
+  //border-style: solid;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+}
+
+.linePastDayDot:hover {
+  background-color: $blue;
   //border-style: solid;
   border-radius: 50%;
   width: 15px;
@@ -29,7 +53,19 @@
 // }
 
 #lineStartDot {
-  background-color: green;
+  background-color: $green;
+  //border-style: solid;
+  // border-style: solid;
+  // border-color: green;
+  // border-width: 1px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+
+#lineStartDot:hover {
+  background-color: $blue;
   //border-style: solid;
   // border-style: solid;
   // border-color: green;
@@ -40,20 +76,43 @@
 }
 
 #lineDeadlineDot {
-  background-color: red;
+  background-color: $red;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+
+#lineDeadlineDot:hover {
+  background-color: $blue;
   border-radius: 50%;
   width: 20px;
   height: 20px;
 }
 
+#lineCurrentDot {
+  background-color: $darkGreen;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+}
+
+#lineCurrentDot:hover {
+  background-color: $blue;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+}
+
 .linePast {
-  background-color: green;
+  background-color: $green;
   height: 3px;
   display: inline-block;
 }
 
 .lineFuture {
-  background-color: black;
+  background-color: $black;
   height: 3px;
   display: inline-block;
 }

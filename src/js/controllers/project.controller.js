@@ -39,27 +39,36 @@ function ProjectCtrl($scope) {
       const dayDot = document.createElement('div');
       const connectionLine = document.createElement('div');
 
-      $(dayDot).addClass('lineDayDot');
+      //$(dayDot).addClass('lineDayDot');
 
       if(i === 1) {
-        // The first dot
+        // The First dot
         $(dayDot).attr('id', `lineStartDot`);
 
       } else if (i === vm.deadline) {
-        // The last dot
+        // The Last dot
         $(dayDot).attr('id', `lineDeadlineDot`);
+
+      } else if (i === vm.currentDay) {
+        // The Current dot
+        $(dayDot).attr('id', `lineCurrentDot`);
 
       } else {
         // Any other dot
         $(dayDot).attr('id', `lineDot${i}`);
+
+        if(i < vm.currentDay) {
+          // Dot BEFORE current day
+          $(dayDot).addClass('linePastDayDot');
+        } else {
+          // Dot AFTER current day
+          $(dayDot).addClass('lineDayDot');
+        }
+
       }
 
       $(dayDot).attr('index', `${i}`);
 
-      // Finding the current dot
-      if (i === vm.currentDay) {
-        $(dayDot).css('background-color', 'orange');
-      }
 
       $(dayDot).hover(
 
@@ -76,7 +85,6 @@ function ProjectCtrl($scope) {
       // Adding connection lines
       if (i < vm.currentDay) {
         $(connectionLine).addClass('linePast');
-        $(dayDot).css('background-color', 'green');
       } else {
         $(connectionLine).addClass('lineFuture');
       }
