@@ -7,35 +7,33 @@ ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams'];
 function ProjectCtrl($scope, Project, $stateParams) {
 
   const vm = this;
-  //vm.project = Project.get($stateParams); // getting the project data
 
   vm.project = Project.get({ id: $stateParams.id}).$promise.then(data => {
+
     // Got the data about this project
     vm.project = data;
-
+    console.log('Got the data', vm.project);
 
     vm.deadline = vm.project.duration; // setting up deadline
     drawLine();
-    console.log('Got the data', vm.project);
   });
 
-  console.log('Project: ', vm.project);
-  console.log('Duration: ', vm.project.duration);
-
-  vm.milestones = [
-    {
-      deadline: 3,
-      title: 'MVP'
-    },
-    {
-      deadline: 5,
-      title: 'Beta'
-    }
-  ];
-  vm.currentDay = 5;
-
+  // Making refernces to elements in the DOM
   $scope.$line = $('.line');
   $scope.$dayLabel = $('#dayLabel');
+
+  // vm.milestones = [
+  //   {
+  //     deadline: 3,
+  //     title: 'MVP'
+  //   },
+  //   {
+  //     deadline: 5,
+  //     title: 'Beta'
+  //   }
+  // ];
+
+  vm.currentDay = 4;
 
   // This function draws dots on the line
   function drawLine() {
@@ -83,16 +81,21 @@ function ProjectCtrl($scope, Project, $stateParams) {
       $(dayDot).hover(
 
         function() {
-          console.log('HOVER!');
+          console.log(vm.deadline);
           // $(this).removeClass();
           // $(this).addClass('lineDotSelected');
-          $scope.$dayLabel.html(`Day ${$(this).attr('index')}`);
+          const dayIndex = $(this).attr('index');
+          if(dayIndex == vm.deadline)
+            $scope.$dayLabel.html('FUCKING DEADLINE');
+          else
+            $scope.$dayLabel.html(`Day ${dayIndex}`);
+
         }, function() {
-        // $(this).removeClass('lineDotSelected');
+          // $(this).removeClass('lineDotSelected');
         $scope.$dayLabel.html('');
       });
 
-      // Adding connection lines
+        // Adding connection lines
       if (i < vm.currentDay) {
         $(connectionLine).addClass('linePast');
       } else {
@@ -103,7 +106,7 @@ function ProjectCtrl($scope, Project, $stateParams) {
       $(connectionLine).css('height', `3px`);
       $(connectionLine).css('margin', `6px 0`);
 
-      // Inserting all new elements in HTML
+        // Inserting all new elements in HTML
       $scope.$line.append(dayDot);
       if (i !== vm.deadline)
         $scope.$line.append(connectionLine);
