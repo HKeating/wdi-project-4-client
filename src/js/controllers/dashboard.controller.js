@@ -7,19 +7,22 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
   const vm = this;
   vm.title = 'Dashboard page';
   vm.user = CurrentUserService.currentUser;
-  if(!vm.user) {
+  // if(!vm.user) {
     $rootScope.$on('loggedIn', () => {
       vm.user = CurrentUserService.currentUser;
       vm.projects = vm.user.projects;
     });
-  }
+  // }
   // $rootScope is like a global event listener/trigger across the whole app.
   // You use $rootScope.$broadcast('Your Message'); as the trigger
   // and $rootScope.$on('Your Message', () => { Triggered function }); as the listener.
   $rootScope.$on('Project Change', () => {
     CurrentUserService.getUser();
+
+    vm.user = CurrentUserService.currentUser;
     vm.newProject = {};
     vm.projectToUpdate = {};
+
   });
 
   vm.createProject = createProject;
