@@ -1,4 +1,4 @@
-{{ register.title }}
+<h1>{{ register.title }}</h1>
 
 <form class="" ng-submit="register.register()">
 
@@ -9,10 +9,10 @@
   <input type="text" name="email" value="" ng-model="register.user.email" placeholder="Email">
 
   <label for="password">Password</label>
-  <input type="text" name="password" value="" ng-model="register.user.password" placeholder="Password">
+  <input type="password" name="password" value="" ng-model="register.user.password" placeholder="Password">
 
   <label for="password_confirmation">Confirm Password</label>
-  <input type="text" name="password_confirmation" value="" ng-model="register.user.password_confirmation" placeholder="Confirm Password">
+  <input type="password" name="password_confirmation" value="" ng-model="register.user.password_confirmation" placeholder="Confirm Password">
 
   <input type="submit" name="" value="Register">
 
