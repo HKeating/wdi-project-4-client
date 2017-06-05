@@ -8,21 +8,50 @@
   <!-- endinject -->
   <!-- inject:css -->
   <!-- endinject -->
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css">
+  <style>
+  @import url('https://fonts.googleapis.com/css?family=Space+Mono');
+  </style>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body ng-controller="MainCtrl as main">
-  <h1><a ui-sref="home">Fck It Shp It</a></h1>
-  <nav>
-    <ul>
-      <li ng-show="main.user">Logged in: {{main.user.username}}</li>
-      <li ng-hide="main.user"><a ui-sref="login">Login</a></li>
-      <li ng-hide="main.user"><a ui-sref="register">Register</a></li>
-      <li ng-show="main.user"><a  ui-sref="dashboard">Dashboard</a></li>
-      <li ng-show="main.user"><a ng-click="main.logout()" ui-sref="login">Logout</a></li>
-      <li ng-show="main.user"><a ui-sref="usersIndex">Users</a></li>
-    </ul>
+  <nav class="navbar navbarAll">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" ui-sref="home"><h1>FckItShpIt</h1></a>
+      </div>
+
+      <ul class="nav navbar-nav navbar-right">
+
+        <li ng-hide="main.user"><a ui-sref="register"><h3>Register</h3></a></li>
+
+        <li ng-hide="main.user"><a ui-sref="login"><h3>Login</h3></a></li>
+
+        <li ng-show="main.user"><a ui-sref="dashboard"><h3>Dashboard</h3></a></li>
+
+        <li ng-show="main.user"><a ng-click="main.logout()" ui-sref="login"><h3>Logout</h3></a></li>
+
+        <li ng-show="main.user"><a ui-sref="usersIndex"><h3>Users</h3></a></li>
+
+      </ul>
+
+    </div>
+    <hr>
   </nav>
-  <main ui-view ></main>
-  <footer></footer>
+
+  <!-- <nav>
+  <ul>
+  <h1><a ui-sref="home">Fck It Shp It</a></h1>
+  <li ng-show="main.user">Logged in: {{main.user.username}}</li>
+  <li ng-hide="main.user"><a ui-sref="login">Login</a></li>
+  <li ng-hide="main.user"><a ui-sref="register">Register</a></li>
+  <li ng-show="main.user"><a  ui-sref="dashboard">Dashboard</a></li>
+  <li ng-show="main.user"><a ng-click="main.logout()" ui-sref="login">Logout</a></li>
+  <li ng-show="main.user"><a ui-sref="usersIndex">Users</a></li>
+</ul>
+</nav> -->
+<main ui-view ></main>
+<footer></footer>
 </body>
 </html>
