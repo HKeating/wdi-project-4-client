@@ -18,6 +18,18 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService) 
     console.log('Got the data', vm.project);
 
     vm.deadline = vm.project.duration; // setting up deadline
+
+    vm.milestones = [
+      {
+        deadline: 3,
+        title: 'MVP'
+      },
+      {
+        deadline: 5,
+        title: 'Beta'
+      }
+    ];
+
     drawLine();
   });
 
@@ -25,16 +37,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService) 
   $scope.$line = $('.line');
   $scope.$dayLabel = $('#dayLabel');
 
-  // vm.milestones = [
-  //   {
-  //     deadline: 3,
-  //     title: 'MVP'
-  //   },
-  //   {
-  //     deadline: 5,
-  //     title: 'Beta'
-  //   }
-  // ];
+
 
   vm.currentDay = 4;
 
@@ -51,30 +54,43 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService) 
       const dayDot = $('<div>');
       const connectionLine = $('<div>');
 
-      //$(dayDot).addClass('lineDayDot');
+      // Getting indexes of Milestones
+      const arrayOfMilestoneIndexes = [];
+      for (const milestone in vm.milestones) {
+        //console.log(vm.milestones[milestone]);
+        arrayOfMilestoneIndexes.push(vm.milestones[milestone].deadline);
+      }
+      console.log('Array of milestone indexes: ',arrayOfMilestoneIndexes);
 
-      if(i === 1) {
-        // The First dot
-        $(dayDot).attr('id', `lineStartDot`);
-
-      } else if (i === vm.deadline) {
-        // The Last dot
-        $(dayDot).attr('id', `lineDeadlineDot`);
-
-      } else if (i === vm.currentDay) {
-        // The Current dot
-        $(dayDot).attr('id', `lineCurrentDot`);
+      if($.inArray(i-1, arrayOfMilestoneIndexes) !== -1) {
+        // It is a milestone
+        $(dayDot).addClass('lineMilestone');
 
       } else {
-        // Any other dot
-        $(dayDot).attr('id', `lineDot${i}`);
 
-        if(i < vm.currentDay) {
-          // Dot BEFORE current day
-          $(dayDot).addClass('linePastDayDot');
+        if(i === 1) {
+          // The First dot
+          $(dayDot).attr('id', `lineStartDot`);
+
+        } else if (i === vm.deadline) {
+          // The Last dot
+          $(dayDot).attr('id', `lineDeadlineDot`);
+
+        } else if (i === vm.currentDay) {
+          // The Current dot
+          $(dayDot).attr('id', `lineCurrentDot`);
+
         } else {
-          // Dot AFTER current day
-          $(dayDot).addClass('lineDayDot');
+          // Any other dot
+          $(dayDot).attr('id', `lineDot${i}`);
+
+          if(i < vm.currentDay) {
+            // Dot BEFORE current day
+            $(dayDot).addClass('linePastDayDot');
+          } else {
+            // Dot AFTER current day
+            $(dayDot).addClass('lineDayDot');
+          }
         }
       }
 
@@ -107,7 +123,9 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService) 
 
       $(connectionLine).css('width', `${distanceBetweenDots}px`);
       $(connectionLine).css('height', `3px`);
-      $(connectionLine).css('margin', `6px 0`);
+      $(connectionLine).css('margin', `7px 0`);
+
+
 
         // Inserting all new elements in HTML
       $scope.$line.append(dayDot);
