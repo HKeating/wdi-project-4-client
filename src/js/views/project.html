@@ -11,6 +11,14 @@
   <img id="icon" ng-src="/images/boat.png" alt="">
 </div>
 
-<div class="taskPanel">
-  <h3 id="dayLabel">Hello</h3>
+<div class="taskPanel col-sm-6">
+  <h3 id="dayLabel">Day {{ selectedDay }}</h3>
+  <div class="task col-sm-12" ng-repeat="task in project.project.tasks">
+    <p>{{task.description}}</p>
+    <div class="taskUserContainer">
+      <div ng-repeat="user in task.users" class="col-sm-3">
+        <img class="taskUserImg" ng-src="{{ user.image }}" alt="">
+      </div>
+    </div>
+  </div>
 </div>
