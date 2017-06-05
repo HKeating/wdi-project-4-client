@@ -27,8 +27,13 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
   vm.createProject = createProject;
   function createProject() {
     vm.newProject.user_id = vm.user.id;
+    vm.newProject.user_ids = [];
+    vm.newProject.user_ids.push(vm.user.id);
+    const projectObj = {
+      'project': vm.newProject
+    };
     Project
-    .save(vm.newProject)
+    .save(projectObj)
     .$promise
     .then((data) => {
       console.log('New project created: ', data);

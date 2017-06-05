@@ -12,6 +12,7 @@ function ProjectCtrl($scope, Project, $stateParams) {
   vm.title = 'Project page';
 
   vm.deadline = 12;
+  // vm.deadline = vm.project.duration;
   vm.milestones = [
     {
       deadline: 3,
