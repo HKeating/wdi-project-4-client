@@ -36,8 +36,8 @@ function ProjectCtrl($scope) {
     for (let i = 1; i <= vm.deadline; i++) {
 
       // Making a day dot and adding a class to it
-      const dayDot = document.createElement('div');
-      const connectionLine = document.createElement('div');
+      const dayDot = $('<div>');
+      const connectionLine = $('<div>');
 
       //$(dayDot).addClass('lineDayDot');
 
@@ -64,7 +64,6 @@ function ProjectCtrl($scope) {
           // Dot AFTER current day
           $(dayDot).addClass('lineDayDot');
         }
-
       }
 
       $(dayDot).attr('index', `${i}`);
