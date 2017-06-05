@@ -2,21 +2,21 @@ angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
 
-ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService'];
+ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope'];
 
-function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService) {
+function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope) {
   const vm = this;
 
   vm.user = CurrentUserService.currentUser;
 
-  if (!vm.user) $state.go('fuckOff');
+  // if (!vm.user) $state.go('fuckOff');
 
   vm.project = Project.get({ id: $stateParams.id}).$promise.then(data => {
 
     // Got the data about this project
     vm.project = data;
     console.log('Got the data', vm.project);
-
+    $rootScope.$broadcast('project ready');
     vm.deadline = vm.project.duration; // setting up deadline
 
     vm.milestones = [
@@ -37,10 +37,12 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService) 
   $scope.$line = $('.line');
   $scope.$dayLabel = $('#dayLabel');
 
-
+  // $rootScope.$on('project ready', () => {
+  //   console.log('tasks: ', vm.project.tasks);
+  // });
 
   vm.currentDay = 4;
-
+  $scope.selectedDay = vm.currentDay;
   // This function draws dots on the line
   function drawLine() {
 
@@ -96,25 +98,30 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService) 
 
       $(dayDot).attr('index', `${i}`);
 
+      $(dayDot).click(() =>  {
+        console.log('clicked');
 
-      $(dayDot).hover(
-
-        function() {
-          console.log(vm.deadline);
-          // $(this).removeClass();
-          // $(this).addClass('lineDotSelected');
-          const dayIndex = $(this).attr('index');
-          if(dayIndex == vm.deadline)
-            $scope.$dayLabel.html('FUCKING DEADLINE');
-          else
-            $scope.$dayLabel.html(`Day ${dayIndex}`);
-
-        }, function() {
-          // $(this).removeClass('lineDotSelected');
-        $scope.$dayLabel.html('');
+        $scope.selectedDay = dayDot.attr('index');
+        console.log('selectedDay: ', $scope.selectedDay);
+      
+        $scope.$apply();
       });
 
-        // Adding connection lines
+      // $(dayDot).hover(
+      //
+      //   function() {
+      //     const dayIndex = $(this).attr('index');
+      //     if(dayIndex == vm.deadline)
+      //       $scope.$dayLabel.html('FUCKING DEADLINE');
+      //     else
+      //       $scope.$dayLabel.html(`Day ${dayIndex}`);
+      //
+      //   }, function() {
+      //     // $(this).removeClass('lineDotSelected');
+      //   $scope.$dayLabel.html('');
+      // });
+
+      // Adding connection lines
       if (i < vm.currentDay) {
         $(connectionLine).addClass('linePast');
       } else {
@@ -127,7 +134,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService) 
 
 
 
-        // Inserting all new elements in HTML
+      // Inserting all new elements in HTML
       $scope.$line.append(dayDot);
       if (i !== vm.deadline)
         $scope.$line.append(connectionLine);
