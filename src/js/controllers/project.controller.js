@@ -2,11 +2,14 @@ angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
 
-ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams'];
+ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService'];
 
-function ProjectCtrl($scope, Project, $stateParams) {
-
+function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService) {
   const vm = this;
+
+  vm.user = CurrentUserService.currentUser;
+
+  if (!vm.user) $state.go('fuckOff');
 
   vm.project = Project.get({ id: $stateParams.id}).$promise.then(data => {
 

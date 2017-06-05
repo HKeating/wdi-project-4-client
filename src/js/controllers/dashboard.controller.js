@@ -8,6 +8,7 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
   vm.title = 'Dashboard page';
   vm.user = CurrentUserService.currentUser;
 
+
   // When loggedIn fires refresh currentUser - allows live updating of projects
   $rootScope.$on('loggedIn', () => {
     vm.user = CurrentUserService.currentUser;
@@ -29,9 +30,14 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
     vm.newProject.user_id = vm.user.id;
     vm.newProject.user_ids = [];
     vm.newProject.user_ids.push(vm.user.id);
+    vm.newProject.start_date = new Date;
+    // console.log('Duration: ', vm.newProject.duration);
+    const endDate = addDays(vm.newProject.start_date, parseInt(vm.newProject.duration));
+    vm.newProject.end_date = endDate;
     const projectObj = {
       'project': vm.newProject
     };
+    console.log('Sending project: ', projectObj);
     Project
     .save(projectObj)
     .$promise
@@ -39,6 +45,14 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
       console.log('New project created: ', data);
       $rootScope.$broadcast('Project Change');
     });
+  }
+
+  function addDays(date, days) {
+    console.log('Date: ', date);
+    console.log('Days: ', days);
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
   }
 
   vm.deleteProject = deleteProject;
@@ -79,3 +93,9 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
   }
 
 }
+
+
+// Additional properties to add to project:
+// New date for project start
+// Select users (post mvp set up requests)
+//
