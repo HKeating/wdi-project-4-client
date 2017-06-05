@@ -7,6 +7,7 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
   const vm = this;
   vm.title = 'Dashboard page';
   vm.user = CurrentUserService.currentUser;
+  
 
   // When loggedIn fires refresh currentUser - allows live updating of projects
   $rootScope.$on('loggedIn', () => {
@@ -79,3 +80,9 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
   }
 
 }
+
+
+// Additional properties to add to project:
+// New date for project start
+// Select users (post mvp set up requests)
+//

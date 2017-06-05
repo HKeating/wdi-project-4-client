@@ -2,13 +2,16 @@ angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
 
-ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams'];
+ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService'];
 
-function ProjectCtrl($scope, Project, $stateParams) {
-
+function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService) {
   const vm = this;
+  vm.user = CurrentUserService.currentUser;
   vm.project = Project.get($stateParams);
   console.log('Project: ', vm.project);
+  console.log('User: ', $scope.user.id);
+  // Redirect if no current user. Having trouble with check for current user being creator of project
+  if (!vm.user) $state.go('fuckOff');
   vm.title = 'Project page';
 
   vm.deadline = 12;

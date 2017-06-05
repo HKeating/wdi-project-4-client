@@ -41,6 +41,10 @@ function Router($stateProvider, $locationProvider, $urlRouterProvider) {
     templateUrl: '/js/views/project.html',
     controller: 'ProjectCtrl',
     controllerAs: 'project'
+  })
+  .state('fuckOff', {
+    url: '/goaway',
+    templateUrl: '/js/views/fuckoff.html'
   });
 
   $urlRouterProvider.otherwise('/');
