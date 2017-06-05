@@ -2,12 +2,13 @@ angular
 .module('ProjectFour')
 .controller('DashboardCtrl', DashboardCtrl);
 
-DashboardCtrl.$inject = ['CurrentUserService', '$rootScope', 'Project'];
-function DashboardCtrl(CurrentUserService, $rootScope, Project) {
+DashboardCtrl.$inject = ['CurrentUserService', '$rootScope', 'Project', 'User'];
+function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
   const vm = this;
   vm.title = 'Dashboard page';
   vm.user = CurrentUserService.currentUser;
-
+  vm.newProject = {};
+  vm.newProject.user_ids = [];
 
   // When loggedIn fires refresh currentUser - allows live updating of projects
   $rootScope.$on('loggedIn', () => {
@@ -23,12 +24,14 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
     CurrentUserService.getUser();
     vm.newProject = {};
     vm.projectToUpdate = {};
+    vm.newProject = {};
+    vm.newProject.user_ids = [];
   });
 
   vm.createProject = createProject;
   function createProject() {
     vm.newProject.user_id = vm.user.id;
-    vm.newProject.user_ids = [];
+    // vm.newProject.user_ids = [];
     vm.newProject.user_ids.push(vm.user.id);
     vm.newProject.start_date = new Date;
     // console.log('Duration: ', vm.newProject.duration);
@@ -53,6 +56,31 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
     var result = new Date(date);
     result.setDate(result.getDate() + days);
     return result;
+  }
+
+  vm.addUser = addUser;
+  function addUser() {
+
+    User.query()
+    .$promise
+    .then(data => {
+      data.map(user => {
+        user.email === vm.userLookup ? vm.newProject.user_ids.push(user.id) : console.log('No user matching that email');
+      });
+      findCollaborators(vm.newProject);
+      vm.userLoopkup = '';
+    });
+  }
+
+  function findCollaborators(project) {
+    User.query()
+    .$promise
+    .then(data => {
+      project.collaborators = [];
+      data.map(user => {
+        project.user_ids.includes(user.id) ? project.collaborators.push(user) : console.log('User not a collaborator');
+      });
+    });
   }
 
   vm.deleteProject = deleteProject;
