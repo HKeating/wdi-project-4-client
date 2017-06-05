@@ -7,12 +7,21 @@ ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams'];
 function ProjectCtrl($scope, Project, $stateParams) {
 
   const vm = this;
-  vm.project = Project.get($stateParams);
-  console.log('Project: ', vm.project);
-  vm.title = 'Project page';
+  //vm.project = Project.get($stateParams); // getting the project data
 
-  vm.deadline = 12;
-  // vm.deadline = vm.project.duration;
+  vm.project = Project.get({ id: $stateParams.id}).$promise.then(data => {
+    // Got the data about this project
+    vm.project = data;
+
+
+    vm.deadline = vm.project.duration; // setting up deadline
+    drawLine();
+    console.log('Got the data', vm.project);
+  });
+
+  console.log('Project: ', vm.project);
+  console.log('Duration: ', vm.project.duration);
+
   vm.milestones = [
     {
       deadline: 3,
@@ -102,5 +111,4 @@ function ProjectCtrl($scope, Project, $stateParams) {
 
   }
 
-  drawLine();
 }
