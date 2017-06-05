@@ -14,7 +14,7 @@ function RegisterCtrl(User, CurrentUserService, $state) {
       .$promise
       .then(() => {
         CurrentUserService.getUser();
-        $state.go('home');
+        $state.go('dashboard');
       }, err => {
         console.log('RegisterCtrl error: ', err);
       });

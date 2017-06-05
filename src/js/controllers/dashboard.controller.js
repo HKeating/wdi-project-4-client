@@ -7,22 +7,21 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
   const vm = this;
   vm.title = 'Dashboard page';
   vm.user = CurrentUserService.currentUser;
-  // if(!vm.user) {
+
+  // When loggedIn fires refresh currentUser - allows live updating of projects
   $rootScope.$on('loggedIn', () => {
     vm.user = CurrentUserService.currentUser;
     vm.projects = vm.user.projects;
   });
-  // }
+
   // $rootScope is like a global event listener/trigger across the whole app.
   // You use $rootScope.$broadcast('Your Message'); as the trigger
   // and $rootScope.$on('Your Message', () => { Triggered function }); as the listener.
   $rootScope.$on('Project Change', () => {
+    // On project change (CRUD) refresh current user, clear newProject and projectToUpdate objects
     CurrentUserService.getUser();
-
-    vm.user = CurrentUserService.currentUser;
     vm.newProject = {};
     vm.projectToUpdate = {};
-
   });
 
   vm.createProject = createProject;
@@ -50,6 +49,7 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
   vm.showEditForm = false;
   vm.selectToEdit = selectToEdit;
   function selectToEdit(projectId) {
+    // Use id of project where edit button was clicked to find that project in db
     vm.showEditForm = true;
     vm.projectToUpdate = Project.get({id: projectId});
   }
@@ -59,7 +59,6 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
     vm.showEditForm = false;
     vm.projectToUpdate = {};
   }
-
 
   vm.updateProject = updateProject;
   function updateProject(project) {

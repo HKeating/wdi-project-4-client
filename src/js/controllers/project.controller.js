@@ -2,12 +2,13 @@ angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
 
-ProjectCtrl.$inject = ['$scope'];
+ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams'];
 
-function ProjectCtrl($scope) {
+function ProjectCtrl($scope, Project, $stateParams) {
 
   const vm = this;
-
+  vm.project = Project.get($stateParams);
+  console.log('Project: ', vm.project);
   vm.title = 'Project page';
 
   vm.deadline = 12;

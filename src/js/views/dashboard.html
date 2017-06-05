@@ -3,7 +3,7 @@
 <h2>Your Projects:</h2>
 
 <div class="" ng-repeat="project in dashboard.user.projects track by $index">
-  <h3>{{ project.title }}</h3>
+  <h3><a ui-sref="project({ id: project.id })">{{ project.title }}</a></h3>
   <p>Duration: {{ project.duration }} days</p>
   <p>Milestones: {{ project.milestones.length }}</p>
   <p>Tasks: {{ project.tasks.length }}</p>

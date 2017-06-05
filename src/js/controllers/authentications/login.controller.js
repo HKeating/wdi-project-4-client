@@ -14,7 +14,7 @@ function LoginCtrl(User, CurrentUserService, $state) {
       .then(() => {
         CurrentUserService.getUser();
         if(vm.user) {
-          $state.go('home');
+          $state.go('dashboard');
         }
       }, err => {
         console.log('LoginCtrl error: ', err);
