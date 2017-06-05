@@ -1,5 +1,12 @@
 <h1>{{project.project.title}}</h1>
 <p>{{ project.project }}</p>
+
+<h3 id="contributorsLabel">Contributors: </h3>
+
+<div class="" ng-repeat="user in project.project.users">
+  <img ng-src="{{ user.image }}" alt="{{ user.username }}">
+</div>
+
 <div class="line">
   <img ng-src="/images/boat.png" id="icon" alt="">
 </div>
