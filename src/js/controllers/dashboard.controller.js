@@ -31,10 +31,13 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
     vm.newProject.user_ids = [];
     vm.newProject.user_ids.push(vm.user.id);
     vm.newProject.start_date = new Date;
-    
+    // console.log('Duration: ', vm.newProject.duration);
+    const endDate = addDays(vm.newProject.start_date, parseInt(vm.newProject.duration));
+    vm.newProject.end_date = endDate;
     const projectObj = {
       'project': vm.newProject
     };
+    console.log('Sending project: ', projectObj);
     Project
     .save(projectObj)
     .$promise
@@ -42,6 +45,14 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
       console.log('New project created: ', data);
       $rootScope.$broadcast('Project Change');
     });
+  }
+
+  function addDays(date, days) {
+    console.log('Date: ', date);
+    console.log('Days: ', days);
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
   }
 
   vm.deleteProject = deleteProject;
