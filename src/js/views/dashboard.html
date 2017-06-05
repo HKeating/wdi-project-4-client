@@ -4,9 +4,13 @@
 
 <div class="" ng-repeat="project in dashboard.user.projects track by $index">
   <h3><a ui-sref="project({ id: project.id })">{{ project.title }}</a></h3>
-  <p>Duration: {{ project.duration }} days</p>
-  <p>Milestones: {{ project.milestones.length }}</p>
+  <!-- <p>Duration: {{ project.duration }} days</p> -->
+  <!-- <p>Milestones: {{ project.milestones.length }}</p>
   <p>Tasks: {{ project.tasks.length }}</p>
+  <p>Started: {{ project.start_date }}</p>
+  <p>Ends: {{ project.end_date }}</p> -->
+  <p>Days left: {{ dashboard.daysLeft(project.end_date) }}</p>
+  <img ng-src="{{ project.image }}" alt="">
   <button ng-click="dashboard.selectToEdit(project.id)" type="button" name="button">Edit Project</button>
   <button type="button" ng-click="dashboard.deleteProject(project)" name="button">Delete Project</button>
 </div>
@@ -19,13 +23,17 @@
       <input type="text" ng-model="dashboard.newProject.title" name="title" value="">
     </div>
     <div class="form-group">
-      <label for="duration">Duration</label>
+      <label for="duration">Duration (in days)</label>
       <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="dashboard.newProject.duration" name="duration" value="">
+    </div>
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input type="text" ng-model="dashboard.newProject.image" name="image" value="">
     </div>
 
     <div class="form-group">
       <label for="userLoopkup">Add Collaborators</label>
-      <input type="text" name="userLookup" id="lookupField" ng-model="dashboard.userLookup" value="dashboard.userLookup">
+      <input type="text" name="userLookup" class="lookupField" ng-model="dashboard.userLookup" value="dashboard.userLookup">
       <button type="button" ng-click="dashboard.addCollaborator()" name="button">Add User</button>
       <div class="" ng-repeat="user in dashboard.newProject.collaborators">
         <p>{{ user.username }}</p>
@@ -47,16 +55,15 @@
       <label for="title">Title</label>
       <input type="text" ng-model="dashboard.projectToUpdate.title" name="title" value="">
     </div>
-    <div class="form-group">
-      <label for="duration">Duration</label>
-      <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="dashboard.projectToUpdate.duration" name="duration" value="">
-    </div>
-
-    <div class="form-group">
-      <input type="submit" name="submit" value="Update Project">
-    </div>
-    <div class="form-group">
-      <button ng-click="dashboard.hideEditForm()" type="button" name="hideForm">Cancel</button>
-    </div>
-  </form>
+    <!-- <div class="form-group">
+    <label for="duration">Duration</label>
+    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="dashboard.projectToUpdate.duration" name="duration" value="">
+  </div> -->
+  <div class="form-group">
+    <input type="submit" name="submit" value="Update Project">
+  </div>
+  <div class="form-group">
+    <button ng-click="dashboard.hideEditForm()" type="button" name="hideForm">Cancel</button>
+  </div>
+</form>
 </div>

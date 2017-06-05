@@ -26,7 +26,7 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
     vm.projectToUpdate = {};
     vm.newProject = {};
     vm.newProject.user_ids = [];
-    $('#lookupField').val('');
+    $('.lookupField').val('');
   });
 
   vm.createProject = createProject;
@@ -38,6 +38,7 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
     // console.log('Duration: ', vm.newProject.duration);
     const endDate = addDays(vm.newProject.start_date, parseInt(vm.newProject.duration));
     vm.newProject.end_date = endDate;
+    if (!vm.newProject.image) vm.newProject.image = 'http://www.fillmurray.com/180/180';
     const projectObj = {
       'project': vm.newProject
     };
@@ -69,7 +70,7 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
       });
       findCollaborators(vm.newProject);
     });
-    $('#lookupField').val('');
+    $('.lookupField').val('');
   }
 
   function findCollaborators(project) {
@@ -126,6 +127,19 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
       vm.showEditForm = false;
     });
     // }
+  }
+
+  vm.daysLeft = daysLeft;
+  function daysLeft(date) {
+    if(date) {
+      const oneDay = 24*60*60*1000;
+      const currentDate = new Date;
+      const endDate = new Date(date);
+      return Math.round(Math.abs((currentDate.getTime() - endDate.getTime())/(oneDay)));
+    } else {
+      return 'Invalid date format';
+    }
+
   }
 
 }
