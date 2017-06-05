@@ -7,7 +7,7 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
   const vm = this;
   vm.title = 'Dashboard page';
   vm.user = CurrentUserService.currentUser;
-  
+
 
   // When loggedIn fires refresh currentUser - allows live updating of projects
   $rootScope.$on('loggedIn', () => {
@@ -30,6 +30,8 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project) {
     vm.newProject.user_id = vm.user.id;
     vm.newProject.user_ids = [];
     vm.newProject.user_ids.push(vm.user.id);
+    vm.newProject.start_date = new Date;
+    
     const projectObj = {
       'project': vm.newProject
     };

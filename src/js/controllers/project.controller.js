@@ -9,7 +9,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService) 
   vm.user = CurrentUserService.currentUser;
   vm.project = Project.get($stateParams);
   console.log('Project: ', vm.project);
-  console.log('User: ', $scope.user.id);
+  console.log('User: ', $scope.user);
   // Redirect if no current user. Having trouble with check for current user being creator of project
   if (!vm.user) $state.go('fuckOff');
   vm.title = 'Project page';
