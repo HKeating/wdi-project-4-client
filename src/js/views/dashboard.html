@@ -24,12 +24,13 @@
     </div>
 
     <div class="form-group">
-      <label for="users">Add Collaborators</label>
-      <input type="text" name="users" ng-model="dashboard.userLookup" value="">
-      <button type="button" ng-click="dashboard.addUser()" name="button">Add User</button>
+      <label for="userLoopkup">Add Collaborators</label>
+      <input type="text" name="userLookup" id="lookupField" ng-model="dashboard.userLookup" value="dashboard.userLookup">
+      <button type="button" ng-click="dashboard.addCollaborator()" name="button">Add User</button>
       <div class="" ng-repeat="user in dashboard.newProject.collaborators">
         <p>{{ user.username }}</p>
-        <img ng-src="user.image" alt="">
+        <img ng-src="{{user.image}}" alt="">
+        <button type="button" ng-click="dashboard.removeCollaborator(user.id, dashboard.newProject)" name="button">Remove</button>
       </div>
       <!-- <p ng-show="dashboard.newProject.user_ids.length">{{dashboard.newProject.user_ids.length}} collaborator(s).</p> -->
     </div>

@@ -26,6 +26,7 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
     vm.projectToUpdate = {};
     vm.newProject = {};
     vm.newProject.user_ids = [];
+    $('#lookupField').val('');
   });
 
   vm.createProject = createProject;
@@ -58,18 +59,17 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
     return result;
   }
 
-  vm.addUser = addUser;
-  function addUser() {
-
+  vm.addCollaborator = addCollaborator;
+  function addCollaborator() {
     User.query()
     .$promise
     .then(data => {
       data.map(user => {
-        user.email === vm.userLookup ? vm.newProject.user_ids.push(user.id) : console.log('No user matching that email');
+        user.email === vm.userLookup && !vm.newProject.user_ids.includes(user.id) && user.id !== vm.user.id ? vm.newProject.user_ids.push(user.id) : console.log('No user matching that email');
       });
       findCollaborators(vm.newProject);
-      vm.userLoopkup = '';
     });
+    $('#lookupField').val('');
   }
 
   function findCollaborators(project) {
@@ -81,6 +81,14 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
         project.user_ids.includes(user.id) ? project.collaborators.push(user) : console.log('User not a collaborator');
       });
     });
+  }
+
+  vm.removeCollaborator = removeCollaborator;
+  function removeCollaborator(id, project) {
+    console.log('Project: ', project);
+    console.log('User id: ', id);
+    project.user_ids.splice(project.user_ids.indexOf(id), 1);
+    findCollaborators(project);
   }
 
   vm.deleteProject = deleteProject;
