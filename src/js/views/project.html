@@ -14,25 +14,25 @@
 <div class="taskPanel col-sm-6">
   <h3 id="dayLabel">Day {{ selectedDay }}</h3>
   <div class="task col-sm-6" ng-repeat="task in project.project.tasks" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day">
-    <div class="taskCard">
-      <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
-      </div>
-      <div class="taskContent col-sm-10">
-        <div class="col-sm-12">
-          <p>{{task.description}}</p>
-          <!-- <button ng-click="project.selectTaskToEdit(task.id)" type="button" name="button">?</button> -->
+      <div data-drag="true" jqyoui-draggable class="taskCard">
+        <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
         </div>
-        <div class="row">
-          <div class="col-sm-6 taskTags">
-            <p>Some tags</p>
+        <div class="taskContent col-sm-10">
+          <div class="col-sm-12">
+            <p>{{task.description}}</p>
+            <!-- <button ng-click="project.selectTaskToEdit(task.id)" type="button" name="button">?</button> -->
           </div>
-          <div class="col-sm-6 taskUserContainer">
-            <div ng-repeat="user in task.users" class="col-sm-3">
-              <img class="taskUserImg" ng-src="{{ user.image }}" alt="">
+          <div class="row">
+            <div class="col-sm-6 taskTags">
+              <p>Some tags</p>
+            </div>
+            <div class="col-sm-6 taskUserContainer">
+              <div ng-repeat="user in task.users" class="col-sm-3">
+                <img class="taskUserImg" ng-src="{{ user.image }}" alt="">
+              </div>
             </div>
           </div>
         </div>
-      </div>
     </div>
   </div>
   <div class="addTask col-sm-6">
@@ -70,7 +70,7 @@
     <div class="form-group">
       <input type="submit" name="submit" value="Add Milestone">
     </div>
-      <!-- <h1 ng-click="project.showTaskNewForm = true" class="col-sm-3">+</h1> -->
+    <!-- <h1 ng-click="project.showTaskNewForm = true" class="col-sm-3">+</h1> -->
   </form>
 </div>
 

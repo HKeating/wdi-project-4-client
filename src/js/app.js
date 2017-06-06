@@ -2,5 +2,7 @@ angular
 .module('ProjectFour', [
   'ui.router',
   'ngResource',
-  'angular-jwt'
+  'angular-jwt',
+  'gridster',
+  'ngDragDrop'
 ]);

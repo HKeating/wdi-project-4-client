@@ -11,7 +11,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   // if (!vm.user) $state.go('fuckOff');
   getProject();
-  
+
   // vm.getProject = getProject;
   function getProject() {
     Project.get({ id: $stateParams.id}).$promise.then(data => {
@@ -215,7 +215,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $rootScope.$broadcast('Task Change');
     });
   }
-  
+
   vm.showTaskEditForm = false;
   vm.selectTaskToEdit = selectTaskToEdit;
   function selectTaskToEdit(taskId) {
