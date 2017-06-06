@@ -1,24 +1,38 @@
-<h1>{{ register.title }}</h1>
+<div class="home-5-container cf">
+  <div class="mw9 center ph3-ns mv5">
+    <div class="fl pa2 mv5 bb b--blue f1">
+      Register
+    </div>
 
-<form class="" ng-submit="register.register()">
 
-  <label for="username">Username</label>
-  <input type="text" name="username" value="" ng-model="register.user.username" placeholder="Username">
+    <div class="registerForm" ng-controller="RegisterCtrl as register">
+      <form class="f2 measure center" ng-submit="register.register()">
 
-  <label for="email">Email</label>
-  <input type="text" name="email" value="" ng-model="register.user.email" placeholder="Email">
+        <div class="mt3">
+          <label class="db fw6 lh-copy f3" for="username">Username</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="username"  ng-model="register.user.username" placeholder="Username">
+        </div>
 
-  <label for="password">Password</label>
-  <input type="password" name="password" value="" ng-model="register.user.password" placeholder="Password">
+        <div class="mt3">
+          <label class="db fw6 lh-copy f3" for="email-address">Email</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email-address"  ng-model="register.user.email" placeholder="Email">
+        </div>
 
-  <label for="password_confirmation">Confirm Password</label>
-  <input type="password" name="password_confirmation" value="" ng-model="register.user.password_confirmation" placeholder="Confirm Password">
+        <div class="mv3">
+          <label class="db fw6 lh-copy f3" for="password">Password</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  ng-model="register.user.password" placeholder="e.g. kittenzRule">
+        </div>
 
-  <input type="submit" name="" value="Register">
+        <div class="mv3">
+          <label class="db fw6 lh-copy f3" for="password_confirmation">Password Confirmation</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password_confirmation"  ng-model="register.user.password_confirmation" placeholder="Confirm Password">
+        </div>
 
-  <div class="">
-    <p>Already have an account?</p>
-    <p><a ui-sref="login">Login</a></p>
+        <div class="">
+          <input class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f3 dib" type="submit" value="Register">
+        </div>
+
+      </form>
+    </div>
   </div>
-
-</form>
+</div>

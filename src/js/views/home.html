@@ -1,5 +1,5 @@
 <div class="home-1-bg">
-  <div class="mw9 center home-1-text">
+  <div class="mw9 center home-1-text pt5">
     <div class="cf ph2-ns">
       <div class="fl w-100 w-50-ns pa2">
         <div class="">
@@ -17,17 +17,101 @@
 </div>
 
 
-<div class="mw9 center ph3-ns mv5">
-  <div class="cf ph2-ns">
-    <div class="fl w-100 w-50-ns pa2">
-      <div class="br b--purple bg-white pv4">
-        <h4>FckItShipIt™ is a really easy and super-simple task manger for team sprints; less conflicts, more productivty. </h4>
+<div class="mw9 center ph3-ns mv5 home-2-container cf">
+  <div class="fl w-100 w-50-ns pa2 cf">
+    <div class="bg-white pv4">
+      <h4>FckItShipIt™ is a really easy and super-simple task manger for team sprints; less conflicts, more productivty. </h4>
+    </div>
+  </div>
+  <div class="fl w-100 w-50-ns pa2">
+    <div class="ml3 black-50 bg-white pv4">
+      <h5>We saw there was a demand for a simple sprint manager as traditional ticketing apps did not have an explicit focus on time but rather the tasks at hand leading to tasks being missed or not properly updated. </h5>
+    </div>
+  </div>
+  <div class="logos">
+    <div class="fl tc w-20 pa2"><img ng-src="/images/GL.png"></div>
+    <div class="fl tc w-20 pa2"><img ng-src="/images/rvL.png"></div>
+    <div class="fl tc w-20 pa2"><img ng-src="/images/fbL.png"></div>
+    <div class="fl tc w-20 pa2"><img ng-src="/images/padL.png"></div>
+    <div class="fl tc w-20 pa2"><img ng-src="/images/tcL.png"></div>
+  </div>
+</div>
+
+
+<div class="home-3-container cf">
+  <div class="mw9 center ph3-ns mv5">
+    <div class="fl pa2 mv5 bb b--blue f1">
+      How it works
+    </div>
+    <div class="cf ph2-ns home-3-text mh5">
+      <div class="fl w-100 w-50-ns pa2">
+        <div class="pv4 f2 mt5">
+          Get started either by yourself or in a team and sign up with GitHub for additional features.
+          <div class="f6">
+            <span class="star">*</span>additional features for exclusive members only
+          </div>
+        </div>
+      </div>
+      <div class="fl w-100 w-50-ns pa2">
+        <div class="pv4">
+          <img src="/images/laptop.png" alt="">
+        </div>
       </div>
     </div>
-    <div class="fl w-100 w-50-ns pa2">
-      <div class="ml3 black-50 bg-white pv4">
-          <h5>We saw there was a demand for a simple sprint manager as traditional ticketing apps did not have an explicit focus on time but rather the tasks at hand leading to tasks being missed or not properly updated. </h5>
+    <div class="mt3 tc">
+      ▢ ▢ ▢
+    </div>
+  </div>
+</div>
+
+<div class="home-4-container cf">
+  <div class="mw9 center ph3-ns mv5">
+    <div class="fl pa2 mv5 bb b--blue f1">
+      A word from our founders
+    </div>
+    <div class="cf ph2-ns home-3-text mh5">
+    </div>
+    <div class="mt3 tc">
+      <img src="https://www.fillmurray.com/800/500" alt="">
+    </div>
+  </div>
+</div>
+
+<div class="home-5-container cf">
+  <div class="mw9 center ph3-ns mv5">
+    <div class="fl pa2 mv5 bb b--blue f1">
+      Register
+    </div>
+
+
+    <div class="registerForm" ng-controller="RegisterCtrl as register">
+      <form class="f2 measure center" ng-submit="register.register()">
+
+        <div class="mt3">
+          <label class="db fw6 lh-copy f3" for="username">Username</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="username"  ng-model="register.user.username" placeholder="Username">
         </div>
+
+        <div class="mt3">
+          <label class="db fw6 lh-copy f3" for="email-address">Email</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email-address"  ng-model="register.user.email" placeholder="Email">
+        </div>
+
+        <div class="mv3">
+          <label class="db fw6 lh-copy f3" for="password">Password</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  ng-model="register.user.password" placeholder="e.g. kittenzRule">
+        </div>
+
+        <div class="mv3">
+          <label class="db fw6 lh-copy f3" for="password_confirmation">Password Confirmation</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password_confirmation"  ng-model="register.user.password_confirmation" placeholder="Confirm Password">
+        </div>
+
+        <div class="">
+          <input class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f3 dib" type="submit" value="Register">
+        </div>
+
+      </form>
     </div>
   </div>
 </div>

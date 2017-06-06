@@ -1,18 +1,32 @@
-<h1>{{ login.title }}</h1>
+<div class="home-5-container cf">
+  <div class="mw9 center ph3-ns mv5">
+    <div class="fl pa2 mv5 bb b--blue f1">
+      Login
+    </div>
 
+    <div class="loginForm">
+      <form class="f2 measure center" ng-submit="login.login()">
 
-<form class="" ng-submit="login.login()" method="post">
+        <div class="mt3">
+          <label class="db fw6 lh-copy f3" for="email-address">Email</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email-address"  ng-model="login.user.email" placeholder="Email">
+        </div>
 
-  <label for="email">Email</label>
-  <input type="email" name="email" value="" ng-model="login.user.email" placeholder="Email">
+        <div class="mv3">
+          <label class="db fw6 lh-copy f3" for="password">Password</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  ng-model="login.user.password" placeholder="e.g. kittenzRule">
+        </div>
 
-  <label for="password">Password</label>
-  <input type="password" name="password" value="" ng-model="login.user.password" placeholder="Password">
+        <div class="">
+          <input class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f3 dib" type="submit" value="Submit">
+        </div>
 
-  <input type="submit" name="" value="Submit">
+        <div class="f4 mt4">
+          <p>Not registered yet?</p>
+          <p>Sign up <a class="grow pointer input-reset dib" ui-sref="register">here</a></p>
+        </div>
 
-  <div class="">
-    <p>Not registered yet?</p>
-    <p>Sign up <a ui-sref="register">here</a>.</p>
+      </form>
+    </div>
   </div>
-</form>
+</div>
