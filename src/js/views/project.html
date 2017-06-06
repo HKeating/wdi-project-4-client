@@ -1,5 +1,5 @@
 <h1>{{project.project.title}}</h1>
-<p>{{ project.project }}</p>
+<!-- <p>{{ project.project }}</p> -->
 
 <h3 id="contributorsLabel">Contributors: </h3>
 
@@ -13,14 +13,27 @@
 
 <div class="taskPanel col-sm-6">
   <h3 id="dayLabel">Day {{ selectedDay }}</h3>
-  <div class="task col-sm-12" ng-repeat="task in project.project.tasks">
-    <div class="" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day">
-      <p>{{task.description}}</p>
-      <div class="taskUserContainer">
-        <div ng-repeat="user in task.users" class="col-sm-3">
-          <img class="taskUserImg" ng-src="{{ user.image }}" alt="">
+  <div class="task col-sm-6" ng-repeat="task in project.project.tasks" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day">
+    <div class="taskCard">
+      <div class="taskColorTag col-sm-2">
+
+      </div>
+      <div class="taskContent col-sm-10">
+        <div class="col-sm-12">
+          <p>{{task.description}}</p>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 taskTags">
+            <p>Some tags</p>
+          </div>
+          <div class="col-sm-6 taskUserContainer">
+            <div ng-repeat="user in task.users" class="col-sm-3">
+              <img class="taskUserImg" ng-src="{{ user.image }}" alt="">
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 </div>
