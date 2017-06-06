@@ -11,6 +11,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   // if (!vm.user) $state.go('fuckOff');
   getProject();
+  
   // vm.getProject = getProject;
   function getProject() {
     Project.get({ id: $stateParams.id}).$promise.then(data => {

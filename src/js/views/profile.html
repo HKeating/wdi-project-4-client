@@ -1,1 +1,25 @@
 <h1>Profile</h1>
+<img ng-src="{{profile.user.image}}" alt="">
+<h3>{{ profile.user.username }}</h3>
+<p>{{ profile.user.email }}</p>
+
+<br>
+
+<h3>Tasks: </h3>
+<ul ng-repeat="task in profile.user.tasks">
+  <li>{{ task.description }}</li>
+</ul>
+
+<br>
+<br>
+
+<h3>Badges: </h3>
+<!-- <ul ng-repeat="task in profile.user.tasks">
+  <li>{{ task.description }}</li>
+</ul> -->
+
+<br>
+<br>
+
+
+<button ng-click="profile.logOut()" type="button" name="button">Log Out</button>
