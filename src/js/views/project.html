@@ -16,7 +16,7 @@
   <div class="task col-sm-6" ng-repeat="task in project.project.tasks" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day">
     <div class="taskCard">
       <div class="taskColorTag col-sm-2">
-        
+
       </div>
       <div class="taskContent col-sm-10">
         <div class="col-sm-12">
@@ -42,3 +42,17 @@
     </div>
   </div>
 </div>
+
+<form ng-submit="project.createTask()">
+  <div class="form-group">
+    <label for="description">Description</label>
+    <input type="text" ng-model="project.newTask.description" name="description" value="">
+  </div>
+  <div class="form-group">
+    <label for="due_Day">Due Day</label>
+    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.due_day" name="duration" value="">
+  </div>
+  <div class="form-group">
+    <input type="submit" name="submit" value="Add Task">
+  </div>
+</form>

@@ -2,9 +2,9 @@ angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
 
-ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope'];
+ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task'];
 
-function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope) {
+function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task) {
   const vm = this;
 
   vm.user = CurrentUserService.currentUser;
@@ -103,7 +103,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
         $scope.selectedDay = dayDot.attr('index');
         console.log('selectedDay: ', $scope.selectedDay);
-      
+
         $scope.$apply();
       });
 
@@ -141,5 +141,42 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     }
 
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  vm.createTask = createTask;
+  function createTask() {
+    vm.newTask.project_id = vm.project.id;
+    vm.newTask.start_day = $scope.selectedDay;
+    const taskObj = {
+      'task': vm.newTask
+    };
+    console.log('Sending task: ', taskObj);
+    Task
+    .save(taskObj)
+    .$promise
+    .then((data) => {
+      console.log('New task created: ', data);
+      $rootScope.$broadcast('Task Change');
+    });
+  }
+
+  $rootScope.$on('Task Change', () => {
+    vm.newTask = {};
+    // $('.lookupField').val('');
+  });
 
 }
