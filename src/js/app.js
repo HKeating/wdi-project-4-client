@@ -1,6 +1,6 @@
 angular
-  .module('ProjectFour', [
-    'ui.router',
-    'ngResource',
-    'angular-jwt'
-  ]);
+.module('ProjectFour', [
+  'ui.router',
+  'ngResource',
+  'angular-jwt'
+]);
