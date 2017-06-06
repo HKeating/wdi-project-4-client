@@ -10,28 +10,32 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   vm.user = CurrentUserService.currentUser;
 
   // if (!vm.user) $state.go('fuckOff');
+  getProject();
+  // vm.getProject = getProject;
+  function getProject() {
+    Project.get({ id: $stateParams.id}).$promise.then(data => {
 
-  vm.project = Project.get({ id: $stateParams.id}).$promise.then(data => {
+      // Got the data about this project
+      vm.project = data;
+      console.log('Got the data', vm.project);
+      $rootScope.$broadcast('project ready');
+      vm.deadline = vm.project.duration; // setting up deadline
 
-    // Got the data about this project
-    vm.project = data;
-    console.log('Got the data', vm.project);
-    $rootScope.$broadcast('project ready');
-    vm.deadline = vm.project.duration; // setting up deadline
+      vm.milestones = [
+        {
+          deadline: 3,
+          title: 'MVP'
+        },
+        {
+          deadline: 5,
+          title: 'Beta'
+        }
+      ];
 
-    vm.milestones = [
-      {
-        deadline: 3,
-        title: 'MVP'
-      },
-      {
-        deadline: 5,
-        title: 'Beta'
-      }
-    ];
+      drawLine();
+    });
+  }
 
-    drawLine();
-  });
 
   // Making refernces to elements in the DOM
   $scope.$line = $('.line');
@@ -45,7 +49,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   $scope.selectedDay = vm.currentDay;
   // This function draws dots on the line
   function drawLine() {
-
+    $('.line').empty();
     console.log(`Line width is ${$scope.$line.width()}`);
     const lineWidth = $scope.$line.width();
     const distanceBetweenDots = (lineWidth / vm.deadline);
@@ -176,6 +180,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   $rootScope.$on('Task Change', () => {
     vm.newTask = {};
+    getProject();
     // $('.lookupField').val('');
   });
 
