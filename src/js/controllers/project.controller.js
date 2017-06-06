@@ -66,7 +66,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         arrayOfMilestoneIndexes.push(vm.milestones[milestone].deadline);
       }
 
-      console.log('Array of milestone indexes: ',arrayOfMilestoneIndexes);
+      // console.log('Array of milestone indexes: ',arrayOfMilestoneIndexes);
 
       if($.inArray(i-1, arrayOfMilestoneIndexes) !== -1) {
         // It is a milestone
@@ -176,6 +176,45 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       console.log('New task created: ', data);
       $rootScope.$broadcast('Task Change');
     });
+  }
+
+  vm.addTaskUser = addTaskUser;
+  function addTaskUser(task, userToAdd) {
+    task.user_ids = [];
+    task.users.map(user => {
+      task.user_ids.push(user.id);
+    });
+    if (task.user_ids.includes(userToAdd.id)) {
+      console.log('user already added');
+    } else {
+      task.user_ids.push(userToAdd.id);
+      updateTask(task);
+    }
+  }
+
+  vm.removeTaskUser = removeTaskUser;
+  function removeTaskUser(task, userToRemove) {
+    task.user_ids = [];
+    task.users.map(user => {
+      if (user.id !== userToRemove.id) {
+        task.user_ids.push(user.id);
+      }
+    });
+    updateTask(task);
+  }
+  vm.updateTask = updateTask;
+  function updateTask(task) {
+    console.log('new task: ', task);
+
+    // if (vm.editForm.$valid) {
+    Task
+    .update({id: task.id }, task)
+    .$promise
+    .then(data => {
+      console.log('Task updated: ', data);
+      $rootScope.$broadcast('Task Change');
+    });
+    // }
   }
 
   $rootScope.$on('Task Change', () => {
