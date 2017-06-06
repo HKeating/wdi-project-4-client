@@ -15,12 +15,12 @@
   <h3 id="dayLabel">Day {{ selectedDay }}</h3>
   <div class="task col-sm-6" ng-repeat="task in project.project.tasks" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day">
     <div class="taskCard">
-      <div class="taskColorTag col-sm-2">
+      <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
       </div>
       <div class="taskContent col-sm-10">
         <div class="col-sm-12">
           <p>{{task.description}}</p>
-          <button ng-click="project.selectTaskToEdit(task.id)" type="button" name="button">?</button>
+          <!-- <button ng-click="project.selectTaskToEdit(task.id)" type="button" name="button">?</button> -->
         </div>
         <div class="row">
           <div class="col-sm-6 taskTags">
@@ -37,49 +37,68 @@
   </div>
   <div class="addTask col-sm-6">
     <div class="addTaskCard">
-      <h1>+</h1>
+      <form ng-submit="project.createTask()">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" ng-model="project.newTask.description" name="description" value="">
+        </div>
+        <div class="form-group">
+          <label for="due_Day">Due Day</label>
+          <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.due_day" name="duration" value="">
+        </div>
+        <div class="form-group">
+          <input type="submit" name="submit" value="Add Task">
+        </div>
+        <!-- <h1 ng-click="project.showTaskNewForm = true" class="col-sm-3">+</h1> -->
+      </form>
+
+
     </div>
   </div>
 </div>
+<div class="col-sm-6">
+  <h3>Add Milestone</h3>
+  <form ng-submit="project.createMilestone()">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" ng-model="project.newMilestone.title" name="title" value="">
+    </div>
+    <div class="form-group">
+      <label for="day">Complete By Day:</label>
+      <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.day" name="day" value="">
+    </div>
+    <div class="form-group">
+      <input type="submit" name="submit" value="Add Milestone">
+    </div>
+      <!-- <h1 ng-click="project.showTaskNewForm = true" class="col-sm-3">+</h1> -->
+  </form>
+</div>
 
-<form ng-submit="project.createTask()">
-  <div class="form-group">
-    <label for="description">Description</label>
-    <input type="text" ng-model="project.newTask.description" name="description" value="">
-  </div>
-  <div class="form-group">
-    <label for="due_Day">Due Day</label>
-    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.due_day" name="duration" value="">
-  </div>
-  <div class="form-group">
-    <input type="submit" name="submit" value="Add Task">
-  </div>
-</form>
 <div class="col-sm-12">
 
 
-<div id="updateTask" class="" ng-show="project.showTaskEditForm">
-  <h3>{{ project.taskToUpdate.description }}</h3>
-  <p>Start day: {{ project.taskToUpdate.start_day }}</p>
-  <p>Due day: {{ project.taskToUpdate.due_day }}</p>
-  <div class="taskUserContainer">
-    <h4 ng-show="project.taskToUpdate.users">Assigned users:</h4>
-    <div ng-repeat="user in project.taskToUpdate.users" class="col-sm-3">
-      <!-- <img class="taskUserImg" ng-src="{{ user.image }}" alt=""> -->
-      <p>{{ user.username }}</p>
-      <button type="button" ng-click="project.removeTaskUser(project.taskToUpdate, user)" name="button">Remove</button>
+  <div id="updateTask" class="" ng-show="project.showTaskEditForm">
+    <h3>{{ project.taskToUpdate.description }}</h3>
+    <p>Start day: {{ project.taskToUpdate.start_day }}</p>
+    <p>Due day: {{ project.taskToUpdate.due_day }}</p>
+    <div class="taskUserContainer">
+      <h4 ng-show="project.taskToUpdate.users">Assigned users:</h4>
+      <div ng-repeat="user in project.taskToUpdate.users" class="col-sm-3">
+        <!-- <img class="taskUserImg" ng-src="{{ user.image }}" alt=""> -->
+        <p>{{ user.username }}</p>
+        <button type="button" ng-click="project.removeTaskUser(project.taskToUpdate, user)" name="button">Remove</button>
+      </div>
+    </div>
+    <div class="taskUserContainer">
+      <h4>Assign users:</h4>
+      <div ng-repeat="user in project.project.users" class="col-sm-3">
+        <!-- <img class="taskUserImg" ng-src="{{ user.image }}" alt=""> -->
+        <p>{{ user.username }}</p>
+        <button type="button" ng-click="project.addTaskUser(project.taskToUpdate, user)" name="button">Add</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <button ng-click="project.hideTaskEditForm()" type="button">Cancel</button>
     </div>
   </div>
-  <div class="taskUserContainer">
-    <h4>Assign users:</h4>
-    <div ng-repeat="user in project.project.users" class="col-sm-3">
-      <!-- <img class="taskUserImg" ng-src="{{ user.image }}" alt=""> -->
-      <p>{{ user.username }}</p>
-      <button type="button" ng-click="project.addTaskUser(project.taskToUpdate, user)" name="button">Add</button>
-    </div>
-  </div>
-  <div class="form-group">
-    <button ng-click="project.hideTaskEditForm()" type="button">Cancel</button>
-  </div>
-</div>
 </div>

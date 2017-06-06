@@ -206,8 +206,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   function updateTask(task) {
     const taskObj = { 'task': task };
     console.log('new task: ', task);
-
-    // if (vm.editForm.$valid) {
     Task
     .update({id: task.id }, taskObj)
     .$promise
@@ -215,13 +213,11 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       console.log('Task updated: ', data);
       $rootScope.$broadcast('Task Change');
     });
-    // }
   }
-
+  
   vm.showTaskEditForm = false;
   vm.selectTaskToEdit = selectTaskToEdit;
   function selectTaskToEdit(taskId) {
-    console.log('firing ', taskId);
     vm.showTaskEditForm = true;
     vm.taskToUpdate = Task.get({id: taskId});
   }
@@ -235,7 +231,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   $rootScope.$on('Task Change', () => {
     vm.newTask = {};
     getProject();
-    // $('.lookupField').val('');
+    vm.taskToUpdate = Task.get({id: vm.taskToUpdate.id});
   });
 
 }
