@@ -11,7 +11,6 @@ function ProfileCtrl($scope, Profile, $stateParams, $state, CurrentUserService, 
   vm.user = CurrentUserService.currentUser;
 
   vm.logOut = () => {
-    console.log("log out");
     CurrentUserService.removeUser();
   };
 
