@@ -5,6 +5,7 @@ angular
 MainCtrl.$inject = ['$rootScope', 'CurrentUserService', '$state', '$scope'];
 function MainCtrl($rootScope, CurrentUserService, $state, $scope) {
   const vm = this;
+
   vm.test = 'Hello';
 
   CurrentUserService.getUser();
@@ -21,5 +22,11 @@ function MainCtrl($rootScope, CurrentUserService, $state, $scope) {
     $state.go('login');
   });
 
+
+  vm.goToUserProfile = () => {
+    $state.go('profile');
+  };
+
   $scope.$state = $state;
+
 }
