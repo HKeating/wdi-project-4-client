@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html ng-app="ProjectFour">
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <title>Fck It Shp It</title>
+  <!-- inject:js -->
+  <!-- endinject -->
+  <!-- inject:css -->
+  <!-- endinject -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css">
+  <style>
+  @import url('https://fonts.googleapis.com/css?family=Space+Mono');
+  </style>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body ng-controller="MainCtrl as main">
+  <div class="navbarAll">
+  <div class="navbar-toggleable-md navItems  pb2 bb b--white-30">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle f2" data-toggle="collapse" data-target=".navbar-collapse">
+        &#x1f354;
+      </button>
+      <a class="navbar-brand title f1" ui-sref="home">FckItShpIt</a>
+    </div>
+    <div class="navbar-collapse collapse ">
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-hide="main.user"><a ui-sref="pricing" class="white f2 nItems">Pricing</a></li>
+        <!-- <li ng-hide="main.user"><a ui-sref="register" class="white f2">Register</a></li> -->
+        <li ng-hide="main.user"> <a ui-sref="login" class="white f2 nItems" >Login</a></li>
+        <li ng-show="main.user"><a ui-sref="dashboard" class="white f2 nItems">Dashboard</a></li>
+        <li ng-show="main.user"><a ng-click="main.logout()" ui-sref="login" class="white f2">Logout</a></li>
+        <li ng-show="main.user"><img class="userThumbnail" ng-src="{{main.user.image}}" alt="main.user.image" ng-click="main.goToUserProfile()"></li>
+        <!-- <li ng-show="main.user"><a ui-sref="usersIndex" class="white f2 nItems">Users</a></li> -->
+        <li ng-show="$state.includes('home')"><p class="white f2 nItems">HOME</p></li>
+        <li ng-show="$state.includes('dashboard')"><p class="white f2 nItems">DASHBOARD</p></li>
+        <li ng-show="$state.includes('project')"><p class="white f2 nItems">PROEJCT</p></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+  <main ui-view></main>
+
+  <footer class="pv4 ph3 ph5-ns tc">
+    <a class="link dim gray dib h2 w2 br-100 mr3 " href="#" title="">
+      <svg data-icon="facebook" viewBox="0 0 32 32" style="fill:currentcolor">
+        <title>facebook icon</title>
+        <path d="M8 12 L13 12 L13 8 C13 2 17 1 24 2 L24 7 C20 7 19 7 19 10 L19 12 L24 12 L23 18 L19 18 L19 30 L13 30 L13 18 L8 18 z"></path>
+      </svg>
+    </a>
+    <a class="link dim gray dib h2 w2 br-100 mr3 " href="#" title="">
+      <svg data-icon="twitter" viewBox="0 0 32 32" style="fill:currentcolor">
+        <title>twitter icon</title>
+        <path d="M2 4 C6 8 10 12 15 11 A6 6 0 0 1 22 4 A6 6 0 0 1 26 6 A8 8 0 0 0 31 4 A8 8 0 0 1 28 8 A8 8 0 0 0 32 7 A8 8 0 0 1 28 11 A18 18 0 0 1 10 30 A18 18 0 0 1 0 27 A12 12 0 0 0 8 24 A8 8 0 0 1 3 20 A8 8 0 0 0 6 19.5 A8 8 0 0 1 0 12 A8 8 0 0 0 3 13 A8 8 0 0 1 2 4"></path>
+      </svg>
+    </a>
+    <a class="link dim gray dib br-100 h2 w2 mr3 " href="#" title="">
+      <svg data-icon="github" viewBox="0 0 32 32" style="fill:currentcolor">
+        <title>github icon</title>
+        <path d="M0 18 C0 12 3 10 3 9 C2.5 7 2.5 4 3 3 C6 3 9 5 10 6 C12 5 14 5 16 5 C18 5 20 5 22 6 C23 5 26 3 29 3 C29.5 4 29.5 7 29 9 C29 10 32 12 32 18 C32 25 30 30 16 30 C2 30 0 25 0 18 M3 20 C3 24 4 28 16 28 C28 28 29 24 29 20 C29 16 28 14 16 14 C4 14 3 16 3 20 M8 21 A1.5 2.5 0 0 0 13 21 A1.5 2.5 0 0 0 8 21 M24 21 A1.5 2.5 0 0 0 19 21 A1.5 2.5 0 0 0 24 21 z"></path>
+      </svg>
+    </a>
+    <a class="link dim gray dib br-100 h2 w2 mr3 " href="#" title="">
+      <svg data-icon="dribbble" viewBox="0 0 32 32" style="fill:currentcolor">
+        <title>dribbble icon</title>
+        <path d="M16 0 A16 16 0 0 0 0 16 A16 16 0 0 0 16 32 A16 16 0 0 0 32 16 A16 16 0 0 0 16 0 M5 11.5 A12 12 0 0 1 11 5 A46 46 0 0 1 13.5 9.25 A46 46 0 0 1 5 11.5 M15 4 A12 12 0 0 1 21.5 5.25 A46 46 0 0 1 17 7.75 A50 50 0 0 0 15 4 M4 16 A50 50 0 0 0 15 13 A46 46 0 0 1 16 15.5 A26 26 0 0 0 6 22.5 A12 12 0 0 1 4 16 M18.5 11.5 A50 50 0 0 0 25 8 A12 12 0 0 1 28 13.75 A26 26 0 0 0 19.75 14.5 A50 50 0 0 0 18.5 11.5 M17 19.5 A46 46 0 0 1 18 28 A12 12 0 0 1 8.75 25.5 A22 22 0 0 1 17 19.5 M20.75 18.25 A22 22 0 0 1 28 17.75 A12 12 0 0 1 22 26.5 A50 50 0 0 0 20.75 18.25"></path>
+      </svg>
+    </a>
+    <div class="mt4">
+      <a href="#" class="f4 link dim gray dib mr3 mr4-ns">Careers</a>
+      <a href="#" class="f4 link dim gray dib mr3 mr4-ns">Send feedback</a>
+      <a href="#" class="f4 link dim gray dib mr3 mr4-ns">Privacy</a>
+      <a href="#" class="f4 link dim gray dib">Terms</a>
+    </div>
+
+  </footer>
+</body>
+</html>

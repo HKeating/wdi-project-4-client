@@ -2,8 +2,8 @@ angular
   .module('ProjectFour')
   .controller('MainCtrl', MainCtrl);
 
-MainCtrl.$inject = ['$rootScope', 'CurrentUserService', '$state'];
-function MainCtrl($rootScope, CurrentUserService, $state) {
+MainCtrl.$inject = ['$rootScope', 'CurrentUserService', '$state', '$scope'];
+function MainCtrl($rootScope, CurrentUserService, $state, $scope) {
   const vm = this;
 
   vm.test = 'Hello';
@@ -22,7 +22,11 @@ function MainCtrl($rootScope, CurrentUserService, $state) {
     $state.go('login');
   });
 
+
   vm.goToUserProfile = () => {
     $state.go('profile');
   };
+
+  $scope.$state = $state;
+
 }

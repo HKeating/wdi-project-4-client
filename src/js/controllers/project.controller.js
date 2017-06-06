@@ -2,36 +2,40 @@ angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
 
-ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope'];
+ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task'];
 
-function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope) {
+function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task) {
   const vm = this;
 
   vm.user = CurrentUserService.currentUser;
 
   // if (!vm.user) $state.go('fuckOff');
+  getProject();
+  // vm.getProject = getProject;
+  function getProject() {
+    Project.get({ id: $stateParams.id}).$promise.then(data => {
 
-  vm.project = Project.get({ id: $stateParams.id}).$promise.then(data => {
+      // Got the data about this project
+      vm.project = data;
+      console.log('Got the data', vm.project);
+      $rootScope.$broadcast('project ready');
+      vm.deadline = vm.project.duration; // setting up deadline
 
-    // Got the data about this project
-    vm.project = data;
-    console.log('Got the data', vm.project);
-    $rootScope.$broadcast('project ready');
-    vm.deadline = vm.project.duration; // setting up deadline
+      vm.milestones = [
+        {
+          deadline: 3,
+          title: 'MVP'
+        },
+        {
+          deadline: 5,
+          title: 'Beta'
+        }
+      ];
 
-    vm.milestones = [
-      {
-        deadline: 3,
-        title: 'MVP'
-      },
-      {
-        deadline: 5,
-        title: 'Beta'
-      }
-    ];
+      drawLine();
+    });
+  }
 
-    drawLine();
-  });
 
   // Making refernces to elements in the DOM
   $scope.$line = $('.line');
@@ -45,7 +49,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   $scope.selectedDay = vm.currentDay;
   // This function draws dots on the line
   function drawLine() {
-
+    $('.line').empty();
     console.log(`Line width is ${$scope.$line.width()}`);
     const lineWidth = $scope.$line.width();
     const distanceBetweenDots = (lineWidth / vm.deadline);
@@ -62,7 +66,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         arrayOfMilestoneIndexes.push(vm.milestones[milestone].deadline);
       }
 
-      console.log('Array of milestone indexes: ',arrayOfMilestoneIndexes);
+      // console.log('Array of milestone indexes: ',arrayOfMilestoneIndexes);
 
       if($.inArray(i-1, arrayOfMilestoneIndexes) !== -1) {
         // It is a milestone
@@ -141,5 +145,82 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     }
 
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  vm.createTask = createTask;
+  function createTask() {
+    vm.newTask.project_id = vm.project.id;
+    vm.newTask.start_day = $scope.selectedDay;
+    const taskObj = {
+      'task': vm.newTask
+    };
+    console.log('Sending task: ', taskObj);
+    Task
+    .save(taskObj)
+    .$promise
+    .then((data) => {
+      console.log('New task created: ', data);
+      $rootScope.$broadcast('Task Change');
+    });
+  }
+
+  vm.addTaskUser = addTaskUser;
+  function addTaskUser(task, userToAdd) {
+    task.user_ids = [];
+    task.users.map(user => {
+      task.user_ids.push(user.id);
+    });
+    if (task.user_ids.includes(userToAdd.id)) {
+      console.log('user already added');
+    } else {
+      task.user_ids.push(userToAdd.id);
+      updateTask(task);
+    }
+  }
+
+  vm.removeTaskUser = removeTaskUser;
+  function removeTaskUser(task, userToRemove) {
+    task.user_ids = [];
+    task.users.map(user => {
+      if (user.id !== userToRemove.id) {
+        task.user_ids.push(user.id);
+      }
+    });
+    updateTask(task);
+  }
+  vm.updateTask = updateTask;
+  function updateTask(task) {
+    console.log('new task: ', task);
+
+    // if (vm.editForm.$valid) {
+    Task
+    .update({id: task.id }, task)
+    .$promise
+    .then(data => {
+      console.log('Task updated: ', data);
+      $rootScope.$broadcast('Task Change');
+    });
+    // }
+  }
+
+  $rootScope.$on('Task Change', () => {
+    vm.newTask = {};
+    getProject();
+    // $('.lookupField').val('');
+  });
 
 }
