@@ -8,8 +8,9 @@ function ProfileCtrl($scope, Profile, $stateParams, $state, CurrentUserService, 
 
   const vm = this;
 
+  vm.user = CurrentUserService.currentUser;
   $rootScope.$on('loggedIn', () => {
-    vm.user = CurrentUserService.currentUser;
+    if(!vm.user) vm.user = CurrentUserService.currentUser;
   });
   vm.logOut = () => {
     CurrentUserService.removeUser();
