@@ -14,7 +14,7 @@
 <div class="taskPanel col-sm-6">
   <h3 id="dayLabel">Day {{ selectedDay }}</h3>
   <div class="task col-sm-6" ng-repeat="task in project.project.tasks" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day">
-      <div data-drag="true" jqyoui-draggable class="taskCard">
+      <div data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true}" class="taskCard">
         <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
         </div>
         <div class="taskContent col-sm-10">
