@@ -1,12 +1,15 @@
 .navbarAll{
+  background: #5aa1f1;
+  width: 100%;
+}
+
+.navItems{
   width: 80%;
   margin: 0 auto;
-  h1,h3{
-    color: white;
-    font-family: 'Space Mono', monospace;
-    font-weight: bold;
-  }
-  hr{
-    opacity: 0.5;
-  }
+
+}
+
+.title,.nItems{
+  color: white;
+  font-family: 'Space Mono', monospace;
 }

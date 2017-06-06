@@ -1,14 +1,14 @@
 .home-1-bg{
-  background-image: url("/images/BG.jpg");
-  background-position: center;
-  height:600px;
-  margin-top: -15%;
-  z-index: -1;
+  background: #5aa1f1;
 }
 
 .home-1-text{
-  padding-top: 17%;
-  z-index: 1;
   color: white;
   font-family: 'Space Mono', monospace;
+}
+
+.home-2-text{
+  height:300px;
+  background-color: white;
+  margin: 0 auto;
 }
