@@ -45,6 +45,12 @@ function Router($stateProvider, $locationProvider, $urlRouterProvider) {
   .state('fuckOff', {
     url: '/goaway',
     templateUrl: '/js/views/fuckoff.html'
+  })
+  .state('profile', {
+    url: '/profile',
+    templateUrl: '/js/views/profile.html',
+    controller: 'ProfileCtrl',
+    controllerAs: 'profile'
   });
 
   $urlRouterProvider.otherwise('/');

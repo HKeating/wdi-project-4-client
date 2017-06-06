@@ -42,6 +42,8 @@
         <li ng-show="main.user"><a ng-click="main.logout()" ui-sref="login" class="white f2">Logout</a></li>
 
         <li ng-show="main.user"><a ui-sref="usersIndex" class="white f2">Users</a></li>
+        <li ng-show="main.user"><img class="userThumbnail" ng-src="{{main.user.image}}" alt="main.user.image" ng-click="main.goToUserProfile()"></li>
+
       </ul>
     </div>
   </div>
