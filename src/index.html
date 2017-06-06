@@ -35,7 +35,6 @@
         <!-- <li ng-hide="main.user"><a ui-sref="register" class="white f2">Register</a></li> -->
         <li ng-hide="main.user"> <a ui-sref="login" class="white f2 nItems" >Login</a></li>
         <li ng-show="main.user"><a ui-sref="dashboard" class="white f2 nItems">Dashboard</a></li>
-        <li ng-show="main.user"><a ng-click="main.logout()" ui-sref="login" class="white f2">Logout</a></li>
         <li ng-show="main.user"><img class="userThumbnail" ng-src="{{main.user.image}}" alt="main.user.image" ng-click="main.goToUserProfile()"></li>
         <!-- <li ng-show="main.user"><a ui-sref="usersIndex" class="white f2 nItems">Users</a></li> -->
         <li ng-show="$state.includes('home')"><p class="white f2 nItems">HOME</p></li>
