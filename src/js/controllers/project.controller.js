@@ -48,7 +48,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
     console.log(`Line width is ${$scope.$line.width()}`);
     const lineWidth = $scope.$line.width();
-    const distanceBetweenDots = (lineWidth / vm.deadline) - 20;
+    const distanceBetweenDots = (lineWidth / vm.deadline);
 
     for (let i = 1; i <= vm.deadline; i++) {
 
@@ -59,9 +59,9 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       // Getting indexes of Milestones
       const arrayOfMilestoneIndexes = [];
       for (const milestone in vm.milestones) {
-        //console.log(vm.milestones[milestone]);
         arrayOfMilestoneIndexes.push(vm.milestones[milestone].deadline);
       }
+
       console.log('Array of milestone indexes: ',arrayOfMilestoneIndexes);
 
       if($.inArray(i-1, arrayOfMilestoneIndexes) !== -1) {
@@ -103,7 +103,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
         $scope.selectedDay = dayDot.attr('index');
         console.log('selectedDay: ', $scope.selectedDay);
-      
+
         $scope.$apply();
       });
 
@@ -128,7 +128,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         $(connectionLine).addClass('lineFuture');
       }
 
-      $(connectionLine).css('width', `${distanceBetweenDots}px`);
+      $(connectionLine).css('width', `${distanceBetweenDots-15}px`);
       $(connectionLine).css('height', `3px`);
       $(connectionLine).css('margin', `7px 0`);
 
