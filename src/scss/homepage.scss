@@ -1,5 +1,6 @@
 .home-1-bg{
   background: #5aa1f1;
+  height: 350px;
 }
 
 .home-1-text{
@@ -18,7 +19,7 @@
 }
 .logos > div > img {
   max-width: 60px;
-  max-height: 20px;
+  max-height: 30px;
 }
 
 .home-2-container{
@@ -37,7 +38,7 @@
   box-shadow: 0px 0px 5px 0px #888888;
 }
 
-.registerForm{
+.registerForm,.loginForm{
   clear: both;
 }
 .home-5-container{

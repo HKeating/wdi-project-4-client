@@ -1,24 +1,75 @@
-<h1>{{ register.title }}</h1>
+<div class="navbarAll">
+  <div class="navbar-toggleable-md navItems  pb2 bb b--white-30">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle f2" data-toggle="collapse" data-target=".navbar-collapse">
+        &#x1f354;
+      </button>
+      <a class="navbar-brand title f1" ui-sref="home">FckItShpIt</a>
+    </div>
+    <div class="navbar-collapse collapse ">
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-hide="main.user"><a ui-sref="pricing" class="white f2 nItems">Pricing</a></li>
 
-<form class="" ng-submit="register.register()">
+        <!-- <li ng-hide="main.user"><a ui-sref="register" class="white f2">Register</a></li> -->
 
-  <label for="username">Username</label>
-  <input type="text" name="username" value="" ng-model="register.user.username" placeholder="Username">
+        <li ng-hide="main.user"> <a ui-sref="login" class="white f2 nItems" >Login</a></li>
 
-  <label for="email">Email</label>
-  <input type="text" name="email" value="" ng-model="register.user.email" placeholder="Email">
+        <li ng-show="main.user"><a ui-sref="dashboard" class="white f2 nItems">Dashboard</a></li>
 
-  <label for="password">Password</label>
-  <input type="password" name="password" value="" ng-model="register.user.password" placeholder="Password">
+        <li ng-show="main.user"><a ng-click="main.logout()" ui-sref="login" class="white f2">Logout</a></li>
 
-  <label for="password_confirmation">Confirm Password</label>
-  <input type="password" name="password_confirmation" value="" ng-model="register.user.password_confirmation" placeholder="Confirm Password">
-
-  <input type="submit" name="" value="Register">
-
-  <div class="">
-    <p>Already have an account?</p>
-    <p><a ui-sref="login">Login</a></p>
+        <li ng-show="main.user"><a ui-sref="usersIndex" class="white f2 nItems">Users</a></li>
+      </ul>
+    </div>
   </div>
+</div>
 
-</form>
+
+
+
+
+
+
+
+
+
+
+
+<div class="home-5-container cf">
+  <div class="mw9 center ph3-ns mv5">
+    <div class="fl pa2 mv5 bb b--blue f1">
+      Register
+    </div>
+
+
+    <div class="registerForm" ng-controller="RegisterCtrl as register">
+      <form class="f2 measure center" ng-submit="register.register()">
+
+        <div class="mt3">
+          <label class="db fw6 lh-copy f3" for="username">Username</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="username"  ng-model="register.user.username" placeholder="Username">
+        </div>
+
+        <div class="mt3">
+          <label class="db fw6 lh-copy f3" for="email-address">Email</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email-address"  ng-model="register.user.email" placeholder="Email">
+        </div>
+
+        <div class="mv3">
+          <label class="db fw6 lh-copy f3" for="password">Password</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  ng-model="register.user.password" placeholder="e.g. kittenzRule">
+        </div>
+
+        <div class="mv3">
+          <label class="db fw6 lh-copy f3" for="password_confirmation">Password Confirmation</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password_confirmation"  ng-model="register.user.password_confirmation" placeholder="Confirm Password">
+        </div>
+
+        <div class="">
+          <input class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f3 dib" type="submit" value="Register">
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
