@@ -1,18 +1,67 @@
-<h1>{{ login.title }}</h1>
+<div class="navbarAll">
+  <div class="navbar-toggleable-md navItems  pb2 bb b--white-30">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle f2" data-toggle="collapse" data-target=".navbar-collapse">
+        &#x1f354;
+      </button>
+      <a class="navbar-brand title f1" ui-sref="home">FckItShpIt</a>
+    </div>
+    <div class="navbar-collapse collapse ">
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-hide="main.user"><a ui-sref="pricing" class="white f2 nItems">Pricing</a></li>
 
+        <!-- <li ng-hide="main.user"><a ui-sref="register" class="white f2">Register</a></li> -->
 
-<form class="" ng-submit="login.login()" method="post">
+        <li ng-hide="main.user"> <a ui-sref="login" class="white f2 nItems" >Login</a></li>
 
-  <label for="email">Email</label>
-  <input type="email" name="email" value="" ng-model="login.user.email" placeholder="Email">
+        <li ng-show="main.user"><a ui-sref="dashboard" class="white f2 nItems">Dashboard</a></li>
 
-  <label for="password">Password</label>
-  <input type="password" name="password" value="" ng-model="login.user.password" placeholder="Password">
+        <li ng-show="main.user"><a ng-click="main.logout()" ui-sref="login" class="white f2">Logout</a></li>
 
-  <input type="submit" name="" value="Submit">
-
-  <div class="">
-    <p>Not registered yet?</p>
-    <p>Sign up <a ui-sref="register">here</a>.</p>
+        <li ng-show="main.user"><a ui-sref="usersIndex" class="white f2 nItems">Users</a></li>
+      </ul>
+    </div>
   </div>
-</form>
+</div>
+
+
+
+
+
+
+
+
+
+
+<div class="home-5-container cf">
+  <div class="mw9 center ph3-ns mv5">
+    <div class="fl pa2 mv5 bb b--blue f1">
+      Login
+    </div>
+
+    <div class="loginForm">
+      <form class="f2 measure center" ng-submit="login.login()">
+
+        <div class="mt3">
+          <label class="db fw6 lh-copy f3" for="email-address">Email</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email-address"  ng-model="login.user.email" placeholder="Email">
+        </div>
+
+        <div class="mv3">
+          <label class="db fw6 lh-copy f3" for="password">Password</label>
+          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  ng-model="login.user.password" placeholder="e.g. kittenzRule">
+        </div>
+
+        <div class="">
+          <input class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f3 dib" type="submit" value="Submit">
+        </div>
+
+        <div class="f4 mt4">
+          <p>Not registered yet?</p>
+          <p>Sign up <a class="grow pointer input-reset dib" ui-sref="register">here</a></p>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
