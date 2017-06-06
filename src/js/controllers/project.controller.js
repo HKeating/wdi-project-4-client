@@ -2,9 +2,9 @@ angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
 
-ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task'];
+ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task', 'Milestone'];
 
-function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task) {
+function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone) {
   const vm = this;
 
   vm.user = CurrentUserService.currentUser;
@@ -214,7 +214,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $rootScope.$broadcast('Task Change');
     });
   }
-  
+
   vm.showTaskEditForm = false;
   vm.selectTaskToEdit = selectTaskToEdit;
   function selectTaskToEdit(taskId) {
@@ -233,5 +233,22 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     getProject();
     vm.taskToUpdate = Task.get({id: vm.taskToUpdate.id});
   });
+
+
+  vm.createMilestone = createMilestone;
+  function createMilestone() {
+    vm.newMilestone.project_id = vm.project.id;
+    const milestoneObj = {
+      'milestone': vm.newMilestone
+    };
+    console.log('Sending task: ', milestoneObj);
+    Milestone
+    .save(milestoneObj)
+    .$promise
+    .then((data) => {
+      console.log('New milestone created: ', data);
+      $rootScope.$broadcast('Milestone Change');
+    });
+  }
 
 }
