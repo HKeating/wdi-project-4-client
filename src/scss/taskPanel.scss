@@ -1,0 +1,18 @@
+.taskPanel {
+  background-color: #5aa1f1;
+  margin: 10px;
+
+  #dayLabel {
+    color: white;
+  }
+
+  .taskUserContainer {
+    float: right;
+  }
+  .taskUserImg {
+    border-radius: 50%;
+    height: 35px;
+    // width: 20px;
+
+  }
+}

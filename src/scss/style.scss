@@ -2,6 +2,7 @@
 
 @import "homepage";
 @import "navbar";
+@import "taskPanel";
 
 $blue:  #0074D9;
 $green: #01FF70;
@@ -9,10 +10,20 @@ $darkGreen: #2ecc40;
 $black: #111111;
 $grey: #AAAAAA;
 $red: #FF4136;
+$purple: #b10dc9;
+
+#icon {
+  display: block;
+  margin-bottom: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+
 
 .line {
   background-color: $grey;
-  margin: 0px 20px;
+  margin: 0px 10px;
 }
 
 .lineDayDot {
@@ -40,6 +51,7 @@ $red: #FF4136;
   width: 15px;
   height: 15px;
   display: inline-block;
+
 }
 
 .linePastDayDot:hover {
@@ -84,6 +96,7 @@ $red: #FF4136;
   width: 20px;
   height: 20px;
   display: inline-block;
+
 }
 
 #lineDeadlineDot:hover {
@@ -99,6 +112,7 @@ $red: #FF4136;
   width: 15px;
   height: 15px;
   display: inline-block;
+
 }
 
 #lineCurrentDot:hover {
@@ -112,10 +126,28 @@ $red: #FF4136;
   background-color: $green;
   height: 3px;
   display: inline-block;
+
 }
 
 .lineFuture {
   background-color: $black;
   height: 3px;
   display: inline-block;
+
+}
+
+.lineMilestone {
+  background-color: $purple;
+  height: 100px;
+  width: 6px;
+  display: inline-block;
+
+}
+
+.contributorDiv {
+  border-radius: 50%;
+  width: 50px;
+  display: inline;
+  //float: left;
+  margin: 0 5px;
 }
