@@ -6,28 +6,77 @@ ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUs
 
 function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone, User) {
   const vm = this;
-
+  // vm.showDropZone = false;
   // Drag and Drop call backs
-  $scope.onDrop = function(target, source){
-    console.log('**** ON DROP  ****');
-  };
+  // $scope.onDrop = function(target, source){
+  //   console.log('**** ON DROP  ****');
+  //   console.log('Target: ', target);
+  //   console.log('Source: ', source);
+  //   console.log();
+  //   // var obj = source.draggable.$scope();
+  //   // console.log('Scope: ', obj);
+  //   // var objDragItem = source.draggable.$scope().dndDragItem;
+  //   // console.log('Scope: ', objDragItem);
+  // };
   $scope.onStart = function(target, source){
     console.log('**** ON START  ****');
   };
 
   $scope.onDrag = function(target, source){
-    console.log('**** ON DRAG  ****');
-    console.log('Target: ', target);
-    console.log('Source: ', source);
+    // console.log('**** ON DRAG  ****');
+    // console.log('Target: ', target);
+    // console.log('Source: ', source);
   };
 
   $scope.onOver = function() {
     console.log('**** ON OVER ****');
+    // vm.showDropZone = true;
+    // console.log('Show drop zone? ', vm.showDropZone);
+
   };
 
   $scope.onOut = function() {
     console.log('**** ON OUT ****');
+    // vm.showDropZone = false;
+    // console.log('Show drop zone? ', vm.showDropZone);
+
   };
+
+  $scope.completeTask = completeTask;
+  function completeTask() {
+    console.log('Task completed: ', vm.draggedTask);
+    vm.draggedTask.completed = true;
+    updateTask(vm.draggedTask);
+    vm.draggedTask = {};
+  }
+  $scope.taskBlocked = taskBlocked;
+  function taskBlocked() {
+    console.log('Task blocked: ', vm.draggedTask);
+    vm.draggedTask = {};
+  }
+  $scope.giveUpTask = giveUpTask;
+  function giveUpTask() {
+    console.log('You gave up on: ', vm.draggedTask);
+    vm.draggedTask = {};
+  }
+
+  $scope.selectTask = selectTask;
+  function selectTask(a, b, task) {
+    console.log('Task: ', task);
+    vm.draggedTask = task;
+    vm.showDropZone = true;
+    console.log('Show drop zone? ', vm.showDropZone);
+    $scope.$apply();
+  }
+
+
+  $scope.hideDropZone = hideDropZone;
+  function hideDropZone() {
+    console.log('Hidedrop triggering');
+    vm.showDropZone = false;
+    $scope.$apply();
+  }
+
 
 
 
@@ -192,6 +241,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   function createTask() {
     vm.newTask.project_id = vm.project.id;
     vm.newTask.start_day = $scope.selectedDay;
+    vm.newTask.completed = false;
     const taskObj = {
       'task': vm.newTask
     };
