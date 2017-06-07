@@ -25,30 +25,28 @@
 
 <body ng-controller="MainCtrl as main">
 
-  <!-- <div class="navbarAll">
-  <div class="navbar-toggleable-md navItems  pb2 bb b--white-30">
+  <div class="navbarAll">
+  <div class="navbar-toggleable-md navItems">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle f2" data-toggle="collapse" data-target=".navbar-collapse">
         &#x1f354;
       </button>
-      <a class="navbar-brand title f1" ui-sref="home">FckItShpIt</a>
+      <a ng-show="$state.includes('dashboard')" class="navbar-brand title f1" ui-sref="home">FckItShpIt</a>
     </div>
     <div class="navbar-collapse collapse ">
       <ul class="nav navbar-nav navbar-right">
-
-        <li ng-hide="main.user"><a ui-sref="pricing" class="white f2 nItems">Pricing</a></li>
 
         <li ng-hide="main.user"> <a ui-sref="login" class="white f2 nItems" >Login</a></li>
 
         <li ng-show="main.user"><a ui-sref="dashboard" class="white f2 nItems">Dashboard</a></li>
         <li ng-show="main.user"><img class="userThumbnail" ng-src="{{main.user.image}}" alt="main.user.image" ng-click="main.goToUserProfile()"></li>
-        <li ng-show="$state.includes('home')"><p class="white f2 nItems">HOME</p></li>
+
         <li ng-show="$state.includes('dashboard')"><p class="white f2 nItems">DASHBOARD</p></li>
         <li ng-show="$state.includes('project')"><p class="white f2 nItems">PROEJCT</p></li>
       </ul>
     </div>
   </div>
-</div> -->
+</div>
 
   <main ui-view></main>
 
