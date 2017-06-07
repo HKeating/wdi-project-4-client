@@ -10,13 +10,18 @@
 <div class="line">
   <img id="icon" ng-src="/images/boat.png" alt="">
 </div>
-
+<div class="row">
 <div class="taskPanel col-sm-6">
   <h3 id="dayLabel">Day {{ selectedDay }}</h3>
   <div class="task col-sm-6" ng-repeat="task in project.project.tasks" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day">
-      <div data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true}" class="taskCard">
-        <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
-        </div>
+
+    <div class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true}">
+      <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
+      </div>
+      <!-- <div class="taskContent col-sm-10">
+        <div class="col-sm-12">
+          <p>{{task.description}}</p>
+        </div> -->
         <div class="taskContent col-sm-10">
           <div class="col-sm-12">
             <p>{{task.description}}</p>
@@ -49,14 +54,20 @@
         <div class="form-group">
           <input type="submit" name="submit" value="Add Task">
         </div>
-        <!-- <h1 ng-click="project.showTaskNewForm = true" class="col-sm-3">+</h1> -->
       </form>
 
 
     </div>
   </div>
 </div>
-<div class="col-sm-6">
+<div class="controlPanel col-sm-5">
+  <h1>ControlPanel</h1>
+</div>
+<div class="sideBar col-sm-1">
+ <h1>SideBar</h1>
+</div>
+</div>
+<div class="col-sm-6 addMilestone">
   <h3>Add Milestone</h3>
   <form ng-submit="project.createMilestone()">
     <div class="form-group">
@@ -65,7 +76,7 @@
     </div>
     <div class="form-group">
       <label for="day">Complete By Day:</label>
-      <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.day" name="day" value="">
+      <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newMilestone.day" name="day" value="">
     </div>
     <div class="form-group">
       <input type="submit" name="submit" value="Add Milestone">
@@ -73,11 +84,40 @@
     <!-- <h1 ng-click="project.showTaskNewForm = true" class="col-sm-3">+</h1> -->
   </form>
 </div>
+<div class="col-sm-6 addMilestoneTask">
+  <h3>Add Tasks To Milestone</h3>
+  <select class="" name="" ng-model="project.milestoneToUpdateId" ng-change="project.selectMilestoneToUpdate(project.milestoneToUpdateId)">
+    <option value="" disabled>Select a milestone</option>
+    <option ng-repeat="milestone in project.project.milestones" value="{{milestone.id}}">{{ milestone.title }}, day: {{ milestone.day }}</option>
+  </select>
+  <div ng-show="project.milestoneToUpdate">
+    <div class="col-sm-6">
+      <h3>{{ project.milestoneToUpdate.title }}</h3>
+      <p>Due: day {{ project.milestoneToUpdate.day}}</p>
+      <p>Tasks:</p>
+      <ul>
+        <li ng-repeat="task in project.milestoneToUpdate.tasks">
+          <ul>
+            <li><strong>{{ task.description }}</strong></li>
+            <li>Complete: {{ task.completed }}</li>
+            <li>Due: day {{ task.due_day }}</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-6">
+      <h3>Add tasks:</h3>
+        <div class="col-sm-4" ng-repeat="task in project.project.tasks" ng-if="project.milestoneToUpdate.day>=task.due_day">
+          <p>{{task.description}}</p>
+        </div>
+    </div>
+  </div>
+</div>
 
-<div class="col-sm-12">
+<div class="col-sm-12 updateTask">
 
 
-  <div id="updateTask" class="" ng-show="project.showTaskEditForm">
+  <div class="" ng-show="project.showTaskEditForm">
     <h3>{{ project.taskToUpdate.description }}</h3>
     <p>Start day: {{ project.taskToUpdate.start_day }}</p>
     <p>Due day: {{ project.taskToUpdate.due_day }}</p>

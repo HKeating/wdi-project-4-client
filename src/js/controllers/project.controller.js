@@ -2,9 +2,9 @@ angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
 
-ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task'];
+ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task', 'Milestone'];
 
-function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task) {
+function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone) {
   const vm = this;
 
   vm.user = CurrentUserService.currentUser;
@@ -22,16 +22,17 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $rootScope.$broadcast('project ready');
       vm.deadline = vm.project.duration; // setting up deadline
 
-      vm.milestones = [
-        {
-          deadline: 3,
-          title: 'MVP'
-        },
-        {
-          deadline: 5,
-          title: 'Beta'
-        }
-      ];
+      // vm.milestones = [
+      //   {
+      //     deadline: 3,
+      //     title: 'MVP'
+      //   },
+      //   {
+      //     deadline: 5,
+      //     title: 'Beta'
+      //   }
+      // ];
+      vm.milestones = data.milestones;
 
       drawLine();
     });
@@ -64,12 +65,12 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       // Getting indexes of Milestones
       const arrayOfMilestoneIndexes = [];
       for (const milestone in vm.milestones) {
-        arrayOfMilestoneIndexes.push(vm.milestones[milestone].deadline);
+        arrayOfMilestoneIndexes.push(vm.milestones[milestone].day);
       }
 
       // console.log('Array of milestone indexes: ',arrayOfMilestoneIndexes);
 
-      if($.inArray(i-1, arrayOfMilestoneIndexes) !== -1) {
+      if($.inArray(i, arrayOfMilestoneIndexes) !== -1) {
         // It is a milestone
         $(dayDot).addClass('lineMilestone');
 
@@ -235,4 +236,73 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     vm.taskToUpdate = Task.get({id: vm.taskToUpdate.id});
   });
 
+
+  vm.createMilestone = createMilestone;
+  function createMilestone() {
+    vm.newMilestone.project_id = vm.project.id;
+    const milestoneObj = {
+      'milestone': vm.newMilestone
+    };
+    console.log('Sending milestone: ', milestoneObj);
+    Milestone
+    .save(milestoneObj)
+    .$promise
+    .then((data) => {
+      console.log('New milestone created: ', data);
+      $rootScope.$broadcast('Milestone Change');
+    });
+  }
+
+  vm.selectMilestoneToUpdate = selectMilestoneToUpdate;
+  function selectMilestoneToUpdate(milestoneId) {
+    console.log('triggering on: ', milestoneId);
+    vm.milestoneToUpdate = Milestone.get({id: milestoneId});
+  }
+
+  vm.addMilestoneTask = addMilestoneTask;
+  function addMilestoneTask(milestone, taskToAdd) {
+    milestone.task_ids = [];
+    milestone.tasks.map(task => {
+      milestone.task_ids.push(task.id);
+    });
+    if (milestone.task_ids.includes(taskToAdd.id)) {
+      console.log('task already added');
+    } else {
+      milestone.task_ids.push(taskToAdd.id);
+      updateMilestone(milestone);
+    }
+  }
+
+  vm.removeMilestoneTask = removeMilestoneTask;
+  function removeMilestoneTask(milestone, taskToRemove) {
+    milestone.task_ids = [];
+    milestone.tasks.map(task => {
+      if (task.id !== taskToRemove.id) {
+        milestone.task_ids.push(task.id);
+      }
+    });
+    updateMilestone(milestone);
+  }
+  vm.updateMilestone = updateMilestone;
+  function updateMilestone(milestone) {
+    const milestoneObj = { 'milestone': milestone };
+    console.log('new milestone: ', milestone);
+    Milestone
+    .update({id: milestone.id }, milestoneObj)
+    .$promise
+    .then(data => {
+      console.log('Milestone updated: ', data);
+      $rootScope.$broadcast('Milestone Change');
+    });
+  }
+  $rootScope.$on('Milestone Change', () => {
+    vm.newMilestone = {};
+    getProject();
+    // vm.taskToUpdate = Task.get({id: vm.taskToUpdate.id});
+  });
+  // vm.taskPanel = $('.taskPanel');
+  // vm.controlPanel = $('.controlPanel');
+  // vm.sideBar = $('.sideBar');
+  // vm.sideBar.height = vm.taskPanel.height;
+  // vm.controlPanel.height = vm.taskPanel.height;
 }
