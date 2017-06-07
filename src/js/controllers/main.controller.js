@@ -11,6 +11,7 @@ function MainCtrl($rootScope, CurrentUserService, $state, $scope) {
   CurrentUserService.getUser();
 
 
+
   $rootScope.$on('loggedIn', () => {
     vm.user = CurrentUserService.currentUser;
   });
@@ -21,7 +22,6 @@ function MainCtrl($rootScope, CurrentUserService, $state, $scope) {
     vm.user = null;
     $state.go('login');
   });
-
 
   vm.goToUserProfile = () => {
     $state.go('profile');
@@ -60,6 +60,5 @@ function MainCtrl($rootScope, CurrentUserService, $state, $scope) {
     // }
 
   });
-
 
 }

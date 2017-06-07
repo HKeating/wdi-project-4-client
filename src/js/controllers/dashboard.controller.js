@@ -2,8 +2,8 @@ angular
 .module('ProjectFour')
 .controller('DashboardCtrl', DashboardCtrl);
 
-DashboardCtrl.$inject = ['CurrentUserService', '$rootScope', 'Project', 'User'];
-function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
+DashboardCtrl.$inject = ['CurrentUserService', '$rootScope', 'Project', 'User', '$state'];
+function DashboardCtrl(CurrentUserService, $rootScope, Project, User, $state) {
   const vm = this;
   vm.title = 'Dashboard page';
   vm.user = CurrentUserService.currentUser;
@@ -40,6 +40,7 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
   });
 
   vm.createProject = createProject;
+
   function createProject() {
     vm.newProject.user_id = vm.user.id;
     // vm.newProject.user_ids = [];
@@ -59,6 +60,15 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
     .then((data) => {
       console.log('New project created: ', data);
       $rootScope.$broadcast('Project Change');
+
+      $('#button').submit(function(e) {
+        e.preventDefault();
+        // Coding
+        $('#closeModal').modal('toggle'); //or  $('#IDModal').modal('hide');
+        return false;
+      });
+
+      $state.go('project', { id: data.id });
     });
   }
 
@@ -151,6 +161,14 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
     }
 
   }
+
+  $('input').submit(function(e) {
+    console.log('what the FUCK');
+    e.preventDefault();
+    // Coding
+    $('#closeModal').modal('toggle'); //or  $('#IDModal').modal('hide');
+    return false;
+  });
 
 }
 
