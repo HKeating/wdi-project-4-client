@@ -275,8 +275,17 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   vm.selectMilestoneToUpdate = selectMilestoneToUpdate;
   function selectMilestoneToUpdate(milestoneId) {
-    console.log('triggering on: ', milestoneId);
-    vm.milestoneToUpdate = Milestone.get({id: milestoneId});
+    Milestone.get({id: milestoneId})
+    .$promise
+    .then(data => {
+      vm.milestoneToUpdate = data;
+      vm.milestoneToUpdate.availableTasks = [];
+      vm.project.tasks.map(task => {
+        if ((vm.milestoneToUpdate.day>=task.due_day) && !(vm.milestoneToUpdate.tasks.find(x => x.id === task.id))) {
+          vm.milestoneToUpdate.availableTasks.push(task);
+        }
+      });
+    });
   }
 
   vm.addMilestoneTask = addMilestoneTask;
@@ -293,6 +302,11 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     }
   }
 
+  vm.checkTask = checkTask;
+  function checkTask(milestone, task) {
+    milestone.tasks.find(x => x.id === task.id);
+  }
+
   vm.removeMilestoneTask = removeMilestoneTask;
   function removeMilestoneTask(milestone, taskToRemove) {
     milestone.task_ids = [];
@@ -303,6 +317,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     });
     updateMilestone(milestone);
   }
+
   vm.updateMilestone = updateMilestone;
   function updateMilestone(milestone) {
     const milestoneObj = { 'milestone': milestone };
@@ -315,10 +330,11 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $rootScope.$broadcast('Milestone Change');
     });
   }
+
   $rootScope.$on('Milestone Change', () => {
     vm.newMilestone = {};
     getProject();
-    // vm.taskToUpdate = Task.get({id: vm.taskToUpdate.id});
+    selectMilestoneToUpdate(vm.milestoneToUpdate.id);
   });
   // vm.taskPanel = $('.taskPanel');
   // vm.controlPanel = $('.controlPanel');

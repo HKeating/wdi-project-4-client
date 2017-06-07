@@ -96,21 +96,28 @@
       <p>Due: day {{ project.milestoneToUpdate.day}}</p>
       <p>Tasks:</p>
       <ul>
-        <li ng-repeat="task in project.milestoneToUpdate.tasks">
+        <li class="" ng-repeat="task in project.milestoneToUpdate.tasks">
           <ul>
             <li><strong>{{ task.description }}</strong></li>
             <li>Complete: {{ task.completed }}</li>
             <li>Due: day {{ task.due_day }}</li>
+            <li><button type="button" ng-click="project.removeMilestoneTask(project.milestoneToUpdate, task)">Remove</button></li>
           </ul>
         </li>
       </ul>
     </div>
     <div class="col-sm-6">
       <h3>Add tasks:</h3>
-        <div class="col-sm-4" ng-repeat="task in project.project.tasks" ng-if="project.milestoneToUpdate.day>=task.due_day">
-          <p>{{task.description}}</p>
+        <div class="col-sm-4" ng-repeat="task in project.milestoneToUpdate.availableTasks"  ng-click="project.addMilestoneTask(project.milestoneToUpdate, task)">
+          <p><strong>{{task.description}}</strong></p>
         </div>
     </div>
+    <!-- <div class="col-sm-6">
+      <h3>Add tasks:</h3>
+        <div class="col-sm-4" ng-repeat="task in project.project.tasks" ng-if="project.milestoneToUpdate.day>=task.due_day && !project.checkTask(project.milestoneToUpdate, task)" ng-click="project.addMilestoneTask(project.milestoneToUpdate, task)">
+          <p><strong>{{task.description}}</strong></p>
+        </div>
+    </div> -->
   </div>
 </div>
 

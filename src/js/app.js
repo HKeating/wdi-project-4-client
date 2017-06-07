@@ -3,6 +3,5 @@ angular
   'ui.router',
   'ngResource',
   'angular-jwt',
-  'gridster',
   'ngDragDrop'
 ]);
