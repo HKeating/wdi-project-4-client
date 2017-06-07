@@ -52,11 +52,14 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   $scope.taskBlocked = taskBlocked;
   function taskBlocked() {
     console.log('Task blocked: ', vm.draggedTask);
+    vm.draggedTask.blocked = true;
+    updateTask(vm.draggedTask);
     vm.draggedTask = {};
   }
   $scope.giveUpTask = giveUpTask;
   function giveUpTask() {
     console.log('You gave up on: ', vm.draggedTask);
+    deleteTask(vm.draggedTask);
     vm.draggedTask = {};
   }
 
@@ -242,6 +245,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     vm.newTask.project_id = vm.project.id;
     vm.newTask.start_day = $scope.selectedDay;
     vm.newTask.completed = false;
+    vm.newTask.blocked = false;
     const taskObj = {
       'task': vm.newTask
     };
@@ -292,6 +296,17 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     });
   }
 
+  vm.deleteTask = deleteTask;
+  function deleteTask(task) {
+    Task
+    .remove({ id: task.id })
+    .$promise
+    .then(() => {
+      console.log('Task successfully destroyed');
+      $rootScope.$broadcast('Task Change');
+    });
+  }
+
   vm.showTaskEditForm = false;
   vm.selectTaskToEdit = selectTaskToEdit;
   function selectTaskToEdit(taskId) {
@@ -308,7 +323,9 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   $rootScope.$on('Task Change', () => {
     vm.newTask = {};
     getProject();
-    vm.taskToUpdate = Task.get({id: vm.taskToUpdate.id});
+    if(vm.taskToUpdate) {
+      vm.taskToUpdate = Task.get({id: vm.taskToUpdate.id});
+    }
   });
 
 
