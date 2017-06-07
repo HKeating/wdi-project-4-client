@@ -2,15 +2,36 @@ angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
 
-ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task'];
+ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task', 'Milestone', 'User'];
 
-function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task) {
+function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone, User) {
   const vm = this;
+
+  // Drag and Drop call backs
+  $scope.onDrop = function(target, source){
+    console.log('**** ON DROP  ****');
+  };
+  $scope.onStart = function(target, source){
+    console.log('**** ON START  ****');
+  };
+
+  $scope.onDrag = function(target, source){
+    console.log('**** ON DRAG  ****');
+  };
+
+  $scope.onOver = function() {
+    console.log('**** ON OVER ****');
+  };
+
+  $scope.onOut = function() {
+    console.log('**** ON OUT ****');
+  };
 
   vm.user = CurrentUserService.currentUser;
 
   // if (!vm.user) $state.go('fuckOff');
   getProject();
+
   // vm.getProject = getProject;
   function getProject() {
     Project.get({ id: $stateParams.id}).$promise.then(data => {
@@ -21,16 +42,17 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $rootScope.$broadcast('project ready');
       vm.deadline = vm.project.duration; // setting up deadline
 
-      vm.milestones = [
-        {
-          deadline: 3,
-          title: 'MVP'
-        },
-        {
-          deadline: 5,
-          title: 'Beta'
-        }
-      ];
+      // vm.milestones = [
+      //   {
+      //     deadline: 3,
+      //     title: 'MVP'
+      //   },
+      //   {
+      //     deadline: 5,
+      //     title: 'Beta'
+      //   }
+      // ];
+      vm.milestones = data.milestones;
 
       drawLine();
     });
@@ -63,12 +85,12 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       // Getting indexes of Milestones
       const arrayOfMilestoneIndexes = [];
       for (const milestone in vm.milestones) {
-        arrayOfMilestoneIndexes.push(vm.milestones[milestone].deadline);
+        arrayOfMilestoneIndexes.push(vm.milestones[milestone].day);
       }
 
       // console.log('Array of milestone indexes: ',arrayOfMilestoneIndexes);
 
-      if($.inArray(i-1, arrayOfMilestoneIndexes) !== -1) {
+      if($.inArray(i, arrayOfMilestoneIndexes) !== -1) {
         // It is a milestone
         $(dayDot).addClass('lineMilestone');
 
@@ -204,23 +226,164 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   }
   vm.updateTask = updateTask;
   function updateTask(task) {
+    const taskObj = { 'task': task };
     console.log('new task: ', task);
-
-    // if (vm.editForm.$valid) {
     Task
-    .update({id: task.id }, task)
+    .update({id: task.id }, taskObj)
     .$promise
     .then(data => {
       console.log('Task updated: ', data);
       $rootScope.$broadcast('Task Change');
     });
-    // }
+  }
+
+  vm.showTaskEditForm = false;
+  vm.selectTaskToEdit = selectTaskToEdit;
+  function selectTaskToEdit(taskId) {
+    vm.showTaskEditForm = true;
+    vm.taskToUpdate = Task.get({id: taskId});
+  }
+
+  vm.hideTaskEditForm = hideTaskEditForm;
+  function hideTaskEditForm() {
+    vm.showTaskEditForm = false;
+    vm.taskToUpdate = {};
   }
 
   $rootScope.$on('Task Change', () => {
     vm.newTask = {};
     getProject();
-    // $('.lookupField').val('');
+    vm.taskToUpdate = Task.get({id: vm.taskToUpdate.id});
   });
 
+
+  vm.createMilestone = createMilestone;
+  function createMilestone() {
+    vm.newMilestone.project_id = vm.project.id;
+    const milestoneObj = {
+      'milestone': vm.newMilestone
+    };
+    console.log('Sending milestone: ', milestoneObj);
+    Milestone
+    .save(milestoneObj)
+    .$promise
+    .then((data) => {
+      console.log('New milestone created: ', data);
+      $rootScope.$broadcast('Milestone Change');
+    });
+  }
+
+  vm.selectMilestoneToUpdate = selectMilestoneToUpdate;
+  function selectMilestoneToUpdate(milestoneId) {
+    Milestone.get({id: milestoneId})
+    .$promise
+    .then(data => {
+      vm.milestoneToUpdate = data;
+      vm.milestoneToUpdate.availableTasks = [];
+      vm.project.tasks.map(task => {
+        if ((vm.milestoneToUpdate.day>=task.due_day) && !(vm.milestoneToUpdate.tasks.find(x => x.id === task.id))) {
+          vm.milestoneToUpdate.availableTasks.push(task);
+        }
+      });
+    });
+  }
+
+  vm.addMilestoneTask = addMilestoneTask;
+  function addMilestoneTask(milestone, taskToAdd) {
+    milestone.task_ids = [];
+    milestone.tasks.map(task => {
+      milestone.task_ids.push(task.id);
+    });
+    if (milestone.task_ids.includes(taskToAdd.id)) {
+      console.log('task already added');
+    } else {
+      milestone.task_ids.push(taskToAdd.id);
+      updateMilestone(milestone);
+    }
+  }
+
+  vm.checkTask = checkTask;
+  function checkTask(milestone, task) {
+    milestone.tasks.find(x => x.id === task.id);
+  }
+
+  vm.removeMilestoneTask = removeMilestoneTask;
+  function removeMilestoneTask(milestone, taskToRemove) {
+    milestone.task_ids = [];
+    milestone.tasks.map(task => {
+      if (task.id !== taskToRemove.id) {
+        milestone.task_ids.push(task.id);
+      }
+    });
+    updateMilestone(milestone);
+  }
+
+  vm.updateMilestone = updateMilestone;
+  function updateMilestone(milestone) {
+    const milestoneObj = { 'milestone': milestone };
+    console.log('new milestone: ', milestone);
+    Milestone
+    .update({id: milestone.id }, milestoneObj)
+    .$promise
+    .then(data => {
+      console.log('Milestone updated: ', data);
+      $rootScope.$broadcast('Milestone Change');
+    });
+  }
+
+  $rootScope.$on('Milestone Change', () => {
+    vm.newMilestone = {};
+    getProject();
+    selectMilestoneToUpdate(vm.milestoneToUpdate.id);
+  });
+
+  vm.allUsers = User.query();
+
+  vm.removeCollaborator = removeCollaborator;
+  function removeCollaborator(userToRemove) {
+    vm.project.user_ids = [];
+    vm.project.users.map(user => {
+      vm.project.user_ids.push(user.id);
+    });
+    if (vm.project.user_ids.length === 1) {
+      return console.log('There must be at least one collaborator');
+    } else {
+      vm.project.user_ids.splice(vm.project.user_ids.indexOf(userToRemove.id), 1);
+      updateProject(vm.project);
+    }
+
+  }
+
+  vm.addCollaborator = addCollaborator;
+  function addCollaborator(userToAdd) {
+    vm.project.user_ids = [];
+    vm.project.users.map(user => {
+      vm.project.user_ids.push(user.id);
+    });
+    if (!vm.project.user_ids.includes(userToAdd.id)) {
+      vm.project.user_ids.push(userToAdd.id);
+      updateProject(vm.project);
+    } else {
+      console.log('User already on project');
+    }
+  }
+
+  vm.updateProject = updateProject;
+  function updateProject(project) {
+    console.log('Project to send to back end: ', project);
+    // if (vm.editForm.$valid) {
+    const projectObj = { 'project': project };
+    Project
+    .update({id: project.id }, projectObj)
+    .$promise
+    .then(() => {
+      $rootScope.$broadcast('Project Change');
+      vm.showEditForm = false;
+    });
+    // }
+  }
+
+  $rootScope.$on('Project Change', () => {
+    getProject();
+  });
 }

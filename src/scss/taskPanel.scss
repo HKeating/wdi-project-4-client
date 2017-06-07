@@ -1,6 +1,6 @@
 .taskPanel {
   background-color: #5aa1f1;
-  margin: 10px;
+  margin-top: 10px;
 
   #dayLabel {
     // margin-left: 15px;
@@ -23,7 +23,9 @@
     margin-bottom: 5px;
     height: 100px;
     overflow: hidden;
-
+  }
+  .addTaskButton {
+    text-align: center;
   }
   .taskColorTag {
     background: orange;
@@ -42,4 +44,13 @@
   }
 }
 
-//  HI MAX THIS IS SOME STUFF
+.updateTask {
+  background: #5555ff;
+}
+
+.addMilestone {
+  background: #ff5555;
+}
+.addMilestoneTask {
+  background: #55ff55;
+}
