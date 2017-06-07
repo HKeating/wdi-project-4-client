@@ -70,20 +70,73 @@
     </div>
   </div>
 </div>
+
 <div class="controlPanel col-sm-5">
+  <div class="dropZone" ng-show="project.showDropZone">
+    <div class="completedBox row" ng-model="done" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'completeTask', onOver:'onOver', onOut:'onOut'}">
+      <h2>DONE</h2>
+    </div>
 
-  <div ng-show="project.showDropZone" class="completedBox row" ng-model="done" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'completeTask', onOver:'onOver', onOut:'onOut'}">
-    <h2>DONE</h2>
+    <div class="blockedBox row" ng-model="block" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'taskBlocked', onOver:'onOver', onOut:'onOut'}">
+      <h2>BLOCKED</h2>
+    </div>
+
+    <div class="giveUpBox row" ng-model="destroy" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'giveUpTask', onOver:'onOver', onOut:'onOut'}">
+      <h2>DESTROY</h2>
+    </div>
+  </div>
+  <div class="blockedAndCompleted" ng-show="project.showMeWhatHellLooksLike">
+    <div class="completed taskPanel row" >
+      <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.completed === true">
+
+        <div class="taskCard">
+          <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
+          </div>
+          <div class="taskContent col-sm-10">
+            <div class="col-sm-12">
+              <p>{{task.description}}</p>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 taskTags">
+                <p>Some tags</p>
+              </div>
+              <div class="col-sm-6 taskUserContainer">
+                <div ng-repeat="user in task.users" class="col-sm-3">
+                  <img class="taskUserImg" ng-src="{{ user.image }}" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="blocked taskPanel row">
+      <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.blocked === true">
+
+        <div class="taskCard">
+          <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
+          </div>
+          <div class="taskContent col-sm-10">
+            <div class="col-sm-12">
+              <p>{{task.description}}</p>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 taskTags">
+                <p>Some tags</p>
+              </div>
+              <div class="col-sm-6 taskUserContainer">
+                <div ng-repeat="user in task.users" class="col-sm-3">
+                  <img class="taskUserImg" ng-src="{{ user.image }}" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div ng-show="project.showDropZone" class="blockedBox row" ng-model="block" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'taskBlocked', onOver:'onOver', onOut:'onOut'}">
-    <h2>BLOCKED</h2>
-  </div>
-
-  <div ng-show="project.showDropZone" class="giveUpBox row" ng-model="destroy" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'giveUpTask', onOver:'onOver', onOut:'onOut'}">
-    <h2>DESTROY</h2>
-  </div>
-
+</div>
   <div class="sideBar col-sm-1">
     <h1>SideBar</h1>
   </div>

@@ -2,8 +2,14 @@
   margin-top: 10px;
   background: #a0a0a0;
   height: 450px;
-  text-align: center;
-  color: white;
+  .completed {
+    height: 225px;
+    background: green;
+  }
+  .blocked {
+    height: 225px;
+    background: red;
+  }
 
 
   .completedBox {
@@ -11,6 +17,8 @@
     height: 150px;
     position: relative;
     h2 {
+      text-align: center;
+      color: white;
       position: absolute;
       top: 40%;
       left: 50%;
@@ -22,6 +30,8 @@
     height: 150px;
     position: relative;
     h2 {
+      text-align: center;
+      color: white;
       position: absolute;
       top: 40%;
       left: 50%;
@@ -33,6 +43,8 @@
     height: 150px;
     position: relative;
     h2 {
+      text-align: center;
+      color: white;
       position: absolute;
       top: 40%;
       left: 50%;
