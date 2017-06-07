@@ -2,8 +2,8 @@ angular
 .module('ProjectFour')
 .controller('DashboardCtrl', DashboardCtrl);
 
-DashboardCtrl.$inject = ['CurrentUserService', '$rootScope', 'Project', 'User', '$state'];
-function DashboardCtrl(CurrentUserService, $rootScope, Project, User, $state) {
+DashboardCtrl.$inject = ['CurrentUserService', '$rootScope', 'Project', 'User', '$state', '$scope'];
+function DashboardCtrl(CurrentUserService, $rootScope, Project, User, $state, $scope) {
   const vm = this;
   vm.title = 'Dashboard page';
   vm.user = CurrentUserService.currentUser;
@@ -61,13 +61,9 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User, $state) {
       console.log('New project created: ', data);
       $rootScope.$broadcast('Project Change');
 
-      $('#button').submit(function(e) {
-        e.preventDefault();
-        // Coding
-        $('#closeModal').modal('toggle'); //or  $('#IDModal').modal('hide');
-        return false;
-      });
-
+      $scope.$theModal = $('#myModal');
+      $scope.$theModal.modal('toggle');
+      //$('#closeModal').modal('toggle'); //or  $('#IDModal').modal('hide');
       $state.go('project', { id: data.id });
     });
   }
