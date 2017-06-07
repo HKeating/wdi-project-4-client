@@ -14,6 +14,16 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
   $rootScope.$on('loggedIn', () => {
     vm.user = CurrentUserService.currentUser;
     vm.projects = vm.user.projects;
+    Project.query()
+    .$promise
+    .then(data => {
+      data.map(project => {
+        if ((!vm.projects.find(x => x.id === project.id)) && (project.users.find(x => x.id === vm.user.id))) {
+          vm.projects.push(project);
+        }
+
+      });
+    });
   });
 
   // $rootScope is like a global event listener/trigger across the whole app.

@@ -5,6 +5,16 @@
 
 <div class="" ng-repeat="user in project.project.users">
   <img class="contributorDiv" ng-src="{{ user.image }}" alt="{{ user.username }}">
+  <button type="button" name="button" ng-click="project.removeCollaborator(user)">Remove</button>
+</div>
+<div class="">
+  <form>
+    <input type="text" ng-model="project.collaboratorSearch" name="" value="">
+    <div class="" ng-repeat="user in project.allUsers | filter: { email: project.collaboratorSearch}">
+      <p>{{ user.username }}</p>
+      <button type="button" ng-click="project.addCollaborator(user)">Add user</button>
+    </div>
+  </form>
 </div>
 
 <div class="line">

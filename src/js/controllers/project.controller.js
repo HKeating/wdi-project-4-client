@@ -2,9 +2,9 @@ angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
 
-ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task', 'Milestone'];
+ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task', 'Milestone', 'User'];
 
-function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone) {
+function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone, User) {
   const vm = this;
 
   // Drag and Drop call backs
@@ -336,9 +336,54 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     getProject();
     selectMilestoneToUpdate(vm.milestoneToUpdate.id);
   });
-  // vm.taskPanel = $('.taskPanel');
-  // vm.controlPanel = $('.controlPanel');
-  // vm.sideBar = $('.sideBar');
-  // vm.sideBar.height = vm.taskPanel.height;
-  // vm.controlPanel.height = vm.taskPanel.height;
+
+  vm.allUsers = User.query();
+
+  vm.removeCollaborator = removeCollaborator;
+  function removeCollaborator(userToRemove) {
+    vm.project.user_ids = [];
+    vm.project.users.map(user => {
+      vm.project.user_ids.push(user.id);
+    });
+    if (vm.project.user_ids.length === 1) {
+      return console.log('There must be at least one collaborator');
+    } else {
+      vm.project.user_ids.splice(vm.project.user_ids.indexOf(userToRemove.id), 1);
+      updateProject(vm.project);
+    }
+
+  }
+
+  vm.addCollaborator = addCollaborator;
+  function addCollaborator(userToAdd) {
+    vm.project.user_ids = [];
+    vm.project.users.map(user => {
+      vm.project.user_ids.push(user.id);
+    });
+    if (!vm.project.user_ids.includes(userToAdd.id)) {
+      vm.project.user_ids.push(userToAdd.id);
+      updateProject(vm.project);
+    } else {
+      console.log('User already on project');
+    }
+  }
+
+  vm.updateProject = updateProject;
+  function updateProject(project) {
+    console.log('Project to send to back end: ', project);
+    // if (vm.editForm.$valid) {
+    const projectObj = { 'project': project };
+    Project
+    .update({id: project.id }, projectObj)
+    .$promise
+    .then(() => {
+      $rootScope.$broadcast('Project Change');
+      vm.showEditForm = false;
+    });
+    // }
+  }
+
+  $rootScope.$on('Project Change', () => {
+    getProject();
+  });
 }
