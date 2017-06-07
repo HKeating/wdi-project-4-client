@@ -7,6 +7,26 @@ ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUs
 function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone) {
   const vm = this;
 
+  // Drag and Drop call backs
+  $scope.onDrop = function(target, source){
+    console.log('**** ON DROP  ****');
+  };
+  $scope.onStart = function(target, source){
+    console.log('**** ON START  ****');
+  };
+
+  $scope.onDrag = function(target, source){
+    console.log('**** ON DRAG  ****');
+  };
+
+  $scope.onOver = function() {
+    console.log('**** ON OVER ****');
+  };
+
+  $scope.onOut = function() {
+    console.log('**** ON OUT ****');
+  };
+
   vm.user = CurrentUserService.currentUser;
 
   // if (!vm.user) $state.go('fuckOff');
