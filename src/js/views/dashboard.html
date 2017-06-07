@@ -14,9 +14,23 @@
   <button ng-click="dashboard.selectToEdit(project.id)" type="button" name="button">Edit Project</button>
   <button type="button" ng-click="dashboard.deleteProject(project)" name="button">Delete Project</button>
 </div>
+<h2>Collab Projects:</h2>
+<div class="" ng-repeat="project in dashboard.collabProjects track by $index">
+  <h3><a ui-sref="project({ id: project.id })">{{ project.title }}</a></h3>
+  <!-- <p>Duration: {{ project.duration }} days</p> -->
+  <!-- <p>Milestones: {{ project.milestones.length }}</p>
+  <p>Tasks: {{ project.tasks.length }}</p>
+  <p>Started: {{ project.start_date }}</p>
+  <p>Ends: {{ project.end_date }}</p> -->
+  <p>Days left: {{ dashboard.daysLeft(project.end_date) }}</p>
+  <img ng-src="{{ project.image }}" alt="">
+  <button ng-click="dashboard.selectToEdit(project.id)" type="button" name="button">Edit Project</button>
+  <button type="button" ng-click="dashboard.deleteProject(project)" name="button">Delete Project</button>
+</div>
 
 
 <div class="">
+  <h2>Add Project</h2>
   <form ng-submit="dashboard.createProject()" id="projectForm" name="dashboard.projectForm">
     <div class="form-group">
       <label for="title">Title</label>
