@@ -1,3 +1,22 @@
+/*
+1) Horace CREATED A *project name* PROJECT
+2) Horace ADDED *username* AS A CONTRIBUTOR
+3) Horace RENAMED THE PROJECT TO *project name*
+4) Horace ADDED *task name* as a task from *day* untill *day*
+5) Horace ASSIGNED *username* to task *task name*
+6) Horace CREATED A *milestone name* due *day*
+7) Horace ADDED *task name* to *milestone name*
+8) Horace REMOVED *task name* from *milestone name*
+9) Horace REMOVED *milestone name*
+10) Horace REMOVED *username* AS A CONTRIBUTOR
+11) Horace MARKED *task name* AS COMPLETED
+12) Horace MARKED *task name* AS BUGGED
+13) Horace GAVE UP ON *task name*
+14) MILESTONE *milestone name* WAS COMPLETED
+15) MILESTONE *milestone name* DEADLINE MISSED, *number* TASKS NOT COMPLETED
+16) DAY *currentDay* BEGAN
+
+*/
 angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
@@ -62,6 +81,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   // Making refernces to elements in the DOM
   $scope.$line = $('.line');
   $scope.$dayLabel = $('#dayLabel');
+  // console.log('The line is ', $scope.$dayLabel);
 
   // $rootScope.$on('project ready', () => {
   //   console.log('tasks: ', vm.project.tasks);
