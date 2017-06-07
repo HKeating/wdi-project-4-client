@@ -5,9 +5,9 @@
 
 <div class="" ng-repeat="user in project.project.users">
   <img class="contributorDiv" ng-src="{{ user.image }}" alt="{{ user.username }}">
-  <button type="button" name="button" ng-click="project.removeCollaborator(user)">Remove</button>
+  <button ng-if="project.userIsAdmin" type="button" name="button" ng-click="project.removeCollaborator(user)">Remove</button>
 </div>
-<div class="">
+<div class="" ng-if="project.userIsAdmin">
   <form>
     <input type="text" ng-model="project.collaboratorSearch" name="" value="">
     <div class="" ng-repeat="user in project.allUsers | filter: { email: project.collaboratorSearch}">
@@ -23,7 +23,7 @@
 <div class="row">
 <div class="taskPanel col-sm-6">
   <h3 id="dayLabel">Day {{ selectedDay }}</h3>
-  <div class="task col-sm-6" ng-repeat="task in project.project.tasks" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day">
+  <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day">
 
     <div class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true, onStart:'onStart', onDrag:'onDrag'}">
       <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">

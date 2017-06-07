@@ -17,6 +17,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   $scope.onDrag = function(target, source){
     console.log('**** ON DRAG  ****');
+    console.log('Target: ', target);
+    console.log('Source: ', source);
   };
 
   $scope.onOver = function() {
@@ -27,7 +29,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     console.log('**** ON OUT ****');
   };
 
-  vm.user = CurrentUserService.currentUser;
+
 
   // if (!vm.user) $state.go('fuckOff');
   getProject();
@@ -38,10 +40,13 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
       // Got the data about this project
       vm.project = data;
+      vm.user = CurrentUserService.currentUser;
       console.log('Got the data', vm.project);
       $rootScope.$broadcast('project ready');
       vm.deadline = vm.project.duration; // setting up deadline
-
+      if (vm.project.user.id === vm.user.id) {
+        vm.userIsAdmin = true;
+      }
       // vm.milestones = [
       //   {
       //     deadline: 3,
@@ -386,4 +391,5 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   $rootScope.$on('Project Change', () => {
     getProject();
   });
+
 }
