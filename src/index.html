@@ -21,8 +21,11 @@
   <link rel="stylesheet" href="https://unpkg.com/tachyons@4.7.0/css/tachyons.min.css"/>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
+
 <body ng-controller="MainCtrl as main">
-  <div class="navbarAll">
+
+  <!-- <div class="navbarAll">
   <div class="navbar-toggleable-md navItems  pb2 bb b--white-30">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle f2" data-toggle="collapse" data-target=".navbar-collapse">
@@ -32,19 +35,20 @@
     </div>
     <div class="navbar-collapse collapse ">
       <ul class="nav navbar-nav navbar-right">
+
         <li ng-hide="main.user"><a ui-sref="pricing" class="white f2 nItems">Pricing</a></li>
-        <!-- <li ng-hide="main.user"><a ui-sref="register" class="white f2">Register</a></li> -->
+
         <li ng-hide="main.user"> <a ui-sref="login" class="white f2 nItems" >Login</a></li>
+
         <li ng-show="main.user"><a ui-sref="dashboard" class="white f2 nItems">Dashboard</a></li>
         <li ng-show="main.user"><img class="userThumbnail" ng-src="{{main.user.image}}" alt="main.user.image" ng-click="main.goToUserProfile()"></li>
-        <!-- <li ng-show="main.user"><a ui-sref="usersIndex" class="white f2 nItems">Users</a></li> -->
         <li ng-show="$state.includes('home')"><p class="white f2 nItems">HOME</p></li>
         <li ng-show="$state.includes('dashboard')"><p class="white f2 nItems">DASHBOARD</p></li>
         <li ng-show="$state.includes('project')"><p class="white f2 nItems">PROEJCT</p></li>
       </ul>
     </div>
   </div>
-</div>
+</div> -->
 
   <main ui-view></main>
 
