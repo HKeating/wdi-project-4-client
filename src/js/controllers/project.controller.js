@@ -104,18 +104,10 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       if (vm.project.user.id === vm.user.id) {
         vm.userIsAdmin = true;
       }
-      // vm.milestones = [
-      //   {
-      //     deadline: 3,
-      //     title: 'MVP'
-      //   },
-      //   {
-      //     deadline: 5,
-      //     title: 'Beta'
-      //   }
-      // ];
       vm.milestones = data.milestones;
+      vm.projectLogs = data.logs;
 
+      console.log('LOGS: ',vm.projectLogs);
       drawLine();
     });
   }
@@ -505,7 +497,14 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
 
 
-
+  vm.convertDate = convertDate;
+  function convertDate(date) {
+    const parsedDate = new Date(date);
+    console.log('parsedDate: ', parsedDate);
+    console.log('UTC time: ', parsedDate.toUTCString());
+    const displayDate = parsedDate.toLocaleDateString() + ' ' + parsedDate.toLocaleTimeString();
+    return displayDate;
+  }
 
 
 
