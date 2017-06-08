@@ -1,5 +1,54 @@
 .controlPanel {
   margin-top: 10px;
   background: #a0a0a0;
-  width: 200px;
+  height: 450px;
+  .completed {
+    height: 225px;
+    background: green;
+  }
+  .blocked {
+    height: 225px;
+    background: red;
+  }
+
+
+  .completedBox {
+    background: #33ff99;
+    height: 150px;
+    position: relative;
+    h2 {
+      text-align: center;
+      color: white;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .blockedBox {
+    background: #ff3399;
+    height: 150px;
+    position: relative;
+    h2 {
+      text-align: center;
+      color: white;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .giveUpBox {
+    background: orange;
+    height: 150px;
+    position: relative;
+    h2 {
+      text-align: center;
+      color: white;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
 }

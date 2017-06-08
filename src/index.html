@@ -25,23 +25,43 @@
 
 <body ng-controller="MainCtrl as main">
 
+  <header ng-show="$state.includes('dashboard')" class="bg-black-90 fixed w-100 ph3 pv3 pv4-ns ph4-m ph5-l tc">
+    <nav class="f6 fw6 ttu tracked">
+      <a class="link dim white dib" href="#" title="Home">Home</a>
+      <a class="link dim white dib" href="#" title="About">About</a>
+      <a class="link dim white dib" href="#" title="Store">Store</a>
+      <a class="link dim white dib" href="#" title="Contact">Contact</a>
+    </nav>
+  </header>
   <div class="navbarAll">
     <div class="navbar-toggleable-md navItems">
       <div class="navbar-header">
-        <button type="button" class="navbar-toggle f2" data-toggle="collapse" data-target=".navbar-collapse">
-          &#x1f354;
-        </button>
+        <button type="button" class="navbar-toggle f2" data-toggle="collapse" data-target=".navbar-collapse">&#x1f354;</button>
         <a ng-show="$state.includes('dashboard')" class="navbar-brand title f1" ui-sref="home">FckItShpIt</a>
       </div>
       <div class="navbar-collapse collapse ">
         <ul class="nav navbar-nav navbar-right">
-          <li><button  ng-show="$state.includes('dashboard')"type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">+</button></li>
 
+          <button ng-show="$state.includes('dashboard')" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">+</button>
+            
           <li ng-hide="main.user"> <a ui-sref="login" class="white f2 nItems" >Login</a></li>
 
-          <li ng-show="main.user"><a ui-sref="dashboard" class="white f2 nItems">Dashboard</a></li>
-          <li ng-show="main.user"><img class="userThumbnail" ng-src="{{main.user.image}}" alt="main.user.image" ng-click="main.goToUserProfile()"></li>
-
+          <li ng-show="main.user" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <img class="userThumbnail" ng-src="{{main.user.image}}" alt="main.user.image">
+              <i class="fa fa-caret-down"></i>
+            </a>
+            <ul ng-controller="ProfileCtrl as profile" class="dropdown-menu dropdown-user">
+              <li ng-controller="DashboardCtrl as dashboard" class="tc">
+                Wasson: <span class="capitalize">{{ dashboard.user.username }}</span>
+              </li>
+              <li><a ng-click="main.goToUserProfile()"><i class="fa fa-user fa-fw"></i> User Profile</a>
+              </li>
+              <li><a ui-sref="dashboard"><i class="fa fa-gear fa-fw"></i> Dashboard</a></li>
+              <li class="divider"></li>
+              <li><a ng-click="profile.logOut()"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+            </ul>
+          </li>
         </ul>
       </div>
     </div>

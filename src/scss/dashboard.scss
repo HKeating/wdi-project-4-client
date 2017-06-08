@@ -1,4 +1,14 @@
 .dashboard-container{
-  height: 700px;
+  background-color: #cccccc;
   padding-top: 100px;
+}
+.capitalize{
+  text-transform: capitalize;
+  font-weight: bold;
+}
+.yourProjects{
+  clear: both;
+}
+.projectCard{
+  margin-right: 50px;
 }

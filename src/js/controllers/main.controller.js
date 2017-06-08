@@ -47,6 +47,7 @@ function MainCtrl($rootScope, CurrentUserService, $state, $scope) {
   // console.log('SQUARE 2!!!!!', movingShip);
 
   // update position of square 1 and square 2 when scroll event fires.
+
   window.addEventListener('scroll', function() {
     var scrollTop = window.pageYOffset || window.scrollTop;
     var scrollPercent = scrollTop/scrollArea || 0;
