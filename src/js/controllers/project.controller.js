@@ -94,6 +94,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   function completeTask() {
     console.log('Task completed: ', vm.draggedTask);
     vm.draggedTask.completed = true;
+    $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'marked', model1: 'task', preposition: 'as', condition: 'completed'}, vm.draggedTask);
     updateTask(vm.draggedTask);
     vm.draggedTask = {};
   }
@@ -102,6 +103,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   function taskBlocked() {
     console.log('Task blocked: ', vm.draggedTask);
     vm.draggedTask.blocked = true;
+    $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'marked', model1: 'task', preposition: 'as', condition: 'blocked'}, vm.draggedTask);
     updateTask(vm.draggedTask);
     vm.draggedTask = {};
   }
@@ -163,18 +165,10 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       if (vm.project.user.id === vm.user.id) {
         vm.userIsAdmin = true;
       }
-      // vm.milestones = [
-      //   {
-      //     deadline: 3,
-      //     title: 'MVP'
-      //   },
-      //   {
-      //     deadline: 5,
-      //     title: 'Beta'
-      //   }
-      // ];
       vm.milestones = data.milestones;
+      vm.projectLogs = data.logs;
 
+      console.log('LOGS: ',vm.projectLogs);
       drawLine();
     });
   }
@@ -320,6 +314,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     .then((data) => {
       console.log('New task created: ', data);
       $rootScope.$broadcast('Task Change');
+      $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'created', model1: 'task'}, data);
     });
   }
 
@@ -333,6 +328,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       console.log('user already added');
     } else {
       task.user_ids.push(userToAdd.id);
+      $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'assigned', model1: 'user', preposition: 'to', model2: 'task'}, userToAdd, task);
       updateTask(task);
     }
   }
@@ -345,6 +341,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         task.user_ids.push(user.id);
       }
     });
+    $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'removed', model1: 'user', preposition: 'from', model2: 'task'}, userToRemove, task);
     updateTask(task);
   }
   vm.updateTask = updateTask;
@@ -367,6 +364,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     .$promise
     .then(() => {
       console.log('Task successfully destroyed');
+      $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'removed', model1: 'task'}, task);
       $rootScope.$broadcast('Task Change');
     });
   }
@@ -405,6 +403,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     .$promise
     .then((data) => {
       console.log('New milestone created: ', data);
+      $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'added', model1: 'milestone'}, data);
       $rootScope.$broadcast('Milestone Change');
     });
   }
@@ -434,6 +433,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       console.log('task already added');
     } else {
       milestone.task_ids.push(taskToAdd.id);
+      $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'added', model1: 'task', preposition: 'to', model2: 'milestone'}, taskToAdd, milestone);
       updateMilestone(milestone);
     }
   }
@@ -451,6 +451,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         milestone.task_ids.push(task.id);
       }
     });
+    $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'removed', model1: 'task', preposition: 'from', model2: 'milestone'}, taskToRemove, milestone);
     updateMilestone(milestone);
   }
 
@@ -485,6 +486,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       return console.log('There must be at least one collaborator');
     } else {
       vm.project.user_ids.splice(vm.project.user_ids.indexOf(userToRemove.id), 1);
+      $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'removed', model1: 'user', preposition: 'as a', condition: 'contributor'}, userToRemove);
       updateProject(vm.project);
     }
 
@@ -498,6 +500,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     });
     if (!vm.project.user_ids.includes(userToAdd.id)) {
       vm.project.user_ids.push(userToAdd.id);
+      $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'added', model1: 'user', preposition: 'as a', condition: 'contributor'}, userToAdd);
       updateProject(vm.project);
     } else {
       console.log('User already on project');
@@ -552,5 +555,48 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     vm.completedShow = false;
     vm.blockedShow = true;
   }
+
+
+
+  vm.convertDate = convertDate;
+  function convertDate(date) {
+    const parsedDate = new Date(date);
+    console.log('parsedDate: ', parsedDate);
+    console.log('UTC time: ', parsedDate.toUTCString());
+    const displayDate = parsedDate.toLocaleDateString() + ' ' + parsedDate.toLocaleTimeString();
+    return displayDate;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
