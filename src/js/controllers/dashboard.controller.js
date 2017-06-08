@@ -81,6 +81,7 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User, $state, $s
     .$promise
     .then((data) => {
       console.log('New project created: ', data);
+      $rootScope.$broadcast('Log', data, vm.user, {action: 'created', model1: 'project'}, data);
       $rootScope.$broadcast('Project Change');
 
       $scope.$theModal = $('#myModal');

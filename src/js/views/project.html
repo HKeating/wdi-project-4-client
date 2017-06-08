@@ -1,3 +1,6 @@
+<div ng-controller="LogCtrl as log">
+
+
 <h1>{{project.project.title}}</h1>
 <!-- <p>{{ project.project }}</p> -->
 
@@ -25,7 +28,7 @@
     <h3 id="dayLabel">Day {{ selectedDay }}</h3>
     <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day && task.completed === false && task.blocked === false">
 
-      <div class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true, onStart:'selectTask(task)', onDrag:'onDrag', onStop:'hideDropZone'}">
+      <div id="{{task.id}}" class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true, onStart:'selectTask(task)', onDrag:'onDrag(task)', onStop:'hideDropZone'}">
         <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
         </div>
         <!-- <div class="taskContent col-sm-10">
@@ -73,20 +76,39 @@
 
 <div class="controlPanel col-sm-5">
   <div class="dropZone" ng-show="project.showDropZone">
-    <div class="completedBox row" ng-model="done" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'completeTask', onOver:'onOver', onOut:'onOut'}">
+    <div id="completedBox" class="completedBox row" ng-model="done" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'completeTask', onOver:'onOverCompletedBox', onOut:'onOutCompletedBox'}">
       <h2>DONE</h2>
     </div>
 
-    <div class="blockedBox row" ng-model="block" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'taskBlocked', onOver:'onOver', onOut:'onOut'}">
+    <div id="blockedBox" class="blockedBox row" ng-model="block" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'taskBlocked', onOver:'onOverBlockedBox', onOut:'onOutBlockedBox'}">
       <h2>BLOCKED</h2>
     </div>
 
-    <div class="giveUpBox row" ng-model="destroy" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'giveUpTask', onOver:'onOver', onOut:'onOut'}">
+    <div id="destroyBox" class="destroyBox row" ng-model="destroy" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'giveUpTask', onOver:'onOverDestroyBox', onOut:'onOutDestroyBox'}">
       <h2>DESTROY</h2>
     </div>
   </div>
-  <div class="blockedAndCompleted" ng-show="project.showMeWhatHellLooksLike">
-    <div class="completed taskPanel row" >
+  <div class="stats row" ng-show="project.statsShow">
+    <h1>STATS</h1>
+  </div>
+  <div class="log row" ng-show="project.logShow">
+    <h1>LOG</h1>
+    <ul>
+      <li ng-repeat="log in project.projectLogs">
+        <p>{{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
+      </li>
+    </ul>
+  </div>
+  <div class="blockedAndCompleted" ng-show="project.tasksShow">
+    <div class="taskTabs row">
+      <div class="col-sm-6 completedHeader" ng-click="project.showCompleted()">
+        <h4>Completed</h4>
+      </div>
+      <div class="col-sm-6 blockedHeader" ng-click="project.showBlocked()">
+        <h4>Blocked</h4>
+      </div>
+    </div>
+    <div class="completed taskPanel row" ng-show="project.completedShow">
       <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.completed === true">
 
         <div class="taskCard">
@@ -110,7 +132,7 @@
         </div>
       </div>
     </div>
-    <div class="blocked taskPanel row">
+    <div class="blocked taskPanel row" ng-show="project.blockedShow">
       <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.blocked === true">
 
         <div class="taskCard">
@@ -138,7 +160,21 @@
 
 </div>
   <div class="sideBar col-sm-1">
-    <h1>SideBar</h1>
+
+    <div class="row sideBarOption statsButton" ng-click="project.showStats()">
+      <h4>Stats</h4>
+    </div>
+    <div class="row sideBarOption tasksButton" ng-click="project.showTasks()">
+      <h4>Tasks</h4>
+    </div>
+    <div class="row sideBarOption logButton" ng-click="project.showLog()">
+      <h4>Log</h4>
+    </div>
+
+
+
+
+
   </div>
 </div>
 <div class="col-sm-6 addMilestone">
@@ -222,4 +258,5 @@
       <button ng-click="project.hideTaskEditForm()" type="button">Cancel</button>
     </div>
   </div>
+</div>
 </div>

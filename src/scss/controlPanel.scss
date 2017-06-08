@@ -3,12 +3,15 @@
   background: #a0a0a0;
   height: 450px;
   .completed {
-    height: 225px;
+    height: 400px;
     background: green;
   }
   .blocked {
-    height: 225px;
+    height: 400px;
     background: red;
+  }
+  .taskTabs {
+    height: 50px;
   }
 
 
@@ -25,10 +28,33 @@
       transform: translate(-50%, -50%);
     }
   }
-  .blockedBox {
-    background: #ff3399;
+  .completedBoxOver {
+
     height: 150px;
     position: relative;
+    animation-name: completedBoxAnimation;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+
+    h2 {
+      text-align: center;
+      color: white;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    @keyframes completedBoxAnimation {
+      from {background-color: #33ff99;}
+      to {background-color:  #60ff00;}
+    }
+  }
+  .blockedBox {
+    background: #ff5b58;
+    height: 150px;
+    position: relative;
+
     h2 {
       text-align: center;
       color: white;
@@ -38,7 +64,30 @@
       transform: translate(-50%, -50%);
     }
   }
-  .giveUpBox {
+
+  .blockedBoxOver {
+    height: 150px;
+    position: relative;
+    animation-name: blockedBoxAnimation;
+    animation-duration: 1.0s;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+
+    h2 {
+      text-align: center;
+      color: white;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    @keyframes blockedBoxAnimation {
+      from {background-color: #ff5b58;}
+      to {background-color: #ff0007;}
+    }
+  }
+
+  .destroyBox {
     background: orange;
     height: 150px;
     position: relative;
@@ -50,5 +99,33 @@
       left: 50%;
       transform: translate(-50%, -50%);
     }
+  }
+
+  .destroyBoxOver {
+    background: url('https://media.giphy.com/media/3o6ozh46EbuWRYAcSY/giphy.gif');
+    background-size: cover;
+    height: 150px;
+    position: relative;
+    h2 {
+      text-align: center;
+      color: white;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .stats {
+    height: 450px;
+    background: #995588;
+  }
+  .log {
+    height: 450px;
+    background: #558899;
+    flex: 1 1 0; 
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
   }
 }

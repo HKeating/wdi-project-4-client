@@ -16,6 +16,37 @@
     overflow: hidden;
 
   }
+
+  .taskCardRotatedRight {
+    //-webkit-transform: rotate(15deg);
+    animation: rotateRight 0.2s 1;
+    -webkit-animation-fill-mode: forwards;
+    @keyframes rotateRight {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(15deg);
+      }
+    }
+  }
+
+  .taskCardRotatedLeft {
+    //-webkit-transform: rotate(-15deg);
+    animation: rotateLeft 0.2s 1;
+    -webkit-animation-fill-mode: forwards;
+
+    @keyframes rotateLeft {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(-15deg);
+      }
+    }
+
+  }
+
   .addTaskCard {
     background: #f5f5f5;
     border-radius: 5px;
