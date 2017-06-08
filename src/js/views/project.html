@@ -92,7 +92,15 @@
     <h1>LOG</h1>
   </div>
   <div class="blockedAndCompleted" ng-show="project.tasksShow">
-    <div class="completed taskPanel row" >
+    <div class="taskTabs row">
+      <div class="col-sm-6 completedHeader" ng-click="project.showCompleted()">
+        <h4>Completed</h4>
+      </div>
+      <div class="col-sm-6 blockedHeader" ng-click="project.showBlocked()">
+        <h4>Blocked</h4>
+      </div>
+    </div>
+    <div class="completed taskPanel row" ng-show="project.completedShow">
       <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.completed === true">
 
         <div class="taskCard">
@@ -116,7 +124,7 @@
         </div>
       </div>
     </div>
-    <div class="blocked taskPanel row">
+    <div class="blocked taskPanel row" ng-show="project.blockedShow">
       <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.blocked === true">
 
         <div class="taskCard">

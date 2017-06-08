@@ -481,5 +481,15 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     vm.tasksShow = false;
     vm.logShow = true;
   }
+  vm.showCompleted = showCompleted;
+  function showCompleted() {
+    vm.completedShow = true;
+    vm.blockedShow = false;
+  }
+  vm.showBlocked = showBlocked;
+  function showBlocked() {
+    vm.completedShow = false;
+    vm.blockedShow = true;
+  }
 
 }
