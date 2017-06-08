@@ -1,44 +1,69 @@
+
 <div class="home-waves">
   <div class="mw9 center pt5 home-font">
     <div class="cf ph2-ns tc">
       <div class="w-100 pa2 tc logo">
         <img src="/images/FISI.png" alt="logo">
       </div>
-    </div>
-  </div>
-</div>
+      <div ng-controller="MainCtrl as main" class="mr4 dib tc homeLogin br3 pa3 cursor: pointer" ng-hide="main.user">
 
-<div class="panel2-carContainer">
-  <div class="mw9 center ph3-ns pt3 cf">
-    <div class="measure center tc">
-      <div class="white f1 home-font">
-        FckItShipIt™ is a super-simple task manager for team sprints; less conflicts, more fun.
+        <div ng-controller="LoginCtrl as login" class="loginPop black">
+          <p class="loginHeads"><a  id="loginform">Login</a><a> || </a><a href="#">Register</a></p>
+          <div class="login">
+            <div class="arrow-up"></div>
+            <div class="formholder">
+              <div class="randompad">
+                <fieldset class="bringFront">
+                  <form ng-submit="login.login()">
+                  <label class="" for="email-address">Email</label>
+                  <input class="" type="email" name="email-address"  ng-model="login.user.email" placeholder="insert@funnyplaceholder.com">
+                  <label  for="password">Password</label>
+                  <input class="input-reset" type="password" name="password"  ng-model="login.user.password" placeholder="e.g. kittenzRule">
+
+                  <input type="submit" value="Login">
+
+                  </form>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- <p ui-sref="login" class="white f2 nItems login">Login</p> -->
       </div>
     </div>
-    <div class="logos">
-      <div class="fl tc w-20 pa2"><img ng-src="/images/GL.png"></div>
-      <div class="fl tc w-20 pa2"><img ng-src="/images/rvL.png"></div>
-      <div class="fl tc w-20 pa2"><img ng-src="/images/fbL.png"></div>
-      <div class="fl tc w-20 pa2"><img ng-src="/images/padL.png"></div>
-      <div class="fl tc w-20 pa2"><img ng-src="/images/tcL.png"></div>
-    </div>
   </div>
 </div>
 
+<!--
+<div class="panel2-carContainer">
+<div class="mw9 center ph3-ns pt3 cf">
+<div class="logos tc">
+<div class="dib w-20 pa2"><img ng-src="/images/GL.png"></div>
+<div class="dib w-20 pa2"><img ng-src="/images/rvL.png"></div>
+<div class="dib w-20 pa2"><img ng-src="/images/fbL.png"></div>
+<div class="dib w-20 pa2"><img ng-src="/images/padL.png"></div>
+</div>
+</div>
+</div> -->
 
 <div class="panel-3-container">
-  <div class="mw9 center home-font pt5">
-    <div class="cf ph2-ns tc">
-      <div class="w-75 dib pa2 tc logo white f2">
-        A ship in harbor is safe — but that is not what ships are built for. (c) Maxim Kartuzov, 1896
+  <div class="">
+    <div class="mw9 center home-font pt5">
+      <div class="cf ph2-ns tc">
+        <div class="white f1 home-font">
+          FckItShipIt™  is a super-simple sprint manager; less conflicts, more fun.
+        </div>
       </div>
     </div>
-  </div>
-  <div class="container">
-    <div id="movingShip" class="mShip movingShip"></div>
-    <div class="timeLine"></div>
-    <div class="monitor"></div>
-    <div class="monitorbg"></div>
+    <div class="containerH">
+      <div id="movingShip" class="mShip movingShip"></div>
+      <div class="timeLine"></div>
+      <div class="monitor"></div>
+      <div class="monitorbg"></div>
+    </div>
   </div>
 </div>
 
@@ -49,46 +74,47 @@
       A word from our founders
     </div>
     <div class="mt3 tc">
-      <img src="https://www.fillmurray.com/800/500" alt="">
+      <img src="https://www.fillmurray.com/600/400" alt="">
     </div>
   </div>
-</div>
-
-<div class="home-5-container cf">
-  <div class="mw9 center ph3-ns mv5">
-    <div class="tc pa2 mv5 f1 home-font">
-      Register
-    </div>
 
 
-    <div class="registerForm" ng-controller="RegisterCtrl as register">
-      <form class="f2 measure center" ng-submit="register.register()">
+  <div class="cf">
+    <div class="mw9 center ph3-ns mv5">
+      <div class="tc pa2 mv5 f1 home-font">
+        Register
+      </div>
 
-        <div class="mt3">
-          <label class="db fw6 lh-copy f3" for="username">Username</label>
-          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="username"  ng-model="register.user.username" placeholder="Username">
-        </div>
 
-        <div class="mt3">
-          <label class="db fw6 lh-copy f3" for="email-address">Email</label>
-          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email-address"  ng-model="register.user.email" placeholder="Email">
-        </div>
+      <div class="registerForm" ng-controller="RegisterCtrl as register">
+        <form class="f2 measure center" ng-submit="register.register()">
 
-        <div class="mv3">
-          <label class="db fw6 lh-copy f3" for="password">Password</label>
-          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  ng-model="register.user.password" placeholder="e.g. kittenzRule">
-        </div>
+          <div class="mt3">
+            <label class="db fw6 lh-copy" for="username">Username</label>
+            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="text" name="username"  ng-model="register.user.username" placeholder="Username">
+          </div>
 
-        <div class="mv3">
-          <label class="db fw6 lh-copy f3" for="password_confirmation">Password Confirmation</label>
-          <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password_confirmation"  ng-model="register.user.password_confirmation" placeholder="Confirm Password">
-        </div>
+          <div class="mt3">
+            <!-- <label class="db fw6 lh-copy" for="email-address">Email</label> -->
+            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="email" name="email-address"  ng-model="register.user.email" placeholder="Email">
+          </div>
 
-        <div class="">
-          <input class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f3 dib" type="submit" value="Register">
-        </div>
+          <div class="mv3">
+            <!-- <label class="db fw6 lh-copy" for="password">Password</label> -->
+            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password"  ng-model="register.user.password" placeholder="Password">
+          </div>
 
-      </form>
+          <div class="mv3">
+            <!-- <label class="db fw6 lh-copy" for="password_confirmation">Password Confirmation</label> -->
+            <input class="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="password" name="password_confirmation"  ng-model="register.user.password_confirmation" placeholder="Confirm Password">
+          </div>
+
+          <div class="">
+            <input class="b ph3 pv2 input-reset ba b--grey white bg-transparent grow pointer f3 dib" type="submit" value="Register">
+          </div>
+
+        </form>
+      </div>
     </div>
   </div>
 </div>

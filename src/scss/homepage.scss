@@ -4,7 +4,7 @@ main{
 
 .home-font{
   color: white;
-  font-family: 'Space Mono', monospace;
+  font-family: 'Cabin Condensed', sans-serif;
 }
 
 .logos{
@@ -32,21 +32,22 @@ main{
 }
 
 
-.container {
+.containerH {
   width: 100%;
   height: 500px;
 }
 .panel2-carContainer{
-  background-image: url("https://media.giphy.com/media/z00B1bo9u9SWA/giphy.gif");
-  z-index: -1;
+  background-color: black;
+  // background-image: url("https://media.giphy.com/media/z00B1bo9u9SWA/giphy.gif");
   width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
   height: 450px;
+  box-shadow: 0 0 200px rgba(0, 0, 0, 1) !important;
 }
 
 .panel-3-container{
-  background-color: #1c1c1c;
+  background-color: black;
   height: 850px;
 }
 
@@ -61,7 +62,7 @@ main{
   background-position: center;
   background-size: contain;
   // left: 800px;
-  top: 1350px;
+  top: 900px;
   z-index: 1;
 }
 
@@ -69,7 +70,7 @@ main{
   position: absolute;
   min-width: 100%;
   height: 200px;
-  top: 1500px;
+  top: 1050px;
   background-image: url("http://med-fom-fmprpostgrad.sites.olt.ubc.ca/files/2016/02/Timeline-for-Scholarship-Projects.png");
   background-position: center;
   background-size: contain;
@@ -79,9 +80,9 @@ main{
 }
 .monitor{
   position: absolute;
-  min-width: 100%;
+  width: 100%;
   height: 700px;
-  top: 1250px;
+  top: 800px;
   background-image: url("/images/monitor.png");
   background-position: center;
   background-size: contain;
@@ -93,11 +94,29 @@ main{
   position: absolute;
   width: 100%;
   height: 480px;
-  top: 1275px;
+  top: 825px;
   background-image: url("https://media.giphy.com/media/l3UcrZHrGW2CjHXqM/giphy.gif");
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
   margin: 0 auto;
   z-index: 0;
+}
+
+.homeLogin{
+  opacity: 0.5;
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  -o-transition: all 0.2s ease-out;
+  /* Opera */
+  transition: all 0.2s ease-out;
+}
+.homeLogin:hover{
+  opacity: 1;
+}
+
+.home-4-container{
+  background-image: url("https://i.warosu.org/data/vr/img/0016/68/1402348179175.gif");
+  background-position: center;
+  background-size: cover;
 }
