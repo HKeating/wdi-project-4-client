@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.18.1/build/cssreset/cssreset-min.css">
   <style>
-  @import url('https://fonts.googleapis.com/css?family=Space+Mono');
+  @import url('https://fonts.googleapis.com/css?family=Cabin+Condensed');
   </style>
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -25,35 +25,49 @@
 
 
 <body ng-controller="MainCtrl as main">
+  <div ng-hide="!main.user" class="navbarAll bg-black-90">
+    <div class="navbar-toggleable-md navItems">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle f2" data-toggle="collapse" data-target=".navbar-collapse">&#x1f354;</button>
+        <a ng-show="main.user" class="dim white navbar-brand title f1" ui-sref="home">FckItShpIt</a>
+      </div>
+      <div class="navbar-collapse collapse ">
+        <ul class="nav navbar-nav navbar-right">
 
-  <!-- <div class="navbarAll">
-  <div class="navbar-toggleable-md navItems  pb2 bb b--white-30">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle f2" data-toggle="collapse" data-target=".navbar-collapse">
-        &#x1f354;
-      </button>
-      <a class="navbar-brand title f1" ui-sref="home">FckItShpIt</a>
-    </div>
-    <div class="navbar-collapse collapse ">
-      <ul class="nav navbar-nav navbar-right">
+          <button ng-show="$state.includes('dashboard')" type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">+</button>
 
-        <li ng-hide="main.user"><a ui-sref="pricing" class="white f2 nItems">Pricing</a></li>
+          <a ng-show="$state.includes('dashboard')" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <img class="userThumbnail" ng-src="{{main.user.image}}" alt="main.user.image">
+              <i class="fa fa-caret-down"></i>
+            </a>
+            <ul ng-controller="ProfileCtrl as profile" class="mr6 dropdown-menu dropdown-user">
+              <li ng-controller="DashboardCtrl as dashboard" class="tc">
+                Wasson: <span class="capitalize">{{ dashboard.user.username }}</span>
+              </li>
+              <li><a ng-click="main.goToUserProfile()"><i class="fa fa-user fa-fw"></i> User Profile</a>
+              </li>
+              <li><a ui-sref="dashboard"><i class="fa fa-gear fa-fw"></i> Dashboard</a></li>
+              <li class="divider"></li>
+              <li><a ng-click="profile.logOut()"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+            </ul>
+          </a>
+        </ul>
 
-        <li ng-hide="main.user"> <a ui-sref="login" class="white f2 nItems" >Login</a></li>
+        <div class="tc mt3" ng-show="$state.includes('project')">
+          <a class="link dim white dib" href="#" title="Home">Home</a>
+          <a class="link dim white dib" href="#" title="About">About</a>
+          <a class="link dim white dib" href="#" title="Store">Store</a>
+          <a class="link dim white dib" href="#" title="Contact">Contact</a>
+        </div>
 
-        <li ng-show="main.user"><a ui-sref="dashboard" class="white f2 nItems">Dashboard</a></li>
-        <li ng-show="main.user"><img class="userThumbnail" ng-src="{{main.user.image}}" alt="main.user.image" ng-click="main.goToUserProfile()"></li>
-        <li ng-show="$state.includes('home')"><p class="white f2 nItems">HOME</p></li>
-        <li ng-show="$state.includes('dashboard')"><p class="white f2 nItems">DASHBOARD</p></li>
-        <li ng-show="$state.includes('project')"><p class="white f2 nItems">PROEJCT</p></li>
-      </ul>
+      </div>
     </div>
   </div>
-</div> -->
 
   <main ui-view></main>
 
-  <footer class="pv4 ph3 ph5-ns tc">
+  <footer class="pv4 ph3 ph5-ns tc bg-black">
     <a class="link dim gray dib h2 w2 br-100 mr3 " href="#" title="">
       <svg data-icon="facebook" viewBox="0 0 32 32" style="fill:currentcolor">
         <title>facebook icon</title>
