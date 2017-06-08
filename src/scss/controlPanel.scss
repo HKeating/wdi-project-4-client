@@ -29,12 +29,13 @@
     }
   }
   .completedBoxOver {
-    background: #33ff99;
+
     height: 150px;
     position: relative;
     animation-name: completedBoxAnimation;
-    animation-duration: 1.0s;
-    animation-iteration-count: infinite;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
 
     h2 {
       text-align: center;
@@ -46,11 +47,11 @@
     }
     @keyframes completedBoxAnimation {
       from {background-color: #33ff99;}
-      to {background-color: #1bff00;}
+      to {background-color:  #60ff00;}
     }
   }
   .blockedBox {
-    background: #ff3399;
+    background: #ff5b58;
     height: 150px;
     position: relative;
 
@@ -69,7 +70,9 @@
     position: relative;
     animation-name: blockedBoxAnimation;
     animation-duration: 1.0s;
-    animation-iteration-count: infinite;
+    animation-iteration-count: 1;
+    -webkit-animation-fill-mode: forwards;
+
     h2 {
       text-align: center;
       color: white;
@@ -79,8 +82,8 @@
       transform: translate(-50%, -50%);
     }
     @keyframes blockedBoxAnimation {
-      from {background-color: #ff3399;}
-      to {background-color: #ff1e00;}
+      from {background-color: #ff5b58;}
+      to {background-color: #ff0007;}
     }
   }
 
