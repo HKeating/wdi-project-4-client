@@ -94,10 +94,20 @@
   <div class="log row" ng-show="project.logShow">
     <h1>LOG</h1>
     <ul>
-      <li ng-repeat="log in project.projectLogs">
-        <p>{{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
+      <li ng-repeat="day in project.projectDays track by $index">
+        <h4>Day: {{ day }}</h4>
+        <ul>
+          <li ng-repeat="log in project.projectLogs" ng-if="log.day === day">
+            <p>{{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
+          </li>
+        </ul>
       </li>
     </ul>
+    <!-- <ul>
+      <li ng-repeat="log in project.projectLogs">
+        <p>Day {{ log.day }}, {{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
+      </li>
+    </ul> -->
   </div>
   <div class="blockedAndCompleted" ng-show="project.tasksShow">
     <div class="taskTabs row">

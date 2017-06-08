@@ -170,6 +170,7 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User) {
       const endDate = new Date(date);
       return Math.round(Math.abs((currentDate.getTime() - endDate.getTime())/(oneDay)));
     } else {
+      console.log('This is returning invalid: ',date);
       return 'Invalid date format';
     }
 

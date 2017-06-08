@@ -167,8 +167,13 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       }
       vm.milestones = data.milestones;
       vm.projectLogs = data.logs;
-
-      console.log('LOGS: ',vm.projectLogs);
+      vm.currentDay = getCurrentDay(vm.project.start_date);
+      $scope.selectedDay = vm.currentDay;
+      vm.project.currentDay = vm.currentDay;
+      vm.projectDays = [];
+      for (var i = 1; i <= vm.project.duration; i++) {
+        vm.projectDays.push(i);
+      }
       drawLine();
     });
   }
@@ -182,8 +187,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   //   console.log('tasks: ', vm.project.tasks);
   // });
 
-  vm.currentDay = 4;
-  $scope.selectedDay = vm.currentDay;
+  // vm.currentDay = 4;
+  // $scope.selectedDay = vm.currentDay;
   // This function draws dots on the line
   function drawLine() {
     $('.line').empty();
@@ -561,11 +566,20 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   vm.convertDate = convertDate;
   function convertDate(date) {
     const parsedDate = new Date(date);
-    console.log('parsedDate: ', parsedDate);
-    console.log('UTC time: ', parsedDate.toUTCString());
-    const displayDate = parsedDate.toLocaleDateString() + ' ' + parsedDate.toLocaleTimeString();
+    const displayDate = parsedDate.toLocaleTimeString();
+    // const displayDate = parsedDate.toLocaleDateString() + ' ' + parsedDate.toLocaleTimeString();
     return displayDate;
   }
+
+  vm.getCurrentDay = getCurrentDay;
+  function getCurrentDay(date) {
+    const startDate = new Date(date);
+    const currentDate = new Date();
+    const timeDiff = Math.abs(currentDate.getTime() - startDate.getTime());
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    return diffDays;
+  }
+
 
 
 

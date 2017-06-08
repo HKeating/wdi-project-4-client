@@ -33,28 +33,29 @@ function LogCtrl($rootScope, Log) {
   vm.test = 'Logs Yo';
   // vm.user = CurrentUserService.currentUser;
   $rootScope.$on('Log', (event, project, subject, params, object1, object2) => {
+    console.log('Project in logCtrl: ', project);
     if (object2) {
       if (params.model1 === 'user') {
         // *username* ASSIGNED *username* TO TASK *task name*
         // *username* REMOVED *username* FROM TASK *task name*
-        vm.newLog = `<strong>${subject.username}</strong> ${params.action} ${object1.username} ${params.preposition} ${params.model2} ${object2.description}`;
+        vm.newLog = `<strong>${subject.username}</strong> ${params.action} <strong>${object1.username}</strong> ${params.preposition} ${params.model2} <i>${object2.description}</i>`;
         // console.log('New log: ', vm.newLog);
       } else if (params.model1 === 'task') {
         // *username* ADDED *task name* TO *milestone name*
         // *username* REMOVED *task name* FROM *milestone name*
-        vm.newLog = `<strong>${subject.username}</strong> ${params.action} ${object1.description} ${params.preposition} ${params.model2} ${object2.title}`;
+        vm.newLog = `<strong>${subject.username}</strong> ${params.action} <i>${object1.description}</i> ${params.preposition} ${params.model2} <i>${object2.title}</i>`;
         // console.log('New log: ', vm.newLog);
       }
     } else {
       if (params.action === 'marked') {
         // *username* MARKED *task name* AS COMPLETED
         // *username* MARKED *task name* AS BLOCKED
-        vm.newLog = `<strong>${subject.username}</strong> ${params.action} ${object1.description} ${params.preposition} ${params.condition}`;
+        vm.newLog = `<strong>${subject.username}</strong> ${params.action} <i>${object1.description}</i> ${params.preposition} <span class="${params.condition}Text">${params.condition}</span>`;
         // console.log('New log: ', vm.newLog);
       } else if (params.model1 === 'user') {
         // *username* ADDED *username* AS A CONTRIBUTOR/comrade
         // *username* REMOVED *username* AS A CONTRIBUTOR/comrade
-        vm.newLog = `<strong>${subject.username}</strong> ${params.action} ${object1.username} ${params.preposition} ${params.condition}`;
+        vm.newLog = `<strong>${subject.username}</strong> ${params.action} <strong>${object1.username}</strong> ${params.preposition} ${params.condition}`;
         // console.log('New log: ', vm.newLog);
       } else {
         // *username* CREATED THE PROJECT, *project name*
@@ -64,7 +65,7 @@ function LogCtrl($rootScope, Log) {
         // *username* ADDED THE TASK *task name*
         // *username* REMOVED THE TASK *task name*
         params.model1 === 'task' ? vm.object = object1.description : vm.object = object1.title;
-        vm.newLog = `<strong>${subject.username}</strong> ${params.action} ${params.model1} ${vm.object}`;
+        vm.newLog = `<strong>${subject.username}</strong> ${params.action} ${params.model1} <i>${vm.object}</i>`;
 
       }
     }
@@ -77,7 +78,7 @@ function LogCtrl($rootScope, Log) {
   vm.createLog = createLog;
   function createLog(content, project, user) {
 
-    const logObj = {'log': { 'project_id': project.id, 'user_id': user.id, 'content': content }};
+    const logObj = {'log': { 'project_id': project.id, 'user_id': user.id, 'content': content , 'day': project.currentDay}};
     Log
       .save(logObj)
       .$promise
