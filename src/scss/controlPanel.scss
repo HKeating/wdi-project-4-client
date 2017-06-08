@@ -28,8 +28,64 @@
       transform: translate(-50%, -50%);
     }
   }
+  .completedBoxOver {
+    background: #33ff99;
+    height: 150px;
+    position: relative;
+    animation-name: completedBoxAnimation;
+    animation-duration: 1.0s;
+    animation-iteration-count: infinite;
+
+    h2 {
+      text-align: center;
+      color: white;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    @keyframes completedBoxAnimation {
+      from {background-color: #33ff99;}
+      to {background-color: #1bff00;}
+    }
+  }
   .blockedBox {
     background: #ff3399;
+    height: 150px;
+    position: relative;
+
+    h2 {
+      text-align: center;
+      color: white;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .blockedBoxOver {
+    height: 150px;
+    position: relative;
+    animation-name: blockedBoxAnimation;
+    animation-duration: 1.0s;
+    animation-iteration-count: infinite;
+    h2 {
+      text-align: center;
+      color: white;
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    @keyframes blockedBoxAnimation {
+      from {background-color: #ff3399;}
+      to {background-color: #ff1e00;}
+    }
+  }
+
+  .destroyBox {
+    background: orange;
     height: 150px;
     position: relative;
     h2 {
@@ -41,8 +97,10 @@
       transform: translate(-50%, -50%);
     }
   }
-  .giveUpBox {
-    background: orange;
+
+  .destroyBoxOver {
+    background: url('https://media.giphy.com/media/3o6ozh46EbuWRYAcSY/giphy.gif');
+    background-size: cover;
     height: 150px;
     position: relative;
     h2 {

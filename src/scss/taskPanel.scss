@@ -16,6 +16,15 @@
     overflow: hidden;
 
   }
+
+  .taskCardRotatedRight {
+    -webkit-transform: rotate(15deg);
+  }
+
+  .taskCardRotatedLeft {
+    -webkit-transform: rotate(-15deg);
+  }
+
   .addTaskCard {
     background: #f5f5f5;
     border-radius: 5px;

@@ -25,7 +25,7 @@
     <h3 id="dayLabel">Day {{ selectedDay }}</h3>
     <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day && task.completed === false && task.blocked === false">
 
-      <div class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true, onStart:'selectTask(task)', onDrag:'onDrag', onStop:'hideDropZone'}">
+      <div id="{{task.id}}" class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true, onStart:'selectTask(task)', onDrag:'onDrag(task)', onStop:'hideDropZone'}">
         <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
         </div>
         <!-- <div class="taskContent col-sm-10">
@@ -73,15 +73,15 @@
 
 <div class="controlPanel col-sm-5">
   <div class="dropZone" ng-show="project.showDropZone">
-    <div class="completedBox row" ng-model="done" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'completeTask', onOver:'onOver', onOut:'onOut'}">
+    <div id="completedBox" class="completedBox row" ng-model="done" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'completeTask', onOver:'onOverCompletedBox', onOut:'onOutCompletedBox'}">
       <h2>DONE</h2>
     </div>
 
-    <div class="blockedBox row" ng-model="block" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'taskBlocked', onOver:'onOver', onOut:'onOut'}">
+    <div id="blockedBox" class="blockedBox row" ng-model="block" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'taskBlocked', onOver:'onOverBlockedBox', onOut:'onOutBlockedBox'}">
       <h2>BLOCKED</h2>
     </div>
 
-    <div class="giveUpBox row" ng-model="destroy" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'giveUpTask', onOver:'onOver', onOut:'onOut'}">
+    <div id="destroyBox" class="destroyBox row" ng-model="destroy" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'giveUpTask', onOver:'onOverDestroyBox', onOut:'onOutDestroyBox'}">
       <h2>DESTROY</h2>
     </div>
   </div>

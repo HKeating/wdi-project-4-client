@@ -6,6 +6,7 @@ ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUs
 
 function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone, User) {
   const vm = this;
+  var currentCardPosition;
   // vm.showDropZone = false;
   // Drag and Drop call backs
   // $scope.onDrop = function(target, source){
@@ -18,29 +19,76 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   //   // var objDragItem = source.draggable.$scope().dndDragItem;
   //   // console.log('Scope: ', objDragItem);
   // };
-  $scope.onStart = function(target, source){
-    console.log('**** ON START  ****');
+
+
+  // $scope.onStart = function(target, source){
+  //   console.log('**** ON START  ****');
+  // };
+
+  // Dragging the card
+  $scope.onDrag = function() {
+
+    if($scope.$card.position().left <= currentCardPosition-5) {
+      // Rotating card to left
+      $scope.$card.removeClass('taskCardRotatedRight');
+      $scope.$card.addClass('taskCardRotatedLeft');
+    } else if ($scope.$card.position().left > currentCardPosition+5) {
+      // Rotating card to right
+      $scope.$card.removeClass('taskCardRotatedLeft');
+      $scope.$card.addClass('taskCardRotatedRight');
+    }
+    // Saving the last position
+    currentCardPosition = $scope.$card.position().left;
+
   };
 
-  $scope.onDrag = function(target, source){
-    // console.log('**** ON DRAG  ****');
-    // console.log('Target: ', target);
-    // console.log('Source: ', source);
-  };
+  // $scope.onOver = function(target, source) {
+  //
+  // };
+  //
+  // $scope.onOut = function() {
+  //   console.log('**** ON OUT ****');
+  //   // vm.showDropZone = false;
+  //   // console.log('Show drop zone? ', vm.showDropZone);
+  //
+  // };
 
-  $scope.onOver = function() {
-    console.log('**** ON OVER ****');
-    // vm.showDropZone = true;
-    // console.log('Show drop zone? ', vm.showDropZone);
+  $scope.$completedBox = $('#completedBox');
+  $scope.$blockedBox = $('#blockedBox');
+  $scope.$destroyBox = $('#destroyBox');
 
-  };
+  $scope.onOverCompletedBox = onOverCompletedBox;
+  function onOverCompletedBox() {
+    $scope.$completedBox.removeClass('completedBox');
+    $scope.$completedBox.addClass('completedBoxOver');
+  }
+  $scope.onOutCompletedBox = onOutCompletedBox;
+  function onOutCompletedBox() {
+    $scope.$completedBox.removeClass('completedBoxOver');
+    $scope.$completedBox.addClass('completedBox');
+  }
 
-  $scope.onOut = function() {
-    console.log('**** ON OUT ****');
-    // vm.showDropZone = false;
-    // console.log('Show drop zone? ', vm.showDropZone);
+  $scope.onOverBlockedBox = onOverBlockedBox;
+  function onOverBlockedBox() {
+    $scope.$blockedBox.removeClass('blockedBox');
+    $scope.$blockedBox.addClass('blockedBoxOver');
+  }
+  $scope.onOutBlockedBox = onOutBlockedBox;
+  function onOutBlockedBox() {
+    $scope.$blockedBox.removeClass('blockedBoxOver');
+    $scope.$blockedBox.addClass('blockedBox');
+  }
 
-  };
+  $scope.onOverDestroyBox = onOverDestroyBox;
+  function onOverDestroyBox() {
+    $scope.$destroyBox.removeClass('destroyBox');
+    $scope.$destroyBox.addClass('destroyBoxOver');
+  }
+  $scope.onOutDestroyBox = onOutDestroyBox;
+  function onOutDestroyBox() {
+    $scope.$destroyBox.removeClass('destroyBoxOver');
+    $scope.$destroyBox.addClass('destroyBox');
+  }
 
   $scope.completeTask = completeTask;
   function completeTask() {
@@ -49,6 +97,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     updateTask(vm.draggedTask);
     vm.draggedTask = {};
   }
+
   $scope.taskBlocked = taskBlocked;
   function taskBlocked() {
     console.log('Task blocked: ', vm.draggedTask);
@@ -56,6 +105,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     updateTask(vm.draggedTask);
     vm.draggedTask = {};
   }
+
   $scope.giveUpTask = giveUpTask;
   function giveUpTask() {
     console.log('You gave up on: ', vm.draggedTask);
@@ -71,6 +121,12 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     vm.statsShow = false;
     vm.tasksShow = false;
     vm.logShow = false;
+    $scope.$card = $(`#${task.id}`);
+
+    // Rotating the card
+    $scope.$card.addClass('taskCardRotatedRight');
+    currentCardPosition = $scope.$card.position().left;
+
     console.log('Show drop zone? ', vm.showDropZone);
     $scope.$apply();
   }
@@ -80,6 +136,11 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   function hideDropZone() {
     console.log('Hidedrop triggering');
     vm.showDropZone = false;
+
+    // Moving card back
+    $scope.$card.removeClass('taskCardRotatedLeft');
+    $scope.$card.removeClass('taskCardRotatedRight');
+
     $scope.$apply();
   }
 
