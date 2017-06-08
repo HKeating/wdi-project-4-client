@@ -68,6 +68,9 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     console.log('Task: ', task);
     vm.draggedTask = task;
     vm.showDropZone = true;
+    vm.statsShow = false;
+    vm.tasksShow = false;
+    vm.logShow = false;
     console.log('Show drop zone? ', vm.showDropZone);
     $scope.$apply();
   }
@@ -458,5 +461,25 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   $rootScope.$on('Project Change', () => {
     getProject();
   });
+
+
+  vm.showStats = showStats;
+  function showStats() {
+    vm.statsShow = true;
+    vm.tasksShow = false;
+    vm.logShow = false;
+  }
+  vm.showTasks = showTasks;
+  function showTasks() {
+    vm.statsShow = false;
+    vm.tasksShow = true;
+    vm.logShow = false;
+  }
+  vm.showLog = showLog;
+  function showLog() {
+    vm.statsShow = false;
+    vm.tasksShow = false;
+    vm.logShow = true;
+  }
 
 }
