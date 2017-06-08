@@ -26,25 +26,26 @@
 <body ng-controller="MainCtrl as main">
 
   <div class="navbarAll">
-  <div class="navbar-toggleable-md navItems">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle f2" data-toggle="collapse" data-target=".navbar-collapse">
-        &#x1f354;
-      </button>
-      <a ng-show="$state.includes('dashboard')" class="navbar-brand title f1" ui-sref="home">FckItShpIt</a>
-    </div>
-    <div class="navbar-collapse collapse ">
-      <ul class="nav navbar-nav navbar-right">
+    <div class="navbar-toggleable-md navItems">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle f2" data-toggle="collapse" data-target=".navbar-collapse">
+          &#x1f354;
+        </button>
+        <a ng-show="$state.includes('dashboard')" class="navbar-brand title f1" ui-sref="home">FckItShpIt</a>
+      </div>
+      <div class="navbar-collapse collapse ">
+        <ul class="nav navbar-nav navbar-right">
+          <li><button  ng-show="$state.includes('dashboard')"type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">+</button></li>
 
-        <li ng-hide="main.user"> <a ui-sref="login" class="white f2 nItems" >Login</a></li>
+          <li ng-hide="main.user"> <a ui-sref="login" class="white f2 nItems" >Login</a></li>
 
-        <li ng-show="main.user"><a ui-sref="dashboard" class="white f2 nItems">Dashboard</a></li>
-        <li ng-show="main.user"><img class="userThumbnail" ng-src="{{main.user.image}}" alt="main.user.image" ng-click="main.goToUserProfile()"></li>
+          <li ng-show="main.user"><a ui-sref="dashboard" class="white f2 nItems">Dashboard</a></li>
+          <li ng-show="main.user"><img class="userThumbnail" ng-src="{{main.user.image}}" alt="main.user.image" ng-click="main.goToUserProfile()"></li>
 
-      </ul>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
 
   <main ui-view></main>
 
