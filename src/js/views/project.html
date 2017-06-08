@@ -85,8 +85,22 @@
       <h2>DESTROY</h2>
     </div>
   </div>
-  <div class="blockedAndCompleted" ng-show="project.showMeWhatHellLooksLike">
-    <div class="completed taskPanel row" >
+  <div class="stats row" ng-show="project.statsShow">
+    <h1>STATS</h1>
+  </div>
+  <div class="log row" ng-show="project.logShow">
+    <h1>LOG</h1>
+  </div>
+  <div class="blockedAndCompleted" ng-show="project.tasksShow">
+    <div class="taskTabs row">
+      <div class="col-sm-6 completedHeader" ng-click="project.showCompleted()">
+        <h4>Completed</h4>
+      </div>
+      <div class="col-sm-6 blockedHeader" ng-click="project.showBlocked()">
+        <h4>Blocked</h4>
+      </div>
+    </div>
+    <div class="completed taskPanel row" ng-show="project.completedShow">
       <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.completed === true">
 
         <div class="taskCard">
@@ -110,7 +124,7 @@
         </div>
       </div>
     </div>
-    <div class="blocked taskPanel row">
+    <div class="blocked taskPanel row" ng-show="project.blockedShow">
       <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.blocked === true">
 
         <div class="taskCard">
@@ -138,7 +152,21 @@
 
 </div>
   <div class="sideBar col-sm-1">
-    <h1>SideBar</h1>
+
+    <div class="row sideBarOption statsButton" ng-click="project.showStats()">
+      <h4>Stats</h4>
+    </div>
+    <div class="row sideBarOption tasksButton" ng-click="project.showTasks()">
+      <h4>Tasks</h4>
+    </div>
+    <div class="row sideBarOption logButton" ng-click="project.showLog()">
+      <h4>Log</h4>
+    </div>
+
+
+
+
+
   </div>
 </div>
 <div class="col-sm-6 addMilestone">
