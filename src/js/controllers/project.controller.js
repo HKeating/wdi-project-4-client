@@ -14,93 +14,41 @@
 13) Horace GAVE UP ON *task name*
 14) MILESTONE *milestone name* WAS COMPLETED
 15) MILESTONE *milestone name* DEADLINE MISSED, *number* TASKS NOT COMPLETED
-16) DAY *currentDay* BEGAN
+16) DAY *currentDay* BEGAN   (?)
+
 
 */
 angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
 
-ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task', 'Milestone', 'User'];
+ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task', 'Milestone'];
 
-function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone, User) {
+function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone) {
   const vm = this;
-  // vm.showDropZone = false;
+
   // Drag and Drop call backs
-  // $scope.onDrop = function(target, source){
-  //   console.log('**** ON DROP  ****');
-  //   console.log('Target: ', target);
-  //   console.log('Source: ', source);
-  //   console.log();
-  //   // var obj = source.draggable.$scope();
-  //   // console.log('Scope: ', obj);
-  //   // var objDragItem = source.draggable.$scope().dndDragItem;
-  //   // console.log('Scope: ', objDragItem);
-  // };
-  $scope.onStart = function(target, source){
+  $scope.onDrop = function(target, source, third){
+    console.log('**** ON DROP  ****');
+  };
+  $scope.onStart = function(target, source, third){
     console.log('**** ON START  ****');
   };
 
-  $scope.onDrag = function(target, source){
-    // console.log('**** ON DRAG  ****');
-    // console.log('Target: ', target);
-    // console.log('Source: ', source);
+  $scope.onDrag = function(target, source, third){
+    console.log('**** ON DRAG  ****');
   };
 
-  $scope.onOver = function() {
+  $scope.onOver = function(target, source, third) {
     console.log('**** ON OVER ****');
-    // vm.showDropZone = true;
-    // console.log('Show drop zone? ', vm.showDropZone);
-
+    console.log('**** THIRD: ', third);
   };
 
-  $scope.onOut = function() {
+  $scope.onOut = function(target, source, third) {
     console.log('**** ON OUT ****');
-    // vm.showDropZone = false;
-    // console.log('Show drop zone? ', vm.showDropZone);
-
   };
 
-  $scope.completeTask = completeTask;
-  function completeTask() {
-    console.log('Task completed: ', vm.draggedTask);
-    vm.draggedTask.completed = true;
-    updateTask(vm.draggedTask);
-    vm.draggedTask = {};
-  }
-  $scope.taskBlocked = taskBlocked;
-  function taskBlocked() {
-    console.log('Task blocked: ', vm.draggedTask);
-    vm.draggedTask.blocked = true;
-    updateTask(vm.draggedTask);
-    vm.draggedTask = {};
-  }
-  $scope.giveUpTask = giveUpTask;
-  function giveUpTask() {
-    console.log('You gave up on: ', vm.draggedTask);
-    deleteTask(vm.draggedTask);
-    vm.draggedTask = {};
-  }
-
-  $scope.selectTask = selectTask;
-  function selectTask(a, b, task) {
-    console.log('Task: ', task);
-    vm.draggedTask = task;
-    vm.showDropZone = true;
-    console.log('Show drop zone? ', vm.showDropZone);
-    $scope.$apply();
-  }
-
-
-  $scope.hideDropZone = hideDropZone;
-  function hideDropZone() {
-    console.log('Hidedrop triggering');
-    vm.showDropZone = false;
-    $scope.$apply();
-  }
-
-
-
+  vm.user = CurrentUserService.currentUser;
 
   // if (!vm.user) $state.go('fuckOff');
   getProject();
@@ -111,13 +59,10 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
       // Got the data about this project
       vm.project = data;
-      vm.user = CurrentUserService.currentUser;
       console.log('Got the data', vm.project);
       $rootScope.$broadcast('project ready');
       vm.deadline = vm.project.duration; // setting up deadline
-      if (vm.project.user.id === vm.user.id) {
-        vm.userIsAdmin = true;
-      }
+
       // vm.milestones = [
       //   {
       //     deadline: 3,
@@ -264,8 +209,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   function createTask() {
     vm.newTask.project_id = vm.project.id;
     vm.newTask.start_day = $scope.selectedDay;
-    vm.newTask.completed = false;
-    vm.newTask.blocked = false;
     const taskObj = {
       'task': vm.newTask
     };
@@ -316,17 +259,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     });
   }
 
-  vm.deleteTask = deleteTask;
-  function deleteTask(task) {
-    Task
-    .remove({ id: task.id })
-    .$promise
-    .then(() => {
-      console.log('Task successfully destroyed');
-      $rootScope.$broadcast('Task Change');
-    });
-  }
-
   vm.showTaskEditForm = false;
   vm.selectTaskToEdit = selectTaskToEdit;
   function selectTaskToEdit(taskId) {
@@ -343,9 +275,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   $rootScope.$on('Task Change', () => {
     vm.newTask = {};
     getProject();
-    if(vm.taskToUpdate) {
-      vm.taskToUpdate = Task.get({id: vm.taskToUpdate.id});
-    }
+    vm.taskToUpdate = Task.get({id: vm.taskToUpdate.id});
   });
 
 
@@ -428,55 +358,9 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     getProject();
     selectMilestoneToUpdate(vm.milestoneToUpdate.id);
   });
-
-  vm.allUsers = User.query();
-
-  vm.removeCollaborator = removeCollaborator;
-  function removeCollaborator(userToRemove) {
-    vm.project.user_ids = [];
-    vm.project.users.map(user => {
-      vm.project.user_ids.push(user.id);
-    });
-    if (vm.project.user_ids.length === 1) {
-      return console.log('There must be at least one collaborator');
-    } else {
-      vm.project.user_ids.splice(vm.project.user_ids.indexOf(userToRemove.id), 1);
-      updateProject(vm.project);
-    }
-
-  }
-
-  vm.addCollaborator = addCollaborator;
-  function addCollaborator(userToAdd) {
-    vm.project.user_ids = [];
-    vm.project.users.map(user => {
-      vm.project.user_ids.push(user.id);
-    });
-    if (!vm.project.user_ids.includes(userToAdd.id)) {
-      vm.project.user_ids.push(userToAdd.id);
-      updateProject(vm.project);
-    } else {
-      console.log('User already on project');
-    }
-  }
-
-  vm.updateProject = updateProject;
-  function updateProject(project) {
-    console.log('Project to send to back end: ', project);
-    // if (vm.editForm.$valid) {
-    const projectObj = { 'project': project };
-    Project
-    .update({id: project.id }, projectObj)
-    .$promise
-    .then(() => {
-      $rootScope.$broadcast('Project Change');
-      vm.showEditForm = false;
-    });
-    // }
-  }
-
-  $rootScope.$on('Project Change', () => {
-    getProject();
-  });
-
+  // vm.taskPanel = $('.taskPanel');
+  // vm.controlPanel = $('.controlPanel');
+  // vm.sideBar = $('.sideBar');
+  // vm.sideBar.height = vm.taskPanel.height;
+  // vm.controlPanel.height = vm.taskPanel.height;
 }
