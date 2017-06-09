@@ -174,6 +174,12 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       for (var i = 1; i <= vm.project.duration; i++) {
         vm.projectDays.push(i);
       }
+      vm.logDays = [];
+      vm.projectLogs.map(log => {
+        if (!vm.logDays.includes(log.day)) {
+          vm.logDays.push(log.day);
+        }
+      });
       drawLine();
     });
   }
@@ -478,6 +484,18 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     .$promise
     .then(data => {
       console.log('Milestone updated: ', data);
+      $rootScope.$broadcast('Milestone Change');
+    });
+  }
+
+  vm.deleteMilestone = deleteMilestone;
+  function deleteMilestone(milestone) {
+    Milestone
+    .remove({ id: milestone.id })
+    .$promise
+    .then(() => {
+      console.log('Milestone successfully destroyed');
+      $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'removed', model1: 'milestone'}, milestone);
       $rootScope.$broadcast('Milestone Change');
     });
   }
