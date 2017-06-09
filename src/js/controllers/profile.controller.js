@@ -2,9 +2,9 @@ angular
 .module('ProjectFour')
 .controller('ProfileCtrl', ProfileCtrl);
 
-ProfileCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task'];
+ProfileCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task', 'User'];
 
-function ProfileCtrl($scope, Profile, $stateParams, $state, CurrentUserService, $rootScope) {
+function ProfileCtrl($scope, Profile, $stateParams, $state, CurrentUserService, $rootScope, Task, User) {
 
   const vm = this;
 
@@ -16,4 +16,30 @@ function ProfileCtrl($scope, Profile, $stateParams, $state, CurrentUserService, 
     CurrentUserService.removeUser();
   };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  vm.updateUser = updateUser;
+  function updateUser(user) {
+    const userObj = { 'user': user };
+    User
+    .update({id: user.id}, userObj)
+    .$promise
+    .then(data => {
+      console.log('User updated: ', data);
+      $rootScope.$broadcast('User Change');
+    });
+  }
 }
