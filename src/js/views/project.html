@@ -89,7 +89,22 @@
     </div>
   </div>
   <div class="stats row" ng-show="project.statsShow">
-    <h1>STATS</h1>
+    <h1>{{ project.project.title }} STATS</h1>
+    <h2>Tasks</h2>
+      <ul>
+        <li ng-if="project.totalTasks">Total Tasks Created: {{ project.totalTasks }}</li>
+        <li ng-if="project.totalTasksCompleted">Tasks Completed: {{ project.totalTasksCompleted }}</li>
+        <li ng-if="project.totalTasksDeleted">Tasks Deleted: {{ project.totalTasksDeleted }}</li>
+      </ul>
+    <h2>Active Users</h2>
+      <ul>
+        <li ng-repeat="user in project.activeUsers">{{ user.username }}</li>
+      </ul>
+
+
+
+
+
   </div>
   <div class="log row" ng-show="project.logShow">
     <h1>LOG</h1>
