@@ -479,6 +479,18 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     });
   }
 
+  vm.deleteMilestone = deleteMilestone;
+  function deleteMilestone(milestone) {
+    Milestone
+    .remove({ id: milestone.id })
+    .$promise
+    .then(() => {
+      console.log('Milestone successfully destroyed');
+      $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'removed', model1: 'milestone'}, milestone);
+      $rootScope.$broadcast('Milestone Change');
+    });
+  }
+
   $rootScope.$on('Milestone Change', () => {
     vm.newMilestone = {};
     getProject();

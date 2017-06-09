@@ -231,6 +231,7 @@
       <div class="col-sm-4" ng-repeat="task in project.milestoneToUpdate.availableTasks"  ng-click="project.addMilestoneTask(project.milestoneToUpdate, task)">
         <p><strong>{{task.description}}</strong></p>
       </div>
+      <button type="button" ng-click="project.deleteMilestone(project.milestoneToUpdate)">Remove Milestone</button>
     </div>
     <!-- <div class="col-sm-6">
     <h3>Add tasks:</h3>
