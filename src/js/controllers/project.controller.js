@@ -203,6 +203,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
     const lineWidth = $scope.$lineContainer.width();
     const distanceBetweenDots = (lineWidth / vm.deadline);
+    let currentLineWidth = 0;
 
     for (let i = 1; i <= vm.deadline; i++) {
 
@@ -210,6 +211,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       const dayDot = $('<div>');
       const connectionLine = $('<div>');
       const ship = $('<div>');
+      // $(ship).css('background-image', 'url(/images/boat.png)');
 
 
       // Getting indexes of Milestones
@@ -238,12 +240,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
           // The Current dot
           $(dayDot).attr('id', `lineCurrentDot`);
           $(ship).attr('id', `icon`);
-          $(ship).css({top: $scope.$lineContainer.height() - 100, left: distanceBetweenDots*(vm.currentDay-1), position: 'absolute'});
-          console.log('Line offset y', $scope.$line.offset().top);
-          console.log('Line position y', $scope.$line.position().top);
-
-          console.log('Current Dot offset y', dayDot.offset().top);
-          console.log('Current Dot', dayDot.position().top);
+          $(ship).css({top: $scope.$lineContainer.height() - 100, left: currentLineWidth - 10, position: 'absolute'});
 
           $scope.$lineContainer.append(ship);
 
@@ -298,10 +295,15 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $(connectionLine).css('height', `3px`);
       $(connectionLine).css('margin', `7px 0`);
 
+
+
       // Inserting all new elements in HTML
       $scope.$line.append(dayDot);
-      if (i !== vm.deadline)
-        $scope.$line.append(connectionLine);
+      if (i !== vm.deadline)  $scope.$line.append(connectionLine);
+
+      console.log(`${i}) Dot width: `, dayDot.width());
+      console.log(`${i}) Line width: `, connectionLine.width());
+      currentLineWidth = currentLineWidth + connectionLine.width() + dayDot.width();
     }
     $scope.$line.css('margin', '0 auto');
     // $scope.$lineContainer.css('text-align', 'center');
