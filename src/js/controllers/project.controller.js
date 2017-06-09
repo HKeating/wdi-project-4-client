@@ -167,8 +167,21 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       }
       vm.milestones = data.milestones;
       vm.projectLogs = data.logs;
-
-      console.log('LOGS: ',vm.projectLogs);
+      console.log('Project logs: ', vm.projectLogs);
+      getStats(vm.projectLogs);
+      vm.currentDay = getCurrentDay(vm.project.start_date);
+      $scope.selectedDay = vm.currentDay;
+      vm.project.currentDay = vm.currentDay;
+      vm.projectDays = [];
+      for (var i = 1; i <= vm.project.duration; i++) {
+        vm.projectDays.push(i);
+      }
+      vm.logDays = [];
+      vm.projectLogs.map(log => {
+        if (!vm.logDays.includes(log.day)) {
+          vm.logDays.push(log.day);
+        }
+      });
       drawLine();
     });
   }
@@ -182,8 +195,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   //   console.log('tasks: ', vm.project.tasks);
   // });
 
-  vm.currentDay = 4;
-  $scope.selectedDay = vm.currentDay;
+  // vm.currentDay = 4;
+  // $scope.selectedDay = vm.currentDay;
   // This function draws dots on the line
   function drawLine() {
     $('.line').empty();
@@ -468,6 +481,18 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     });
   }
 
+  vm.deleteMilestone = deleteMilestone;
+  function deleteMilestone(milestone) {
+    Milestone
+    .remove({ id: milestone.id })
+    .$promise
+    .then(() => {
+      console.log('Milestone successfully destroyed');
+      $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'removed', model1: 'milestone'}, milestone);
+      $rootScope.$broadcast('Milestone Change');
+    });
+  }
+
   $rootScope.$on('Milestone Change', () => {
     vm.newMilestone = {};
     getProject();
@@ -561,13 +586,45 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   vm.convertDate = convertDate;
   function convertDate(date) {
     const parsedDate = new Date(date);
-    console.log('parsedDate: ', parsedDate);
-    console.log('UTC time: ', parsedDate.toUTCString());
-    const displayDate = parsedDate.toLocaleDateString() + ' ' + parsedDate.toLocaleTimeString();
+    const displayDate = parsedDate.toLocaleTimeString();
+    // const displayDate = parsedDate.toLocaleDateString() + ' ' + parsedDate.toLocaleTimeString();
     return displayDate;
   }
 
+  vm.getCurrentDay = getCurrentDay;
+  function getCurrentDay(date) {
+    const startDate = new Date(date);
+    const currentDate = new Date();
+    const timeDiff = Math.abs(currentDate.getTime() - startDate.getTime());
+    const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    return diffDays;
+  }
 
+  $rootScope.$on('New Log', getProject);
+
+  vm.getStats = getStats;
+  function getStats(logs) {
+    console.log('Number of logs: ', logs.length);
+    vm.totalTasks = 0;
+    vm.totalTasksCompleted = 0;
+    vm.totalTasksDeleted = 0;
+    vm.activeUsers = [];
+    logs.map(log => {
+      if (log.details.action === 'created' && log.details.model1 === 'task') {
+        vm.totalTasks ++;
+      } else if (log.details.action === 'marked' && log.details.condition === 'completed') {
+        vm.totalTasksCompleted ++ ;
+      } else if (log.details.action === 'removed' && log.details.model1 === 'task') {
+        vm.totalTasksDeleted ++;
+      }
+      console.log('Active users: ', vm.activeUsers);
+      console.log('log.user: ', log.user.id);
+      if (!vm.activeUsers.find(x => x.id === log.user.id)) {
+        console.log('Triggers');
+        vm.activeUsers.push(log.user);
+      }
+    });
+  }
 
 
 

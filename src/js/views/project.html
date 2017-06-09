@@ -89,15 +89,40 @@
     </div>
   </div>
   <div class="stats row" ng-show="project.statsShow">
-    <h1>STATS</h1>
+    <h1>{{ project.project.title }} STATS</h1>
+    <h2>Tasks</h2>
+      <ul>
+        <li ng-if="project.totalTasks">Total Tasks Created: {{ project.totalTasks }}</li>
+        <li ng-if="project.totalTasksCompleted">Tasks Completed: {{ project.totalTasksCompleted }}</li>
+        <li ng-if="project.totalTasksDeleted">Tasks Deleted: {{ project.totalTasksDeleted }}</li>
+      </ul>
+    <h2>Active Users</h2>
+      <ul>
+        <li ng-repeat="user in project.activeUsers">{{ user.username }}</li>
+      </ul>
+
+
+
+
+
   </div>
   <div class="log row" ng-show="project.logShow">
     <h1>LOG</h1>
     <ul>
-      <li ng-repeat="log in project.projectLogs">
-        <p>{{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
+      <li ng-repeat="day in project.projectDays track by $index" ng-if="project.logDays.includes(day)">
+        <h4>Day: {{ day }}</h4>
+        <ul>
+          <li ng-repeat="log in project.projectLogs" ng-if="log.day === day">
+            <p>{{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
+          </li>
+        </ul>
       </li>
     </ul>
+    <!-- <ul>
+      <li ng-repeat="log in project.projectLogs">
+        <p>Day {{ log.day }}, {{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
+      </li>
+    </ul> -->
   </div>
   <div class="blockedAndCompleted" ng-show="project.tasksShow">
     <div class="taskTabs row">
@@ -221,6 +246,7 @@
       <div class="col-sm-4" ng-repeat="task in project.milestoneToUpdate.availableTasks"  ng-click="project.addMilestoneTask(project.milestoneToUpdate, task)">
         <p><strong>{{task.description}}</strong></p>
       </div>
+      <button type="button" ng-click="project.deleteMilestone(project.milestoneToUpdate)">Remove Milestone</button>
     </div>
     <!-- <div class="col-sm-6">
     <h3>Add tasks:</h3>

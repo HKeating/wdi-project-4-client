@@ -122,10 +122,18 @@
   }
   .log {
     height: 450px;
-    background: #558899;
-    flex: 1 1 0; 
+    background: white;
+    flex: 1 1 0;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
+    .blockedText {
+      color: #FF4136;
+      font-weight: bold;
+    }
+    .completedText {
+      color: #2ECC40;
+      font-weight: bold;
+    }
   }
 }
