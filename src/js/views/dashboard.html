@@ -1,7 +1,36 @@
 
-
-
 <div class="dashboard-container pb4">
+
+  <div ng-controller="ProfileCtrl as profile" class="mw9 center pt5 home-font black bg-white br4 mv4 pa4">
+    <center>
+      <img class="br-100 h5 w5 mt5" ng-src="{{profile.user.image}}" alt="">
+      <h3 class="media-heading capitalize">{{ profile.user.username}}<small> &nbsp; UK</small></h3>
+      {{ profile.user.email }}<br>
+      <b>Badges:</b><br>
+      <span class="label label-warning">Most Commits</span>
+      <span class="label label-info">Best Quote</span>
+      <span class="label label-danger">Team Ledge</span>
+      <span class="label label-success">Least Conflicts</span>
+
+      <div class="tl bt b--light-gray pa4 ma4"><b>Tasks:</b><br>
+        <ul class="" ng-repeat="task in profile.user.tasks">
+          <li>{{ task.description }}</li>
+        </ul>
+      </div>
+
+      <form ng-submit="profile.updateUser(profile.user)">
+        <div class="form-group">
+          <label for="name">UserName</label>
+          <input type="text" class="form-control" name="username" id="username" ng-model="profile.user.username">
+          <input type="submit" name="" value="update">
+        </div>
+      </form>
+
+    </center>
+  </div>
+
+
+
 
   <div class="mw9 center home-font black bg-white br4 pa4">
     <h2>Your Projects:</h2>
@@ -72,71 +101,71 @@
     </article>
   </div>
 
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog">
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Create Project</h4>
-      </div>
-      <div class="modal-body">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create Project</h4>
+        </div>
+        <div class="modal-body">
 
-        <div id="closeModal" class="">
-          <form ng-submit="dashboard.createProject()" id="projectForm" name="dashboard.projectForm">
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" ng-model="dashboard.newProject.title" name="title" value="">
-            </div>
-            <div class="form-group">
-              <label for="duration">Duration (in days)</label>
-              <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="dashboard.newProject.duration" name="duration" value="">
-            </div>
-            <div class="form-group">
-              <label for="image">Image</label>
-              <input type="text" ng-model="dashboard.newProject.image" name="image" value="">
-            </div>
-
-            <div class="form-group">
-              <label for="userLoopkup">Add Collaborators</label>
-              <input type="text" name="userLookup" class="lookupField" ng-model="dashboard.userLookup" value="dashboard.userLookup">
-              <button type="button" ng-click="dashboard.addCollaborator()" name="button">Add User</button>
-              <div class="" ng-repeat="user in dashboard.newProject.collaborators">
-                <p>{{ user.username }}</p>
-                <img ng-src="{{user.image}}" alt="">
-                <button type="button" ng-click="dashboard.removeCollaborator(user.id, dashboard.newProject)" name="button">Remove</button>
+          <div id="closeModal" class="">
+            <form ng-submit="dashboard.createProject()" id="projectForm" name="dashboard.projectForm">
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" ng-model="dashboard.newProject.title" name="title" value="">
               </div>
-              <!-- <p ng-show="dashboard.newProject.user_ids.length">{{dashboard.newProject.user_ids.length}} collaborator(s).</p> -->
-            </div>
+              <div class="form-group">
+                <label for="duration">Duration (in days)</label>
+                <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="dashboard.newProject.duration" name="duration" value="">
+              </div>
+              <div class="form-group">
+                <label for="image">Image</label>
+                <input type="text" ng-model="dashboard.newProject.image" name="image" value="">
+              </div>
 
-            <div class="form-group">
-              <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Save</button>
-            </div>
+              <div class="form-group">
+                <label for="userLoopkup">Add Collaborators</label>
+                <input type="text" name="userLookup" class="lookupField" ng-model="dashboard.userLookup" value="dashboard.userLookup">
+                <button type="button" ng-click="dashboard.addCollaborator()" name="button">Add User</button>
+                <div class="" ng-repeat="user in dashboard.newProject.collaborators">
+                  <p>{{ user.username }}</p>
+                  <img ng-src="{{user.image}}" alt="">
+                  <button type="button" ng-click="dashboard.removeCollaborator(user.id, dashboard.newProject)" name="button">Remove</button>
+                </div>
+                <!-- <p ng-show="dashboard.newProject.user_ids.length">{{dashboard.newProject.user_ids.length}} collaborator(s).</p> -->
+              </div>
 
-          </form>
+              <div class="form-group">
+                <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Save</button>
+              </div>
+
+            </form>
+          </div>
+
+          <div id="updateProject" class="" ng-show="dashboard.showEditForm">
+            <form ng-submit="dashboard.updateProject(dashboard.projectToUpdate)" name="dashboard.updateProjectForm">
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" ng-model="dashboard.projectToUpdate.title" name="title" value="">
+              </div>
+              <div class="form-group">
+                <input type="submit" name="submit" value="Update Project">
+              </div>
+              <div class="form-group">
+                <button ng-click="dashboard.hideEditForm()" type="button" name="hideForm">Cancel</button>
+              </div>
+            </form>
+          </div>
         </div>
-
-        <div id="updateProject" class="" ng-show="dashboard.showEditForm">
-          <form ng-submit="dashboard.updateProject(dashboard.projectToUpdate)" name="dashboard.updateProjectForm">
-            <div class="form-group">
-              <label for="title">Title</label>
-              <input type="text" ng-model="dashboard.projectToUpdate.title" name="title" value="">
-            </div>
-            <div class="form-group">
-              <input type="submit" name="submit" value="Update Project">
-            </div>
-            <div class="form-group">
-              <button ng-click="dashboard.hideEditForm()" type="button" name="hideForm">Cancel</button>
-            </div>
-          </form>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
-</div>
 </div>

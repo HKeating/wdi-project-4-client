@@ -23,20 +23,6 @@ function ProfileCtrl($scope, Profile, $stateParams, $state, CurrentUserService, 
   };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   vm.updateUser = updateUser;
   function updateUser(user) {
     const userObj = { 'user': user };

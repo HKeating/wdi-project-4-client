@@ -28,6 +28,7 @@
 <button ng-click="profile.logOut()" type="button" name="button">Log Out</button>
 </div>
 </div> -->
+
 <div class="dashboard-container greyBG">
   <div class="mw9 center pt5">
 
@@ -48,8 +49,20 @@
               <li>{{ task.description }}</li>
             </ul>
           </div>
+
+          <form ng-submit="profile.updateUser(profile.user)">
+            <div class="form-group">
+              <label for="name">UserName</label>
+              <input type="text" class="form-control" name="username" id="username" ng-model="profile.user.username">
+              <input type="submit" name="" value="update">
+            </div>
+          </form>
+
+
+
+
           </center>
+        </div>
       </div>
     </div>
   </div>
-</div>
