@@ -35,7 +35,7 @@
       <div class="">
         <center>
           <img class="br-100 h5 w5 mt5" ng-src="{{profile.user.image}}" alt="">
-          <h3 class="media-heading capitalize">{{ profile.user.username }}<small> &nbsp; UK</small></h3>
+          <h3 class="media-heading capitalize">{{ profile.user.username}}<small> &nbsp; UK</small></h3>
           {{ profile.user.email }}<br>
           <b>Badges:</b><br>
           <span class="label label-warning">Most Commits</span>
@@ -43,7 +43,7 @@
           <span class="label label-danger">Team Ledge</span>
           <span class="label label-success">Least Conflicts</span>
 
-          <div class="tl bt pa4 ma4"><b>Tasks:</b><br>
+          <div class="tl bt b--light-gray pa4 ma4"><b>Tasks:</b><br>
             <ul class="" ng-repeat="task in profile.user.tasks">
               <li>{{ task.description }}</li>
             </ul>
