@@ -94,7 +94,7 @@
   <div class="log row" ng-show="project.logShow">
     <h1>LOG</h1>
     <ul>
-      <li ng-repeat="day in project.projectDays track by $index">
+      <li ng-repeat="day in project.projectDays track by $index" ng-if="project.logDays.includes(day)">
         <h4>Day: {{ day }}</h4>
         <ul>
           <li ng-repeat="log in project.projectLogs" ng-if="log.day === day">
