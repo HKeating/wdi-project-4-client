@@ -1,25 +1,55 @@
-<h1>Profile</h1>
-<img ng-src="{{profile.user.image}}" alt="">
-<h3>{{ profile.user.username }}</h3>
-<p>{{ profile.user.email }}</p>
+<!-- <div class="dashboard-container">
+<div class="mw9 center pt5">
 
-<br>
 
-<h3>Tasks: </h3>
-<ul ng-repeat="task in profile.user.tasks">
-  <li>{{ task.description }}</li>
+<div class="dib">
+<img class="br-100 h5 w5" ng-src="{{profile.user.image}}" alt="">
+</div>
+
+<div class="dib f1 w5 ml5">
+<p class="capitalize">{{ profile.user.username }}</p>
+<p class="f4 ">{{ profile.user.email }}</p>
+</div>
+
+
+<div class="fr tc f1 w5">
+<p class="bb">Tasks</p>
+<ul class="f4" ng-repeat="task in profile.user.tasks">
+<li>{{ task.description }}</li>
 </ul>
+</div>
 
-<br>
-<br>
 
 <h3>Badges: </h3>
-<!-- <ul ng-repeat="task in profile.user.tasks">
-  <li>{{ task.description }}</li>
-</ul> -->
-
-<br>
-<br>
-
+<ul ng-repeat="task in profile.user.tasks">
+<li>{{ task.description }}</li>
+</ul>
 
 <button ng-click="profile.logOut()" type="button" name="button">Log Out</button>
+</div>
+</div> -->
+<div class="dashboard-container greyBG">
+  <div class="mw9 center pt5">
+
+    <div class="bg-white br4">
+      <div class="">
+        <center>
+          <img class="br-100 h5 w5 mt5" ng-src="{{profile.user.image}}" alt="">
+          <h3 class="media-heading capitalize">{{ profile.user.username }}<small> &nbsp; UK</small></h3>
+          {{ profile.user.email }}<br>
+          <b>Badges:</b><br>
+          <span class="label label-warning">Most Commits</span>
+          <span class="label label-info">Best Quote</span>
+          <span class="label label-danger">Team Ledge</span>
+          <span class="label label-success">Least Conflicts</span>
+
+          <div class="tl bt pa4 ma4"><b>Tasks:</b><br>
+            <ul class="" ng-repeat="task in profile.user.tasks">
+              <li>{{ task.description }}</li>
+            </ul>
+          </div>
+          </center>
+      </div>
+    </div>
+  </div>
+</div>
