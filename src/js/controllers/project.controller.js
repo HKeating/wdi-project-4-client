@@ -172,6 +172,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       }
       vm.milestones = data.milestones;
       vm.projectLogs = data.logs;
+      console.log('Project logs: ', vm.projectLogs);
+      getStats(vm.projectLogs);
       vm.currentDay = getCurrentDay(vm.project.start_date);
       $scope.selectedDay = vm.currentDay;
       vm.project.currentDay = vm.currentDay;
@@ -628,8 +630,35 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     return diffDays;
   }
 
+  $rootScope.$on('New Log', getProject);
 
+  vm.getStats = getStats;
+  function getStats(logs) {
+    console.log('Number of logs: ', logs.length);
+    vm.totalTasks = 0;
+    vm.totalTasksCompleted = 0;
+    vm.totalTasksDeleted = 0;
+    vm.activeUsers = [];
+    logs.map(log => {
+      if (!vm.activeUsers.find(x => x.id === log.user.id)) {
+        log.user.tasksCompleted = 0;
+        log.user.tasksDeleted = 0;
+        vm.activeUsers.push(log.user);
+      }
+      if (log.details.action === 'created' && log.details.model1 === 'task') {
+        vm.totalTasks ++;
+      } else if (log.details.action === 'marked' && log.details.condition === 'completed') {
+        (vm.activeUsers.find(x => x.id === log.user.id)).tasksCompleted ++;
+        vm.totalTasksCompleted ++ ;
+      } else if (log.details.action === 'removed' && log.details.model1 === 'task') {
+        (vm.activeUsers.find(x => x.id === log.user.id)).tasksDeleted ++;
+        vm.totalTasksDeleted ++;
+      }
+      console.log('Active users: ', vm.activeUsers);
+      console.log('log.user: ', log.user.id);
 
+    });
+  }
 
 
 

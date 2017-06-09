@@ -71,19 +71,21 @@ function LogCtrl($rootScope, Log) {
     }
 
     console.log('New log: ', vm.newLog);
-    createLog(vm.newLog, project, subject);
+    createLog(vm.newLog, project, subject, params);
   });
 
 
   vm.createLog = createLog;
-  function createLog(content, project, user) {
+  function createLog(content, project, user, params) {
 
-    const logObj = {'log': { 'project_id': project.id, 'user_id': user.id, 'content': content , 'day': project.currentDay}};
+    const logObj = {'log': { 'project_id': project.id, 'user_id': user.id, 'content': content , 'day': project.currentDay, 'details': params}};
+    console.log('Sending this as log: ', logObj);
     Log
       .save(logObj)
       .$promise
       .then(data => {
         console.log('New log saved: ', data);
+        $rootScope.$broadcast('New Log');
       });
   }
 }
