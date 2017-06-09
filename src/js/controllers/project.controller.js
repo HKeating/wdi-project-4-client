@@ -2,6 +2,8 @@ angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
 
+let wasShipAnimated = false;
+
 ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task', 'Milestone', 'User'];
 
 function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone, User) {
@@ -243,8 +245,10 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
           $(dayDot).attr('id', `lineCurrentDot`);
           $(ship).attr('id', `icon`);
           shipLineWidth = currentLineWidth - 10;
-          $(ship).css({top: $scope.$lineContainer.height() - 100, left: 0, position: 'absolute'});
-          $scope.$lineContainer.append(ship);
+          if(!wasShipAnimated) {
+            $(ship).css({top: $scope.$lineContainer.height() - 100, left: 0, position: 'absolute'});
+            $scope.$lineContainer.append(ship);
+          }
 
 
         } else {
@@ -309,11 +313,12 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     }
     $scope.$line.css('margin', '0 auto');
     // $scope.$lineContainer.css('text-align', 'center');
-    $(ship).animate({
-      left: shipLineWidth
-    }, 1500, function() {
-
-    });
+    if(!wasShipAnimated) {
+      wasShipAnimated = true;
+      $(ship).animate({
+        left: shipLineWidth
+      }, 1500);
+    }
   }
 
 
