@@ -98,7 +98,11 @@
       </ul>
     <h2>Active Users</h2>
       <ul>
-        <li ng-repeat="user in project.activeUsers">{{ user.username }}</li>
+        <li ng-repeat="user in project.activeUsers">
+          <p>{{ user.username }}</p>
+          <p ng-if="user.tasksCompleted">Tasks completed: {{ user.tasksCompleted }}</p>
+          <p ng-if="user.tasksDeleted">Tasks deleted: {{ user.tasksDeleted }}</p>
+        </li>
       </ul>
 
 
