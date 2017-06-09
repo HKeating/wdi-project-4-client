@@ -193,6 +193,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   function drawLine() {
     $('.line').empty();
     console.log(`Line width is ${$scope.$line.width()}`);
+
     const lineWidth = $scope.$line.width();
     const distanceBetweenDots = (lineWidth / vm.deadline);
 
@@ -201,6 +202,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       // Making a day dot and adding a class to it
       const dayDot = $('<div>');
       const connectionLine = $('<div>');
+      const ship = $('<div>');
+
 
       // Getting indexes of Milestones
       const arrayOfMilestoneIndexes = [];
@@ -227,6 +230,12 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         } else if (i === vm.currentDay) {
           // The Current dot
           $(dayDot).attr('id', `lineCurrentDot`);
+          $(ship).attr('id', `icon`);
+          $(ship).css({top: $scope.$line.offset().top, left: distanceBetweenDots*(vm.currentDay-1), position: 'absolute'});
+          console.log('Line offset y', $scope.$line.offset().top);
+          console.log('Line position y', $scope.$line.position().top);
+          $scope.$line.append(ship);
+
 
         } else {
           // Any other dot
