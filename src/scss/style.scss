@@ -26,12 +26,20 @@ $purple: #b10dc9;
   z-index: 1;
 }
 
+.lineContainer {
+  background-color: #b4da55;
+  height:200px;
+  margin: 40px 10px;
+  position: relative;
+}
 
 
 .line {
   background-color: white;
-  margin: 40px 10px;
-  height: 100px;
+  // margin: 40px 10px;
+  // height: 200px;
+  position: absolute;
+  bottom: 10px;
 }
 
 .lineDayDot {
@@ -134,14 +142,14 @@ $purple: #b10dc9;
   background-color: $green;
   height: 3px;
   display: inline-block;
-
+  // position: absolute;
 }
 
 .lineFuture {
   background-color: $black;
   height: 3px;
   display: inline-block;
-
+  // position: absolute;
 }
 
 .lineMilestone {

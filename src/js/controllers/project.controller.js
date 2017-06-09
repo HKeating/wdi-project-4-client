@@ -187,6 +187,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   // Making refernces to elements in the DOM
   $scope.$line = $('.line');
+  $scope.$lineContainer = $('.lineContainer');
   $scope.$dayLabel = $('#dayLabel');
 
   // $rootScope.$on('project ready', () => {
@@ -197,10 +198,10 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   // $scope.selectedDay = vm.currentDay;
   // This function draws dots on the line
   function drawLine() {
-    $('.line').empty();
-    console.log(`Line width is ${$scope.$line.width()}`);
+    $scope.$line.empty();
+    console.log(`Line Container width is ${$scope.$lineContainer.width()}`);
 
-    const lineWidth = $scope.$line.width();
+    const lineWidth = $scope.$lineContainer.width();
     const distanceBetweenDots = (lineWidth / vm.deadline);
 
     for (let i = 1; i <= vm.deadline; i++) {
@@ -237,10 +238,14 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
           // The Current dot
           $(dayDot).attr('id', `lineCurrentDot`);
           $(ship).attr('id', `icon`);
-          $(ship).css({top: $scope.$line.offset().top, left: distanceBetweenDots*(vm.currentDay-1), position: 'absolute'});
+          $(ship).css({top: $scope.$lineContainer.height() - 100, left: distanceBetweenDots*(vm.currentDay-1), position: 'absolute'});
           console.log('Line offset y', $scope.$line.offset().top);
           console.log('Line position y', $scope.$line.position().top);
-          $scope.$line.append(ship);
+
+          console.log('Current Dot offset y', dayDot.offset().top);
+          console.log('Current Dot', dayDot.position().top);
+
+          $scope.$lineContainer.append(ship);
 
 
         } else {
@@ -293,14 +298,13 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $(connectionLine).css('height', `3px`);
       $(connectionLine).css('margin', `7px 0`);
 
-
-
       // Inserting all new elements in HTML
       $scope.$line.append(dayDot);
       if (i !== vm.deadline)
         $scope.$line.append(connectionLine);
     }
-
+    $scope.$line.css('margin', '0 auto');
+    // $scope.$lineContainer.css('text-align', 'center');
   }
 
 
