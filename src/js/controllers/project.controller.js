@@ -94,11 +94,14 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   $scope.completeTask = completeTask;
   function completeTask() {
-    console.log('Task completed: ', vm.draggedTask);
-    vm.draggedTask.completed = true;
-    $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'marked', model1: 'task', preposition: 'as', condition: 'completed'}, vm.draggedTask);
-    updateTask(vm.draggedTask);
-    vm.draggedTask = {};
+
+    $scope.$card.fadeOut(1000, () => {
+      console.log('Task completed: ', vm.draggedTask);
+      vm.draggedTask.completed = true;
+      $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'marked', model1: 'task', preposition: 'as', condition: 'completed'}, vm.draggedTask);
+      updateTask(vm.draggedTask);
+      vm.draggedTask = {};
+    });
   }
 
   $scope.taskBlocked = taskBlocked;
