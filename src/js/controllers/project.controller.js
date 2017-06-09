@@ -203,14 +203,16 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
     const lineWidth = $scope.$lineContainer.width();
     const distanceBetweenDots = (lineWidth / vm.deadline);
+    const ship = $('<div>');
+
     let currentLineWidth = 0;
+    let shipLineWidth = 0;
 
     for (let i = 1; i <= vm.deadline; i++) {
 
       // Making a day dot and adding a class to it
       const dayDot = $('<div>');
       const connectionLine = $('<div>');
-      const ship = $('<div>');
       // $(ship).css('background-image', 'url(/images/boat.png)');
 
 
@@ -240,8 +242,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
           // The Current dot
           $(dayDot).attr('id', `lineCurrentDot`);
           $(ship).attr('id', `icon`);
-          $(ship).css({top: $scope.$lineContainer.height() - 100, left: currentLineWidth - 10, position: 'absolute'});
-
+          shipLineWidth = currentLineWidth - 10;
+          $(ship).css({top: $scope.$lineContainer.height() - 100, left: 0, position: 'absolute'});
           $scope.$lineContainer.append(ship);
 
 
@@ -307,6 +309,11 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     }
     $scope.$line.css('margin', '0 auto');
     // $scope.$lineContainer.css('text-align', 'center');
+    $(ship).animate({
+      left: shipLineWidth
+    }, 1500, function() {
+
+    });
   }
 
 
