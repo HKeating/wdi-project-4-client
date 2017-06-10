@@ -2,6 +2,8 @@ angular
 .module('ProjectFour')
 .controller('ProjectCtrl', ProjectCtrl);
 
+let wasShipAnimated = false;
+
 ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task', 'Milestone', 'User'];
 
 function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone, User) {
@@ -92,11 +94,14 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   $scope.completeTask = completeTask;
   function completeTask() {
-    console.log('Task completed: ', vm.draggedTask);
-    vm.draggedTask.completed = true;
-    $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'marked', model1: 'task', preposition: 'as', condition: 'completed'}, vm.draggedTask);
-    updateTask(vm.draggedTask);
-    vm.draggedTask = {};
+
+    $scope.$card.fadeOut(1000, () => {
+      console.log('Task completed: ', vm.draggedTask);
+      vm.draggedTask.completed = true;
+      $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'marked', model1: 'task', preposition: 'as', condition: 'completed'}, vm.draggedTask);
+      updateTask(vm.draggedTask);
+      vm.draggedTask = {};
+    });
   }
 
   $scope.taskBlocked = taskBlocked;
@@ -189,6 +194,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   // Making refernces to elements in the DOM
   $scope.$line = $('.line');
+  $scope.$lineContainer = $('.lineContainer');
   $scope.$dayLabel = $('#dayLabel');
 
   // $rootScope.$on('project ready', () => {
@@ -199,16 +205,23 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   // $scope.selectedDay = vm.currentDay;
   // This function draws dots on the line
   function drawLine() {
-    $('.line').empty();
-    console.log(`Line width is ${$scope.$line.width()}`);
-    const lineWidth = $scope.$line.width();
+    $scope.$line.empty();
+    console.log(`Line Container width is ${$scope.$lineContainer.width()}`);
+
+    const lineWidth = $scope.$lineContainer.width();
     const distanceBetweenDots = (lineWidth / vm.deadline);
+    const ship = $('<div>');
+
+    let currentLineWidth = 0;
+    let shipLineWidth = 0;
 
     for (let i = 1; i <= vm.deadline; i++) {
 
       // Making a day dot and adding a class to it
       const dayDot = $('<div>');
       const connectionLine = $('<div>');
+      // $(ship).css('background-image', 'url(/images/boat.png)');
+
 
       // Getting indexes of Milestones
       const arrayOfMilestoneIndexes = [];
@@ -235,6 +248,13 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         } else if (i === vm.currentDay) {
           // The Current dot
           $(dayDot).attr('id', `lineCurrentDot`);
+          $(ship).attr('id', `icon`);
+          shipLineWidth = currentLineWidth - 10;
+          if(!wasShipAnimated) {
+            $(ship).css({top: $scope.$lineContainer.height() - 100, left: 0, position: 'absolute'});
+            $scope.$lineContainer.append(ship);
+          }
+
 
         } else {
           // Any other dot
@@ -290,10 +310,20 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
       // Inserting all new elements in HTML
       $scope.$line.append(dayDot);
-      if (i !== vm.deadline)
-        $scope.$line.append(connectionLine);
-    }
+      if (i !== vm.deadline)  $scope.$line.append(connectionLine);
 
+      console.log(`${i}) Dot width: `, dayDot.width());
+      console.log(`${i}) Line width: `, connectionLine.width());
+      currentLineWidth = currentLineWidth + connectionLine.width() + dayDot.width();
+    }
+    $scope.$line.css('margin', '0 auto');
+    // $scope.$lineContainer.css('text-align', 'center');
+    if(!wasShipAnimated) {
+      wasShipAnimated = true;
+      $(ship).animate({
+        left: shipLineWidth
+      }, 1500);
+    }
   }
 
 
@@ -610,19 +640,23 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     vm.totalTasksDeleted = 0;
     vm.activeUsers = [];
     logs.map(log => {
+      if (!vm.activeUsers.find(x => x.id === log.user.id)) {
+        log.user.tasksCompleted = 0;
+        log.user.tasksDeleted = 0;
+        vm.activeUsers.push(log.user);
+      }
       if (log.details.action === 'created' && log.details.model1 === 'task') {
         vm.totalTasks ++;
       } else if (log.details.action === 'marked' && log.details.condition === 'completed') {
+        (vm.activeUsers.find(x => x.id === log.user.id)).tasksCompleted ++;
         vm.totalTasksCompleted ++ ;
       } else if (log.details.action === 'removed' && log.details.model1 === 'task') {
+        (vm.activeUsers.find(x => x.id === log.user.id)).tasksDeleted ++;
         vm.totalTasksDeleted ++;
       }
       console.log('Active users: ', vm.activeUsers);
       console.log('log.user: ', log.user.id);
-      if (!vm.activeUsers.find(x => x.id === log.user.id)) {
-        console.log('Triggers');
-        vm.activeUsers.push(log.user);
-      }
+
     });
   }
 

@@ -1,16 +1,3 @@
-// Import all of your scss files here
-
-@import "homepage";
-@import "navbar";
-@import "taskPanel";
-@import "controlPanel";
-@import "sideBar";
-@import "dashboard";
-@import "login";
-@import "project";
-@import "line";
-@import "profile";
-
 $blue:  #0074D9;
 $green: #01FF70;
 $darkGreen: #2ecc40;
@@ -20,30 +7,45 @@ $red: #FF4136;
 $purple: #b10dc9;
 
 #icon {
-  display: block;
+
+  display: inline-block;
   margin-bottom: 10px;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
+  background-color: $red;
+  //background-image: url('/images/boat.png');
+  z-index: 1;
 }
 
+.lineContainer {
+  background-color: white;
+  height:200px;
+  margin: 40px 10px;
+  position: relative;
+  z-index: 0;
+}
 
 
 .line {
-  background-color: $grey;
-  margin: 0px 10px;
+  background-color: white;
+  // margin: 40px 10px;
+  // height: 200px;
+  position: absolute;
+  bottom: 10px;
 }
 
 .lineDayDot {
-  background-color: $black;
-  //border-style: solid;
+  background-color: transparent;
+  border: 2px solid $black;
   border-radius: 50%;
   width: 15px;
   height: 15px;
   display: inline-block;
+
 }
 
 .lineDayDot:hover {
-  background-color: $blue;
+  background-color: $black;
   //border-style: solid;
   border-radius: 50%;
   width: 15px;
@@ -53,6 +55,8 @@ $purple: #b10dc9;
 
 .linePastDayDot {
   background-color: $green;
+  //border: 2px solid $green;
+
   //border-style: solid;
   border-radius: 50%;
   width: 15px;
@@ -62,7 +66,7 @@ $purple: #b10dc9;
 }
 
 .linePastDayDot:hover {
-  background-color: $blue;
+  background-color: $green;
   //border-style: solid;
   border-radius: 50%;
   width: 15px;
@@ -98,7 +102,8 @@ $purple: #b10dc9;
 }
 
 #lineDeadlineDot {
-  background-color: $red;
+
+  background-color: $black;
   border-radius: 50%;
   width: 20px;
   height: 20px;
@@ -114,7 +119,9 @@ $purple: #b10dc9;
 }
 
 #lineCurrentDot {
-  background-color: $darkGreen;
+
+  border: 2px solid $green;
+  background-color: transparent;
   border-radius: 50%;
   width: 15px;
   height: 15px;
@@ -133,28 +140,22 @@ $purple: #b10dc9;
   background-color: $green;
   height: 3px;
   display: inline-block;
-
+  // position: absolute;
 }
 
 .lineFuture {
   background-color: $black;
   height: 3px;
   display: inline-block;
-
+  // position: absolute;
 }
 
 .lineMilestone {
-  background-color: $purple;
+
+  background-color: $blue;
   height: 100px;
-  width: 6px;
+  width: 5px;
   display: inline-block;
+  border-radius: 5px;
 
-}
-
-.contributorDiv {
-  border-radius: 50%;
-  width: 50px;
-  display: inline;
-  //float: left;
-  margin: 0 5px;
 }
