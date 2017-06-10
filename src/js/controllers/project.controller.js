@@ -306,8 +306,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $(connectionLine).css('height', `3px`);
       $(connectionLine).css('margin', `7px 0`);
 
-
-
+      
       // Inserting all new elements in HTML
       $scope.$line.append(dayDot);
       if (i !== vm.deadline)  $scope.$line.append(connectionLine);
@@ -356,8 +355,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     .$promise
     .then((data) => {
       console.log('New task created: ', data);
-      $rootScope.$broadcast('Task Change');
       $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'created', model1: 'task'}, data);
+      $rootScope.$broadcast('Task Change');
     });
   }
 
