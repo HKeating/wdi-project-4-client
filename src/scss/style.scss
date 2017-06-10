@@ -9,3 +9,152 @@
 @import "login";
 @import "project";
 @import "line";
+@import "profile";
+
+$blue:  #0074D9;
+$green: #01FF70;
+$darkGreen: #2ecc40;
+$black: #111111;
+$grey: #AAAAAA;
+$red: #FF4136;
+$purple: #b10dc9;
+
+#icon {
+  display: block;
+  margin-bottom: 10px;
+  width: 40px;
+  height: 40px;
+}
+
+
+
+.line {
+  background-color: $grey;
+  margin: 0px 10px;
+}
+
+.lineDayDot {
+  background-color: $black;
+  //border-style: solid;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+}
+
+.lineDayDot:hover {
+  background-color: $blue;
+  //border-style: solid;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+}
+
+.linePastDayDot {
+  background-color: $green;
+  //border-style: solid;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+
+}
+
+.linePastDayDot:hover {
+  background-color: $blue;
+  //border-style: solid;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+}
+
+// .lineDotSelected {
+//   background-color: blue;
+// }
+
+#lineStartDot {
+  background-color: $green;
+  //border-style: solid;
+  // border-style: solid;
+  // border-color: green;
+  // border-width: 1px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+
+#lineStartDot:hover {
+  background-color: $blue;
+  //border-style: solid;
+  // border-style: solid;
+  // border-color: green;
+  // border-width: 1px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+
+#lineDeadlineDot {
+  background-color: $red;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+
+}
+
+#lineDeadlineDot:hover {
+  background-color: $blue;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+
+#lineCurrentDot {
+  background-color: $darkGreen;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+
+}
+
+#lineCurrentDot:hover {
+  background-color: $blue;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+}
+
+.linePast {
+  background-color: $green;
+  height: 3px;
+  display: inline-block;
+
+}
+
+.lineFuture {
+  background-color: $black;
+  height: 3px;
+  display: inline-block;
+
+}
+
+.lineMilestone {
+  background-color: $purple;
+  height: 100px;
+  width: 6px;
+  display: inline-block;
+
+}
+
+.contributorDiv {
+  border-radius: 50%;
+  width: 50px;
+  display: inline;
+  //float: left;
+  margin: 0 5px;
+}
