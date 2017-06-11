@@ -245,16 +245,28 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         if(i === 1) {
           // The First dot
           $(dayDot).attr('id', `lineStartDot`);
+          $(firstDayLabel).addClass('lineLabel');
           $(firstDayLabel).html('Day 1');
-          $(firstDayLabel).css({top: $scope.$lineContainer.height(), left: currentLineWidth, position: 'absolute'});
+          $(firstDayLabel).css({top: $scope.$lineContainer.height()-5, left: currentLineWidth, position: 'absolute'});
+
+          // if first day is current day, add ship to the first day
+          if(!wasShipAnimated && vm.currentDay === i) {
+            $(ship).attr('id', `icon`);
+            shipLineWidth = 0;
+            $(ship).css({top: $scope.$lineContainer.height() - 80, left: 0, position: 'absolute'});
+            $scope.$lineContainer.append(ship);
+          }
+
           $scope.$lineContainer.append(firstDayLabel);
 
 
         } else if (i === vm.deadline) {
           // The Last dot
           $(dayDot).attr('id', `lineDeadlineDot`);
+
+          $(finalDayLabel).addClass('lineLabel');
           $(finalDayLabel).html(`Day ${vm.deadline}`);
-          $(finalDayLabel).css({top: $scope.$lineContainer.height(), left: currentLineWidth+20, position: 'absolute'});
+          $(finalDayLabel).css({top: $scope.$lineContainer.height()-5, left: currentLineWidth, position: 'absolute'});
           $scope.$lineContainer.append(finalDayLabel);
 
 
@@ -262,8 +274,10 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         } else if (i === vm.currentDay) {
           // The Current dot
           $(dayDot).attr('id', `lineCurrentDot`);
+
+          $(currentDayLabel).addClass('lineLabel');
           $(currentDayLabel).html(`Day ${vm.currentDay}`);
-          $(currentDayLabel).css({top: $scope.$lineContainer.height(), left: currentLineWidth-10, position: 'absolute'});
+          $(currentDayLabel).css({top: $scope.$lineContainer.height()-5, left: currentLineWidth-10, position: 'absolute'});
           $scope.$lineContainer.append(currentDayLabel);
 
           $(ship).attr('id', `icon`);
@@ -321,7 +335,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       }
 
       $(connectionLine).css('width', `${distanceBetweenDots-15}px`);
-      $(connectionLine).css('height', `3px`);
       $(connectionLine).css('margin', `7px 0`);
 
 
@@ -333,8 +346,10 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       console.log(`${i}) Line width: `, connectionLine.width());
       currentLineWidth = currentLineWidth + connectionLine.width() + dayDot.width();
     }
+
+    // After the loop
     $scope.$line.css('margin', '0 auto');
-    // $scope.$lineContainer.css('text-align', 'center');
+
     if(!wasShipAnimated) {
       wasShipAnimated = true;
       $(ship).animate({
