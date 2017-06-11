@@ -158,10 +158,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
 
 
-  // if (!vm.user) $state.go('fuckOff');
   getProject();
 
-  // vm.getProject = getProject;
   function getProject() {
     Project.get({ id: $stateParams.id}).$promise.then(data => {
 
@@ -215,6 +213,9 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     const lineWidth = $scope.$lineContainer.width();
     const distanceBetweenDots = (lineWidth / vm.deadline);
     const ship = $('<div>');
+    const firstDayLabel = $('<div>');
+    const currentDayLabel = $('<div>');
+    const finalDayLabel = $('<div>');
 
     let currentLineWidth = 0;
     let shipLineWidth = 0;
@@ -244,18 +245,31 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         if(i === 1) {
           // The First dot
           $(dayDot).attr('id', `lineStartDot`);
+          $(firstDayLabel).html('Day 1');
+          $(firstDayLabel).css({top: $scope.$lineContainer.height(), left: currentLineWidth, position: 'absolute'});
+          $scope.$lineContainer.append(firstDayLabel);
+
 
         } else if (i === vm.deadline) {
           // The Last dot
           $(dayDot).attr('id', `lineDeadlineDot`);
+          $(finalDayLabel).html(`Day ${vm.deadline}`);
+          $(finalDayLabel).css({top: $scope.$lineContainer.height(), left: currentLineWidth+20, position: 'absolute'});
+          $scope.$lineContainer.append(finalDayLabel);
+
+
 
         } else if (i === vm.currentDay) {
           // The Current dot
           $(dayDot).attr('id', `lineCurrentDot`);
+          $(currentDayLabel).html(`Day ${vm.currentDay}`);
+          $(currentDayLabel).css({top: $scope.$lineContainer.height(), left: currentLineWidth-10, position: 'absolute'});
+          $scope.$lineContainer.append(currentDayLabel);
+
           $(ship).attr('id', `icon`);
           shipLineWidth = currentLineWidth - 10;
           if(!wasShipAnimated) {
-            $(ship).css({top: $scope.$lineContainer.height() - 100, left: 0, position: 'absolute'});
+            $(ship).css({top: $scope.$lineContainer.height() - 80, left: 0, position: 'absolute'});
             $scope.$lineContainer.append(ship);
           }
 
