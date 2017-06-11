@@ -116,6 +116,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   $scope.giveUpTask = giveUpTask;
   function giveUpTask() {
     console.log('You gave up on: ', vm.draggedTask);
+    $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'removed', model1: 'task'}, vm.draggedTask);
     deleteTask(vm.draggedTask);
     vm.draggedTask = {};
   }
@@ -306,7 +307,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $(connectionLine).css('height', `3px`);
       $(connectionLine).css('margin', `7px 0`);
 
-      
+
       // Inserting all new elements in HTML
       $scope.$line.append(dayDot);
       if (i !== vm.deadline)  $scope.$line.append(connectionLine);
@@ -406,7 +407,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     .$promise
     .then(() => {
       console.log('Task successfully destroyed');
-      $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'removed', model1: 'task'}, task);
       $rootScope.$broadcast('Task Change');
     });
   }
