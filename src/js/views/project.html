@@ -16,23 +16,16 @@
       <div id="{{task.id}}" class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true, onStart:'selectTask(task)', onDrag:'onDrag(task)', onStop:'hideDropZone'}">
         <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
         </div>
-        <!-- <div class="taskContent col-sm-10">
-        <div class="col-sm-12">
-        <p>{{task.description}}</p>
-      </div> -->
       <div class="taskContent col-sm-10">
-        <div class="col-sm-12">
+        <div class="taskDescription row">
           <p>{{task.description}}</p>
-          <!-- <button ng-click="project.selectTaskToEdit(task.id)" type="button" name="button">?</button> -->
         </div>
         <div class="row">
-          <div class="col-sm-6 taskTags">
-            <p>Some tags</p>
+          <div class="col-sm-5 taskDueDay">
+            <p>Complete by day: <strong>{{ task.due_day }}</strong></p>
           </div>
-          <div class="col-sm-6 taskUserContainer">
-            <div ng-repeat="user in task.users" class="col-sm-3">
-              <img class="taskUserImg" ng-src="{{ user.image }}" alt="">
-            </div>
+          <div class="col-sm-7 taskUserContainer">
+              <img  ng-repeat="user in task.users" class="taskUserImg" ng-src="{{ user.image }}" alt="">
           </div>
         </div>
       </div>
@@ -41,17 +34,25 @@
   <div class="addTask col-sm-6">
     <div class="addTaskCard">
       <form ng-submit="project.createTask()">
-        <div class="form-group">
-          <label for="description">Description</label>
-          <input type="text" ng-model="project.newTask.description" name="description" value="">
+        <div class="col-sm-9 addTaskForm">
+          <div class="form-group">
+            <input type="text" ng-model="project.newTask.description" name="description" value="">
+          </div>
+          <div class="form-group">
+            <!-- <label for="due_Day">Due Day</label>
+            <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.due_day" name="duration" value=""> -->
+            <select ng-model="project.newTask.due_day" class="" name="">
+              <option value="" disabled>Choose a due day</option>
+              <option value="{{ day }}" ng-repeat="day in project.projectDays" ng-if="day >= selectedDay">{{ day }}</option>
+            </select>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="due_Day">Due Day</label>
-          <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.due_day" name="duration" value="">
+        <div class="col-sm-3 addTaskSubmit">
+          <!-- <div class="form-group"> -->
+            <input class="addTaskButton" type="submit" name="submit" value="+">
+          <!-- </div> -->
         </div>
-        <div class="form-group">
-          <input type="submit" name="submit" value="Add Task">
-        </div>
+
       </form>
 
 
