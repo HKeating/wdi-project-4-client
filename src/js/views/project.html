@@ -16,23 +16,18 @@
       <div id="{{task.id}}" class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true, onStart:'selectTask(task)', onDrag:'onDrag(task)', onStop:'hideDropZone'}">
         <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
         </div>
-        <!-- <div class="taskContent col-sm-10">
-        <div class="col-sm-12">
-        <p>{{task.description}}</p>
-      </div> -->
       <div class="taskContent col-sm-10">
-        <div class="col-sm-12">
+        <div class="taskDescription row">
           <p>{{task.description}}</p>
-          <!-- <button ng-click="project.selectTaskToEdit(task.id)" type="button" name="button">?</button> -->
         </div>
         <div class="row">
-          <div class="col-sm-6 taskTags">
-            <p>Some tags</p>
+          <div class="col-sm-5 taskDueDay">
+            <p>Complete by day: <strong>{{ task.due_day }}</strong></p>
           </div>
-          <div class="col-sm-6 taskUserContainer">
-            <div ng-repeat="user in task.users" class="col-sm-3">
-              <img class="taskUserImg" ng-src="{{ user.image }}" alt="">
-            </div>
+          <div class="col-sm-7 taskUserContainer">
+            <!-- <div class=""> -->
+              <img  ng-repeat="user in task.users" class="taskUserImg" ng-src="{{ user.image }}" alt="">
+            <!-- </div> -->
           </div>
         </div>
       </div>
