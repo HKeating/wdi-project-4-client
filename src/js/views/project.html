@@ -1,115 +1,115 @@
 <div ng-controller="LogCtrl as log">
 
 
-<h1>{{project.project.title}}</h1>
-<!-- <p>{{ project.project }}</p> -->
+  <h1>{{project.project.title}}</h1>
+  <!-- <p>{{ project.project }}</p> -->
 
-<div class="lineContainer">
-  <div class="line"></div>
-</div>
+  <div class="lineContainer">
+    <div class="line"></div>
+  </div>
 
-<div class="row">
-  <div class="taskPanel col-sm-6">
-    <h3 id="dayLabel">Day {{ selectedDay }}</h3>
-    <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day && task.completed === false && task.blocked === false">
+  <div class="row">
+    <div class="taskPanel col-sm-6">
+      <h3 id="dayLabel">Day {{ selectedDay }}</h3>
+      <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day && task.completed === false && task.blocked === false">
 
-      <div id="{{task.id}}" class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true, onStart:'selectTask(task)', onDrag:'onDrag(task)', onStop:'hideDropZone'}">
-        <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
-        </div>
-      <div class="taskContent col-sm-10">
-        <div class="taskDescription row">
-          <p>{{task.description}}</p>
-        </div>
-        <div class="row">
-          <div class="col-sm-5 taskDueDay">
-            <p>Complete by day: <strong>{{ task.due_day }}</strong></p>
+        <div id="{{task.id}}" class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true, onStart:'selectTask(task)', onDrag:'onDrag(task)', onStop:'hideDropZone'}">
+          <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
           </div>
-          <div class="col-sm-7 taskUserContainer">
-              <img  ng-repeat="user in task.users" class="taskUserImg" ng-src="{{ user.image }}" alt="">
+          <div class="taskContent col-sm-10">
+            <div class="taskDescription row">
+              <p>{{task.description}}</p>
+            </div>
+            <div class="row">
+              <div class="col-sm-5 taskDueDay">
+                <p>Complete by day: <strong>{{ task.due_day }}</strong></p>
+              </div>
+              <div class="col-sm-7 taskUserContainer">
+                <img  ng-repeat="user in task.users" class="taskUserImg" ng-src="{{ user.image }}" alt="">
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="addTask col-sm-6">
-    <div class="addTaskCard">
-      <form ng-submit="project.createTask()">
-        <div class="col-sm-9 addTaskForm">
-          <div class="form-group">
-            <input type="text" ng-model="project.newTask.description" name="description" value="">
-          </div>
-          <div class="form-group">
-            <!-- <label for="due_Day">Due Day</label>
-            <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.due_day" name="duration" value=""> -->
-            <select ng-model="project.newTask.due_day" class="" name="">
-              <option value="" disabled>Choose a due day</option>
-              <option value="{{ day }}" ng-repeat="day in project.projectDays" ng-if="day >= selectedDay">{{ day }}</option>
-            </select>
-          </div>
+      <div class="addTask col-sm-6">
+        <div class="addTaskCard">
+          <form ng-submit="project.createTask()">
+            <div class="col-sm-9 addTaskForm">
+              <div class="form-group">
+                <input type="text" ng-model="project.newTask.description" name="description" value="">
+              </div>
+              <div class="form-group">
+                <!-- <label for="due_Day">Due Day</label>
+                <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.due_day" name="duration" value=""> -->
+                <select ng-model="project.newTask.due_day" class="" name="">
+                  <option value="" disabled>Choose a due day</option>
+                  <option value="{{ day }}" ng-repeat="day in project.projectDays" ng-if="day >= selectedDay">{{ day }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-3 addTaskSubmit">
+              <!-- <div class="form-group"> -->
+              <input class="addTaskButton" type="submit" name="submit" value="+">
+              <!-- </div> -->
+            </div>
+
+          </form>
+
+
         </div>
-        <div class="col-sm-3 addTaskSubmit">
-          <!-- <div class="form-group"> -->
-            <input class="addTaskButton" type="submit" name="submit" value="+">
-          <!-- </div> -->
+      </div>
+    </div>
+
+    <div class="controlPanel col-sm-5">
+      <div class="dropZone" ng-show="project.showDropZone">
+        <div id="completedBox" class="completedBox row" ng-model="done" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'completeTask', onOver:'onOverCompletedBox', onOut:'onOutCompletedBox'}">
+          <h2>DONE</h2>
         </div>
 
-      </form>
+        <div id="blockedBox" class="blockedBox row" ng-model="block" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'taskBlocked', onOver:'onOverBlockedBox', onOut:'onOutBlockedBox'}">
+          <h2>BLOCKED</h2>
+        </div>
 
-
-    </div>
-  </div>
-</div>
-
-<div class="controlPanel col-sm-5">
-  <div class="dropZone" ng-show="project.showDropZone">
-    <div id="completedBox" class="completedBox row" ng-model="done" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'completeTask', onOver:'onOverCompletedBox', onOut:'onOutCompletedBox'}">
-      <h2>DONE</h2>
-    </div>
-
-    <div id="blockedBox" class="blockedBox row" ng-model="block" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'taskBlocked', onOver:'onOverBlockedBox', onOut:'onOutBlockedBox'}">
-      <h2>BLOCKED</h2>
-    </div>
-
-    <div id="destroyBox" class="destroyBox row" ng-model="destroy" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'giveUpTask', onOver:'onOverDestroyBox', onOut:'onOutDestroyBox'}">
-      <h2>DESTROY</h2>
-    </div>
-  </div>
-  <div class="stats row" ng-show="project.statsShow">
-    <h1>{{ project.project.title }} STATS</h1>
-    <h2>Tasks</h2>
-      <ul>
-        <li ng-if="project.totalTasks">Total Tasks Created: {{ project.totalTasks }}</li>
-        <li ng-if="project.totalTasksCompleted">Tasks Completed: {{ project.totalTasksCompleted }}</li>
-        <li ng-if="project.totalTasksDeleted">Tasks Deleted: {{ project.totalTasksDeleted }}</li>
-      </ul>
-    <h2>Active Users</h2>
-      <ul>
-        <li ng-repeat="user in project.activeUsers">
-          <p>{{ user.username }}</p>
-          <p ng-if="user.tasksCompleted">Tasks completed: {{ user.tasksCompleted }}</p>
-          <p ng-if="user.tasksDeleted">Tasks deleted: {{ user.tasksDeleted }}</p>
-        </li>
-      </ul>
-
-
-
-
-
-  </div>
-  <div class="log row" ng-show="project.logShow">
-    <h1>LOG</h1>
-    <ul>
-      <li ng-repeat="day in project.projectDays track by $index" ng-if="project.logDays.includes(day)">
-        <h4>Day: {{ day }}</h4>
+        <div id="destroyBox" class="destroyBox row" ng-model="destroy" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'giveUpTask', onOver:'onOverDestroyBox', onOut:'onOutDestroyBox'}">
+          <h2>DESTROY</h2>
+        </div>
+      </div>
+      <div class="stats row" ng-show="project.statsShow">
+        <h1>{{ project.project.title }} STATS</h1>
+        <h2>Tasks</h2>
         <ul>
-          <li ng-repeat="log in project.projectLogs" ng-if="log.day === day">
-            <p>{{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
+          <li ng-if="project.totalTasks">Total Tasks Created: {{ project.totalTasks }}</li>
+          <li ng-if="project.totalTasksCompleted">Tasks Completed: {{ project.totalTasksCompleted }}</li>
+          <li ng-if="project.totalTasksDeleted">Tasks Deleted: {{ project.totalTasksDeleted }}</li>
+        </ul>
+        <h2>Active Users</h2>
+        <ul>
+          <li ng-repeat="user in project.activeUsers">
+            <p>{{ user.username }}</p>
+            <p ng-if="user.tasksCompleted">Tasks completed: {{ user.tasksCompleted }}</p>
+            <p ng-if="user.tasksDeleted">Tasks deleted: {{ user.tasksDeleted }}</p>
           </li>
         </ul>
-      </li>
-    </ul>
-    <!-- <ul>
-      <li ng-repeat="log in project.projectLogs">
+
+
+
+
+
+      </div>
+      <div class="log row" ng-show="project.logShow">
+        <h1>LOG</h1>
+        <ul>
+          <li ng-repeat="day in project.projectDays track by $index" ng-if="project.logDays.includes(day)">
+            <h4>Day: {{ day }}</h4>
+            <ul>
+              <li ng-repeat="log in project.projectLogs" ng-if="log.day === day">
+                <p>{{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <!-- <ul>
+        <li ng-repeat="log in project.projectLogs">
         <p>Day {{ log.day }}, {{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
       </li>
     </ul> -->
@@ -174,23 +174,22 @@
   </div>
 
 </div>
-  <div class="sideBar col-sm-1">
-
-    <div class="row sideBarOption statsButton" ng-click="project.showStats()">
-      <img ng-src="/images/settings.png" alt="">
-    </div>
-    <div class="row sideBarOption tasksButton" ng-click="project.showTasks()">
-      <img ng-src="/images/done.png" alt="">
-    </div>
-    <div class="row sideBarOption logButton" ng-click="project.showLog()">
-      <img ng-src="/images/logs.png" alt="">
-    </div>
-
-
-
-
-
+<div class="sideBar col-sm-1">
+  <div class="row sideBarOption tasksButton" ng-click="project.showTasks()">
+    <img ng-src="/images/done.png" alt="">
   </div>
+  
+  <div class="row sideBarOption logButton" ng-click="project.showLog()">
+    <img ng-src="/images/logs.png" alt="">
+  </div>
+  <div class="row sideBarOption statsButton" ng-click="project.showStats()">
+    <img ng-src="/images/settings.png" alt="">
+  </div>
+
+
+
+
+</div>
 </div>
 <div class="col-sm-6 addMilestone">
   <h3>Add Milestone</h3>
