@@ -9,7 +9,7 @@
   }
 
   .taskCard {
-    background: #f5f5f5;
+    background: white;
     border-radius: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
@@ -24,7 +24,14 @@
   }
 
   .taskCardRotatedRight {
-    //-webkit-transform: rotate(15deg);
+
+    background: white;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    height: 100px;
+    overflow: hidden;
+
     animation: rotateRight 0.2s 1;
     -webkit-animation-fill-mode: forwards;
     border: 2px solid orange;
@@ -42,7 +49,14 @@
   }
 
   .taskCardRotatedLeft {
-    //-webkit-transform: rotate(-15deg);
+
+    background: white;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    height: 100px;
+    overflow: hidden;
+
     animation: rotateLeft 0.2s 1;
     -webkit-animation-fill-mode: forwards;
     border: 2px solid orange;

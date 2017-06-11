@@ -5,6 +5,15 @@
 
   .sideBarOption {
     height: 150px;
+    position: relative;
+    img {
+      height: 40px;
+      position:absolute;
+      top:50%;
+      left:50%;
+      margin-top:-25px;
+      margin-left:-25px;
+    }
   }
   .statsButton {
     background: #aaaaff
