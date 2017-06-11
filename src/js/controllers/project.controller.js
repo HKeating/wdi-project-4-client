@@ -277,11 +277,11 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
           $(currentDayLabel).addClass('lineLabel');
           $(currentDayLabel).html(`Day ${vm.currentDay}`);
-          $(currentDayLabel).css({top: $scope.$lineContainer.height()-5, left: currentLineWidth-10, position: 'absolute'});
+          $(currentDayLabel).css({top: $scope.$lineContainer.height()-5, left: currentLineWidth, position: 'absolute'});
           $scope.$lineContainer.append(currentDayLabel);
 
           $(ship).attr('id', `icon`);
-          shipLineWidth = currentLineWidth - 10;
+          shipLineWidth = currentLineWidth;
           if(!wasShipAnimated) {
             $(ship).css({top: $scope.$lineContainer.height() - 80, left: 0, position: 'absolute'});
             $scope.$lineContainer.append(ship);
