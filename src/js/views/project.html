@@ -25,9 +25,7 @@
             <p>Complete by day: <strong>{{ task.due_day }}</strong></p>
           </div>
           <div class="col-sm-7 taskUserContainer">
-            <!-- <div class=""> -->
               <img  ng-repeat="user in task.users" class="taskUserImg" ng-src="{{ user.image }}" alt="">
-            <!-- </div> -->
           </div>
         </div>
       </div>
@@ -36,17 +34,25 @@
   <div class="addTask col-sm-6">
     <div class="addTaskCard">
       <form ng-submit="project.createTask()">
-        <div class="form-group">
-          <label for="description">Description</label>
-          <input type="text" ng-model="project.newTask.description" name="description" value="">
+        <div class="col-sm-9 addTaskForm">
+          <div class="form-group">
+            <input type="text" ng-model="project.newTask.description" name="description" value="">
+          </div>
+          <div class="form-group">
+            <!-- <label for="due_Day">Due Day</label>
+            <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.due_day" name="duration" value=""> -->
+            <select ng-model="project.newTask.due_day" class="" name="">
+              <option value="" disabled>Choose a due day</option>
+              <option value="{{ day }}" ng-repeat="day in project.projectDays" ng-if="day >= selectedDay">{{ day }}</option>
+            </select>
+          </div>
         </div>
-        <div class="form-group">
-          <label for="due_Day">Due Day</label>
-          <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.due_day" name="duration" value="">
+        <div class="col-sm-3 addTaskSubmit">
+          <!-- <div class="form-group"> -->
+            <input class="addTaskButton" type="submit" name="submit" value="+">
+          <!-- </div> -->
         </div>
-        <div class="form-group">
-          <input type="submit" name="submit" value="Add Task">
-        </div>
+
       </form>
 
 

@@ -1,9 +1,10 @@
 .taskPanel {
   background-color: #5aa1f1;
   margin-top: 10px;
-
+  height: 450px;
+  // overflow-y: scroll;
+  // overflow-x: visible;
   #dayLabel {
-    // margin-left: 15px;
     color: white;
   }
 
@@ -61,9 +62,24 @@
     margin-bottom: 5px;
     height: 100px;
     overflow: hidden;
+    .addTaskForm {
+      margin-top: 20px;
+    }
+    .addTaskSubmit {
+      height: 100px;
+      margin: 0 auto;
+    }
   }
+
   .addTaskButton {
-    text-align: center;
+    position: relative;
+    top: 35px;
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+    border: 2px solid #5aa1f1;
+    background: grey;
+    color: white;
   }
   .taskColorTag {
     background: orange;
