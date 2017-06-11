@@ -12,8 +12,10 @@ $purple: #b10dc9;
   margin-bottom: 10px;
   width: 30px;
   height: 30px;
-  background-color: $red;
-  //background-image: url('/images/boat.png');
+  // background-color: $red;
+  background-image: url('/images/boat.png');
+  background-position: center;
+  background-size: contain;
   z-index: 1;
 }
 
@@ -157,5 +159,5 @@ $purple: #b10dc9;
   width: 5px;
   display: inline-block;
   border-radius: 5px;
-  
+
 }

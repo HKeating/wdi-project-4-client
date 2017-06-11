@@ -43,6 +43,10 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     currentCardPosition = $scope.$card.position().left;
 
   };
+  $scope.$on('$destroy', function(){
+    // Updating some data
+    wasShipAnimated = false;
+  });
 
   // $scope.onOver = function(target, source) {
   //
@@ -306,7 +310,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $(connectionLine).css('height', `3px`);
       $(connectionLine).css('margin', `7px 0`);
 
-      
+
       // Inserting all new elements in HTML
       $scope.$line.append(dayDot);
       if (i !== vm.deadline)  $scope.$line.append(connectionLine);
@@ -322,6 +326,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $(ship).animate({
         left: shipLineWidth
       }, 1500);
+    } else {
+      console.log('Ship was animated');
     }
   }
 
