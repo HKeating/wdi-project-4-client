@@ -422,6 +422,14 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'removed', model1: 'user', preposition: 'from', model2: 'task'}, userToRemove, task);
     updateTask(task);
   }
+
+  vm.unblockTask = unblockTask;
+  function unblockTask(task) {
+    task.blocked = false;
+    $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'marked', model1: 'task', preposition: 'as', condition: 'unblocked'}, task);
+    updateTask(task);
+  }
+
   vm.updateTask = updateTask;
   function updateTask(task) {
     const taskObj = { 'task': task };
