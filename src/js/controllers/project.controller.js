@@ -177,7 +177,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         vm.userIsAdmin = true;
       }
       vm.milestones = data.milestones;
-
       // vm.projectLogs = data.logs;
       // orderLogs(vm.projectLogs);
       orderLogs(data.logs);
@@ -403,9 +402,18 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     $scope.$lineContainer.append(linkLine);
   };
 
+<<<<<<< HEAD
   vm.taskMouseLeave = function taskMouseLeave() {
     $('.lineLink').remove();
   };
+=======
+
+
+
+
+  // vm.taskColors = ['#e74c3c', '#2ecc71', '#3498db', '#34495e', '#1abc9c', '#9b59b6', '#f1c40f', '#f39c12'];
+  vm.taskColors = [{name: 'taskRed', color: 'e74c3c'},{name: 'taskGreen', color: '2ecc71'}, {name: 'taskBlue', color: '3498db'}, {name: 'taskDarkBlue', color: '34495e'}, {name: 'taskAqua', color: '1abc9c'}, {name: 'taskPurple', color: '9b59b6'}, {name: 'taskYellow', color: 'f1c40f'}, {name: 'taskOrange', color: 'f39c12'}, {name: 'taskDefault', color: 'ecf0f1'}];
+>>>>>>> 0c34d0f72f28cc6d4cf58d66a692c2d2b039c3c7
 
   vm.createTask = createTask;
   function createTask() {
@@ -413,6 +421,12 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     vm.newTask.start_day = $scope.selectedDay;
     vm.newTask.completed = false;
     vm.newTask.blocked = false;
+    if (!vm.newTask.due_day) {
+      vm.newTask.due_day = vm.project.duration;
+    }
+    if (!vm.newTask.color) {
+      vm.newTask.color = 'ecf0f1';
+    }
     const taskObj = {
       'task': vm.newTask
     };
@@ -471,6 +485,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     .then(data => {
       console.log('Task updated: ', data);
       $rootScope.$broadcast('Task Change');
+      $scope.$apply();
     });
   }
 
