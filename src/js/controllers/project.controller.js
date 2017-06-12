@@ -379,6 +379,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
     let allDotsWidth = 0;
     let lastDotWidth = 0;
+    const startDay = task.start_day;
 
     // Calculating starting position
     for(var i = 0; i < startDay; i++) {
@@ -387,7 +388,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     }
 
     // Calculating the total length of the line between two dots
-    const startDay = task.start_day;
     const dueDay = task.due_day;
     const totalDaysBetweenTwoDots = dueDay-startDay;
     const distanceBetweenDots = totalDaysBetweenTwoDots * dotDistance + allDotsWidth - (lastDotWidth/2);
@@ -402,18 +402,13 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     $scope.$lineContainer.append(linkLine);
   };
 
-<<<<<<< HEAD
+
   vm.taskMouseLeave = function taskMouseLeave() {
     $('.lineLink').remove();
   };
-=======
-
-
-
 
   // vm.taskColors = ['#e74c3c', '#2ecc71', '#3498db', '#34495e', '#1abc9c', '#9b59b6', '#f1c40f', '#f39c12'];
   vm.taskColors = [{name: 'taskRed', color: 'e74c3c'},{name: 'taskGreen', color: '2ecc71'}, {name: 'taskBlue', color: '3498db'}, {name: 'taskDarkBlue', color: '34495e'}, {name: 'taskAqua', color: '1abc9c'}, {name: 'taskPurple', color: '9b59b6'}, {name: 'taskYellow', color: 'f1c40f'}, {name: 'taskOrange', color: 'f39c12'}, {name: 'taskDefault', color: 'ecf0f1'}];
->>>>>>> 0c34d0f72f28cc6d4cf58d66a692c2d2b039c3c7
 
   vm.createTask = createTask;
   function createTask() {
