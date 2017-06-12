@@ -28,8 +28,11 @@
   }
 
   .taskDescInput {
-    height: 30px;
-    width: 180px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    height: 60px;
+    width: 200px;
   }
 
   .taskCard:hover {
@@ -47,7 +50,7 @@
 
     animation: rotateRight 0.2s 1;
     -webkit-animation-fill-mode: forwards;
-    border: 2px solid orange;
+    // border: 2px solid orange;
     .taskColorTag {
       border-radius: 0 !important;
     }
@@ -72,7 +75,7 @@
 
     animation: rotateLeft 0.2s 1;
     -webkit-animation-fill-mode: forwards;
-    border: 2px solid orange;
+    // border: 2px solid orange;
     .taskColorTag {
       border-radius: 0 !important;
     }
@@ -88,7 +91,7 @@
   }
 
   .addTaskCard {
-    background: #f5f5f5;
+    background: $veryLightPurple;
     border-radius: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
@@ -105,16 +108,18 @@
 
   .addTaskButton {
     position: relative;
+    left: 8px;
     top: 35px;
     height: 30px;
     width: 30px;
     border-radius: 5px;
-    border: 2px solid #5aa1f1;
-    background: grey;
+    border: none;
+    background: $green;
     color: white;
   }
   .taskColorTag {
-    background: orange;
+    // background: orange;
+    z-index: 10;
     height: 100%;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
@@ -127,6 +132,7 @@
     overflow-y: scroll;
     p {
       font-weight: bold;
+      font-size: 12px;
       margin: 5px 0 0 5px;
     }
     border-bottom: 1px solid grey;
