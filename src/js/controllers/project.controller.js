@@ -223,6 +223,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       // Making a day dot and adding a class to it
       const dayDot = $('<div>');
       const connectionLine = $('<div>');
+      const milestoneLabel = $('<div>');
       // $(ship).css('background-image', 'url(/images/boat.png)');
 
 
@@ -237,6 +238,10 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       if($.inArray(i, arrayOfMilestoneIndexes) !== -1) {
         // It is a milestone
         $(dayDot).addClass('lineMilestone');
+        $(milestoneLabel).addClass('lineMilestoneLabel');
+        $(milestoneLabel).html('THIS IS A MILESTONE');
+        $(milestoneLabel).css({top: $scope.$lineContainer.height()-140, left: currentLineWidth-60, position: 'absolute'});
+        $scope.$lineContainer.append(milestoneLabel);
 
       } else {
 
