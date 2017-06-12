@@ -412,7 +412,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   };
 
   // vm.taskColors = ['#e74c3c', '#2ecc71', '#3498db', '#34495e', '#1abc9c', '#9b59b6', '#f1c40f', '#f39c12'];
-  vm.taskColors = [{name: 'taskRed', color: 'e74c3c'},{name: 'taskGreen', color: '2ecc71'}, {name: 'taskBlue', color: '3498db'}, {name: 'taskDarkBlue', color: '34495e'}, {name: 'taskAqua', color: '1abc9c'}, {name: 'taskPurple', color: '9b59b6'}, {name: 'taskYellow', color: 'f1c40f'}, {name: 'taskOrange', color: 'f39c12'}, {name: 'taskDefault', color: 'ecf0f1'}];
+  vm.taskColors = [{name: 'Red', color: 'e74c3c'},{name: 'Green', color: '2ecc71'}, {name: 'Blue', color: '3498db'}, {name: 'Dark Blue', color: '34495e'}, {name: 'Aqua', color: '1abc9c'}, {name: 'Purple', color: '9b59b6'}, {name: 'Yellow', color: 'f1c40f'}, {name: 'Orange', color: 'f39c12'}, {name: 'Default', color: 'ecf0f1'}];
 
   vm.createTask = createTask;
   function createTask() {
@@ -501,6 +501,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   vm.getTaskColor = getTaskColor;
   function getTaskColor(task) {
+    console.log('Getting task color', task.color);
     return `#${task.color}`;
   }
 
