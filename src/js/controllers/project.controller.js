@@ -221,7 +221,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     let currentLineWidth = 0;
     let shipLineWidth = 0;
     let milestoneIndex = 0;
-
+    $('.lineMilestoneLabel').remove();
     for (let i = 1; i <= vm.deadline; i++) {
 
       // Making a day dot and adding a class to it
@@ -240,6 +240,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       // console.log('Array of milestone indexes: ',arrayOfMilestoneIndexes);
 
       if($.inArray(i, arrayOfMilestoneIndexes) !== -1) {
+
         // It is a milestone
         $(dayDot).addClass('lineMilestone');
         $(milestoneLabel).addClass('lineMilestoneLabel');
@@ -248,6 +249,13 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         $(milestoneLabel).css({top: $scope.$lineContainer.height()-150, left: currentLineWidth-30, position: 'absolute'});
 
         milestoneIndex++;
+
+        $(dayDot).hover(function() {
+          $(milestoneLabel).addClass('lineMilestoneLabelHover');
+        }, function() {
+          $(milestoneLabel).removeClass('lineMilestoneLabelHover');
+        }
+      );
 
       } else {
 
@@ -268,7 +276,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
           if(!wasShipAnimated) $scope.$lineContainer.append(firstDayLabel);
 
-
         } else if (i === vm.deadline) {
           // The Last dot
           $(dayDot).attr('id', `lineDeadlineDot`);
@@ -277,9 +284,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
           $(finalDayLabel).html(`Day ${vm.deadline}`);
           $(finalDayLabel).css({top: $scope.$lineContainer.height()-5, left: currentLineWidth, position: 'absolute'});
           if(!wasShipAnimated) $scope.$lineContainer.append(finalDayLabel);
-
-
-
 
         } else if (i === vm.currentDay) {
           // The Current dot
