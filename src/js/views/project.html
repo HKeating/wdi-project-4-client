@@ -9,16 +9,18 @@
   </div>
 
   <div class="row projectPanels">
-    <div class="taskPanel col-sm-6">
+
+
+    <div class="taskPanel mainTaskPanel col-sm-6">
       <h3 id="dayLabel">Day {{ selectedDay }}</h3>
       <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day && task.completed === false && task.blocked === false">
 
         <div id="{{task.id}}" class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true, onStart:'selectTask(task)', onDrag:'onDrag(task)', onStop:'hideDropZone'}">
-          <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
+          <div class="taskColorTag col-sm-2" ng-style="{'background': '#{{task.color}}' }" ng-click="project.selectTaskToEdit(task.id)" data-toggle="modal" data-target="#taskModal">
           </div>
           <div class="taskContent col-sm-10">
             <div class="taskDescription row">
-              <p>{{task.description}}</p>
+              <p>{{task.description}} {{task.color}}</p>
             </div>
             <div class="row">
               <div class="col-sm-5 taskDueDay">
@@ -36,13 +38,7 @@
           <form ng-submit="project.createTask()">
             <div class="col-sm-9 addTaskForm">
               <div class="form-group">
-                <input type="text" ng-model="project.newTask.description" name="description" value="">
-              </div>
-              <div class="form-group">
-                <select ng-model="project.newTask.due_day" class="" name="">
-                  <option value="" disabled>Choose a due day</option>
-                  <option value="{{ day }}" ng-repeat="day in project.projectDays" ng-if="day >= selectedDay">{{ day }}</option>
-                </select>
+                <textarea class="taskDescInput" ng-model="project.newTask.description" name="description" value=""></textarea>
               </div>
             </div>
             <div class="col-sm-3 addTaskSubmit">
@@ -57,7 +53,6 @@
         </div>
       </div>
     </div>
-
     <div class="controlPanel col-sm-5">
       <div class="dropZone" ng-show="project.showDropZone">
         <div id="completedBox" class="completedBox row" ng-model="done" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'completeTask', onOver:'onOverCompletedBox', onOut:'onOutCompletedBox'}">
@@ -95,101 +90,234 @@
 
       </div>
       <div class="log row" ng-show="project.logShow">
-        <h1>LOG</h1>
+        <div class="logSearchContainer">
+          <input type="text-area" name="" class="logSearch" ng-model="project.logFilter" placeholder="You can find anything if you look hard enough...">
+          <img src="images/search.png" class="logSearchImg" alt="">
+        </div>
+
+
+
         <ul>
           <li ng-repeat="day in project.projectDays track by $index" ng-if="project.logDays.includes(day)">
-            <h4>Day: {{ day }}</h4>
+            <h4 class="logDayHeader">Day {{ day }}</h4>
             <ul>
-              <li ng-repeat="log in project.projectLogs" ng-if="log.day === day">
+              <li ng-repeat="log in project.projectLogs | filter: project.logFilter" ng-if="log.day === day" class="logContent">
                 <p>{{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
               </li>
             </ul>
             <hr>
           </li>
         </ul>
-  </div>
-  <div class="blockedAndCompleted" ng-show="project.tasksShow">
-    <div class="taskTabs row">
-      <div class="col-sm-6 completedHeader" ng-click="project.showCompleted()">
-        <h4>Completed</h4>
       </div>
-      <div class="col-sm-6 blockedHeader" ng-click="project.showBlocked()">
-        <h4>Blocked</h4>
-      </div>
-    </div>
-    <div class="completed taskPanel row" ng-show="project.completedShow">
-      <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.completed === true">
-        <div class="taskCard">
-          <div class="taskColorTag col-sm-2">
+      <div class="blockedAndCompleted" ng-show="project.tasksShow">
+        <div class="taskTabs row">
+          <div class="col-sm-6 blockedHeader blockedHeaderSelected" ng-click="project.showBlocked()">
+            <h4>Blocked</h4>
           </div>
-          <div class="taskContent col-sm-10">
-            <div class="taskDescription row">
-              <p>{{task.description}}</p>
-            </div>
-            <div class="row">
-              <div class="col-sm-5 taskDueDay">
-                <p>Complete by day: <strong>{{ task.due_day }}</strong></p>
+          <div class="col-sm-6 completedHeader" ng-click="project.showCompleted()">
+            <h4>Completed</h4>
+          </div>
+        </div>
+        <div class="completed taskPanel row" ng-show="project.completedShow">
+          <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.completed === true">
+            <div class="taskCard">
+              <div class="taskColorTag col-sm-2">
               </div>
-              <div class="col-sm-7 taskUserContainer">
-                <img  ng-repeat="user in task.users" class="taskUserImg" ng-src="{{ user.image }}" alt="">
+              <div class="taskContent col-sm-10">
+                <div class="taskDescription row">
+                  <p>{{task.description}}</p>
+                </div>
+                <div class="row">
+                  <div class="col-sm-5 taskDueDay">
+                    <p>Complete by day: <strong>{{ task.due_day }}</strong></p>
+                  </div>
+                  <div class="col-sm-7 taskUserContainer">
+                    <img  ng-repeat="user in task.users" class="taskUserImg" ng-src="{{ user.image }}" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="blocked taskPanel row" ng-show="project.blockedShow">
+          <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.blocked === true" ng-click="project.unblockTask(task)">
+            <div class="taskCard">
+              <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
+
+              </div>
+              <div class="taskContent col-sm-10">
+                <div class="taskDescription row">
+                  <p>{{task.description}}</p>
+
+                  <!-- <a ng-click="project.unblockTask(task)">Unblock?</a> -->
+                </div>
+                <div class="row">
+                  <div class="col-sm-5 taskDueDay">
+                    <p>Complete by day: <strong>{{ task.due_day }}</strong></p>
+                  </div>
+                  <div class="col-sm-7 taskUserContainer">
+                    <img  ng-repeat="user in task.users" class="taskUserImg" ng-src="{{ user.image }}" alt="">
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
     </div>
-    <div class="blocked taskPanel row" ng-show="project.blockedShow">
-      <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.blocked === true" ng-click="project.unblockTask(task)">
-        <div class="taskCard">
-          <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
+    <div class="sideBar col-sm-1">
+      <!-- <div class="arrow-right"> -->
+      <!-- </div> -->
+      <div class="row sideBarOption tasksButton selectedButton" ng-click="project.showTasks()">
+        <img ng-src="/images/done.png" alt="">
+      </div>
+
+      <div class="row sideBarOption logButton" ng-click="project.showLog()">
+        <img ng-src="/images/logs.png" alt="">
+      </div>
+      <div class="row sideBarOption statsButton" ng-click="project.showStats()">
+        <img ng-src="/images/stats.png" alt="">
+      </div>
+
+
+
+
+    </div>
+  </div>
+
+
+
+
+
+  <!-- MODAL XXXXXXXXXXXXXX -->
+  <div class="DashboardCtrl as dashboard">
+    <div class="modal fade" id="projectModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <!-- Modal Header-->
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Create Task</h4>
           </div>
-          <div class="taskContent col-sm-10">
-            <div class="taskDescription row">
-              <p>{{task.description}}</p>
-              <!-- <a ng-click="project.unblockTask(task)">Unblock?</a> -->
-            </div>
-            <div class="row">
-              <div class="col-sm-5 taskDueDay">
-                <p>Complete by day: <strong>{{ task.due_day }}</strong></p>
+          <!-- Modal Body-->
+          <div class="modal-body">
+
+            <div id="closeModal" class="">
+
+              <form ng-submit="project.createTask()">
+                <div class="form-group">
+                  <label for="description">Description</label>
+                  <input type="text" ng-model="project.newTask.description" name="description" value="">
+                </div>
+                <div class="form-group">
+                  <label for="due_Day">Due Day</label>
+                  <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.due_day" name="duration" value="">
+                </div>
+
+                <div class="form-group">
+                  <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Save</button>
+                </div>
+
+              </form>
+
+              <!-- Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title">Add MilestoneX</h4>
               </div>
-              <div class="col-sm-7 taskUserContainer">
-                <img  ng-repeat="user in task.users" class="taskUserImg" ng-src="{{ user.image }}" alt="">
+              <div class="modal-body">
+
+                <form ng-submit="project.createMilestone()">
+                  <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" ng-model="project.newMilestone.title" name="title" value="">
+                  </div>
+                  <div class="form-group">
+                    <label for="day">Complete By Day:</label>
+                    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newMilestone.day" name="day" value="">
+                  </div>
+                  <div class="form-group">
+                    <input type="submit" name="submit" value="Add Milestone">
+                  </div>
+                  <!-- <h1 ng-click="project.showTaskNewForm = true" class="col-sm-3">+</h1> -->
+                </form>
               </div>
+
+              <!-- FORM 3  -->
+              <div class="modal-header">
+                <h4 class="modal-title">Assign Task To Milestone</h4>
+              </div>
+              <div class="modal-body">
+                <select class="" name="" ng-model="project.milestoneToUpdateId" ng-change="project.selectMilestoneToUpdate(project.milestoneToUpdateId)">
+                  <option value="" disabled>Select a milestone</option>
+                  <option ng-repeat="milestone in project.project.milestones" value="{{milestone.id}}">{{ milestone.title }}, day: {{ milestone.day }}</option>
+                </select>
+                <div ng-show="project.milestoneToUpdate">
+                  <div class="col-sm-6">
+                    <h3>{{ project.milestoneToUpdate.title }}</h3>
+                    <p>Due: day {{ project.milestoneToUpdate.day}}</p>
+                    <p>Tasks:</p>
+                    <ul>
+                      <li class="" ng-repeat="task in project.milestoneToUpdate.tasks">
+                        <ul>
+                          <li><strong>{{ task.description }}</strong></li>
+                          <li>Complete: {{ task.completed }}</li>
+                          <li>Due: day {{ task.due_day }}</li>
+                          <li><button type="button" ng-click="project.removeMilestoneTask(project.milestoneToUpdate, task)">Remove</button></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col-sm-6">
+                    <h3>Add tasks:</h3>
+                    <div class="col-sm-4" ng-repeat="task in project.milestoneToUpdate.availableTasks"  ng-click="project.addMilestoneTask(project.milestoneToUpdate, task)">
+                      <p><strong>{{task.description}}</strong></p>
+                    </div>
+                    <button type="button" ng-click="project.deleteMilestone(project.milestoneToUpdate)">Remove Milestone</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- FORM 4  -->
+              <div class="modal-header">
+                <h4 class="modal-title">Add Contributors</h4>
+              </div>
+              <div class="modal-body">
+                <h3 id="contributorsLabel">Contributors: </h3>
+
+                <div class="" ng-repeat="user in project.project.users">
+                  <img class="contributorDiv" ng-src="{{ user.image }}" alt="{{ user.username }}">
+                  <button ng-if="project.userIsAdmin" type="button" name="button" ng-click="project.removeCollaborator(user)">Remove</button>
+                </div>
+                <div class="" ng-if="project.userIsAdmin">
+                  <form>
+                    <input type="text" ng-model="project.collaboratorSearch" name="" value="">
+                    <div class="" ng-repeat="user in project.allUsers | filter: { email: project.collaboratorSearch}">
+                      <p>{{ user.username }}</p>
+                      <button type="button" ng-click="project.addCollaborator(user)">Add user</button>
+                    </div>
+                  </form>
+                </div>
+
+              </div>
+
             </div>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-
-</div>
-<div class="sideBar col-sm-1">
-  <!-- <div class="arrow-right"> -->
-  <!-- </div> -->
-  <div class="row sideBarOption tasksButton selectedButton" ng-click="project.showTasks()">
-    <img ng-src="/images/done.png" alt="">
-  </div>
-
-  <div class="row sideBarOption logButton" ng-click="project.showLog()">
-    <img ng-src="/images/logs.png" alt="">
-  </div>
-  <div class="row sideBarOption statsButton" ng-click="project.showStats()">
-    <img ng-src="/images/settings.png" alt="">
-  </div>
-
-
-
-
-</div>
 </div>
 
-
-
-
-
-<!-- MODAL XXXXXXXXXXXXXX -->
 <div class="DashboardCtrl as dashboard">
-  <div class="modal fade" id="projectModal" role="dialog">
+  <div class="modal fade" id="taskModal" role="dialog">
     <div class="modal-dialog">
 
       <!-- Modal content-->
@@ -197,117 +325,45 @@
         <!-- Modal Header-->
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Create Task</h4>
+          <h4 class="modal-title">Task Details</h4>
         </div>
         <!-- Modal Body-->
         <div class="modal-body">
 
-          <div id="closeModal" class="">
-
-            <form ng-submit="project.createTask()">
-              <div class="form-group">
-                <label for="description">Description</label>
-                <input type="text" ng-model="project.newTask.description" name="description" value="">
-              </div>
-              <div class="form-group">
-                <label for="due_Day">Due Day</label>
-                <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.due_day" name="duration" value="">
-              </div>
-
-              <div class="form-group">
-                <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Save</button>
-              </div>
-
-            </form>
-
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">Add MilestoneX</h4>
+          <form class="row updateTaskForm" ng-submit="project.updateTask(project.taskToUpdate)">
+            <div class="form-group">
+              <textarea class="taskDescInputModal" ng-model="project.taskToUpdate.description" name="description" value=""></textarea>
             </div>
-            <div class="modal-body">
-
-              <form ng-submit="project.createMilestone()">
-                <div class="form-group">
-                  <label for="title">Title</label>
-                  <input type="text" ng-model="project.newMilestone.title" name="title" value="">
-                </div>
-                <div class="form-group">
-                  <label for="day">Complete By Day:</label>
-                  <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newMilestone.day" name="day" value="">
-                </div>
-                <div class="form-group">
-                  <input type="submit" name="submit" value="Add Milestone">
-                </div>
-                <!-- <h1 ng-click="project.showTaskNewForm = true" class="col-sm-3">+</h1> -->
-              </form>
-            </div>
-
-            <!-- FORM 3  -->
-            <div class="modal-header">
-              <h4 class="modal-title">Assign Task To Milestone</h4>
-            </div>
-            <div class="modal-body">
-              <select class="" name="" ng-model="project.milestoneToUpdateId" ng-change="project.selectMilestoneToUpdate(project.milestoneToUpdateId)">
-                <option value="" disabled>Select a milestone</option>
-                <option ng-repeat="milestone in project.project.milestones" value="{{milestone.id}}">{{ milestone.title }}, day: {{ milestone.day }}</option>
+<div class="form-group">
+            <div class="col-sm-6">
+              <label for="dueDay">Due Day</label>
+              <select ng-model="project.taskToUpdate.due_day" class="" name="dueDay">
+                <option value="{{ day }}" ng-repeat="day in project.projectDays" ng-if="day >= selectedDay">{{ day }}</option>
               </select>
-              <div ng-show="project.milestoneToUpdate">
-                <div class="col-sm-6">
-                  <h3>{{ project.milestoneToUpdate.title }}</h3>
-                  <p>Due: day {{ project.milestoneToUpdate.day}}</p>
-                  <p>Tasks:</p>
-                  <ul>
-                    <li class="" ng-repeat="task in project.milestoneToUpdate.tasks">
-                      <ul>
-                        <li><strong>{{ task.description }}</strong></li>
-                        <li>Complete: {{ task.completed }}</li>
-                        <li>Due: day {{ task.due_day }}</li>
-                        <li><button type="button" ng-click="project.removeMilestoneTask(project.milestoneToUpdate, task)">Remove</button></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
-                <div class="col-sm-6">
-                  <h3>Add tasks:</h3>
-                  <div class="col-sm-4" ng-repeat="task in project.milestoneToUpdate.availableTasks"  ng-click="project.addMilestoneTask(project.milestoneToUpdate, task)">
-                    <p><strong>{{task.description}}</strong></p>
-                  </div>
-                  <button type="button" ng-click="project.deleteMilestone(project.milestoneToUpdate)">Remove Milestone</button>
-                </div>
-          </div>
-        </div>
-
-        <!-- FORM 4  -->
-        <div class="modal-header">
-          <h4 class="modal-title">Add Contributors</h4>
-        </div>
-        <div class="modal-body">
-          <h3 id="contributorsLabel">Contributors: </h3>
-
-          <div class="" ng-repeat="user in project.project.users">
-            <img class="contributorDiv" ng-src="{{ user.image }}" alt="{{ user.username }}">
-            <button ng-if="project.userIsAdmin" type="button" name="button" ng-click="project.removeCollaborator(user)">Remove</button>
-          </div>
-          <div class="" ng-if="project.userIsAdmin">
-            <form>
-              <input type="text" ng-model="project.collaboratorSearch" name="" value="">
-              <div class="" ng-repeat="user in project.allUsers | filter: { email: project.collaboratorSearch}">
-                <p>{{ user.username }}</p>
-                <button type="button" ng-click="project.addCollaborator(user)">Add user</button>
+            </div>
+            <div class="col-sm-6">
+              <label for="color">Tag Color</label>
+              <select class="" ng-model="project.taskToUpdate.color" name="color">
+                <option value="{{color.color}}" ng-repeat="color in project.taskColors">{{color.name}}</option>
+              </select>
+            </div>
               </div>
-            </form>
-          </div>
+            <!-- <div class="form-group">
+            <input type="submit" name="" value="Update Task">
+          </div> -->
+        </form>
 
-        </div>
+
+
 
       </div>
+      <div class="modal-footer">
 
+        <input ng-click="project.updateTask(project.taskToUpdate)" type="submit" class="btn btn-primary" value="Update Task" data-dismiss="modal">
 
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
-</div>
 </div>
 </div>
