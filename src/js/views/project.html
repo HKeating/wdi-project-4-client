@@ -96,11 +96,18 @@
 
       </div>
       <div class="log row" ng-show="project.logShow">
+        <div class="logSearchContainer">
+          <input type="text-area" name="" class="logSearch" ng-model="project.logFilter" placeholder="You can find anything if you look hard enough...">
+          <img src="images/search.png" class="logSearchImg" alt="">
+        </div>
+
+
+
         <ul>
           <li ng-repeat="day in project.projectDays track by $index" ng-if="project.logDays.includes(day)">
             <h4 class="logDayHeader">Day {{ day }}</h4>
             <ul>
-              <li ng-repeat="log in project.projectLogs" ng-if="log.day === day" class="logContent">
+              <li ng-repeat="log in project.projectLogs | filter: project.logFilter" ng-if="log.day === day" class="logContent">
                 <p>{{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
               </li>
             </ul>

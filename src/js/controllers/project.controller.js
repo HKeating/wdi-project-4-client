@@ -694,10 +694,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   vm.orderLogs = orderLogs;
   function orderLogs(logs) {
-
     vm.projectLogs = logs.sort((a, b) => {
       return new Date(a.created_at) - new Date(b.created_at);
-
     });
   }
 
