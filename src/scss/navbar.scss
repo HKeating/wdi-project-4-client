@@ -2,6 +2,7 @@
   width: 100%;
   position: relative;
   z-index: 100;
+  background-color:#53438f!important;
 }
 
 .navItems{
@@ -20,4 +21,8 @@
   border-radius: 50%;
   border: 2px solid white;
   margin: 5px;
+}
+.loginHeads,.login{
+  margin: 0 auto;
+  z-index: 100;
 }

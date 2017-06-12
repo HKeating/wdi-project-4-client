@@ -4,15 +4,19 @@
       <div class="w-100 pa2 tc logo">
         <img src="/images/FISI.png" alt="logo">
       </div>
-      <div ng-controller="MainCtrl as main" class="mr4 dib tc homeLogin br3 pa3 cursor: pointer" ng-hide="main.user">
+      <div ng-controller="MainCtrl as main" class=" w-100 dib tc homeLogin br3 pa3 cursor: pointer" ng-hide="main.user">
 
         <div ng-controller="LoginCtrl as login" class="loginPop black">
-          <p class="loginHeads"><a id="loginform">Login</a><a> || </a><a ng-href="#registerSection">Register</a></p>
-          <div class="login">
-            <div class="arrow-up"></div>
-            <div class="formholder">
+          <p class="loginHeads ">
+            <a id="loginform">Login</a>
+            <a> || </a>
+            <a ng-href="#registerSection">Register</a>
+          </p>
+          <div class="login w-100 dib tc">
+            <div class="arrow-up w-50 dib tc"></div>
+            <div class="formholder w-100 dib tc">
               <div class="randompad">
-                <fieldset class="bringFront">
+                <fieldset class="bringFront cf p">
                   <form ng-submit="login.login()">
                     <label class="" for="email-address">Email</label>
                     <input class="" type="email" name="email-address"  ng-model="login.user.email" placeholder="insert@funnyplaceholder.com">
@@ -53,7 +57,7 @@
     <div class="mw9 center home-font pt5">
       <div class="cf ph2-ns tc">
         <div class="white f1 home-font">
-          FckItShipIt™  is a super-simple sprint manager; less conflicts, more fun.
+          FckItShipIt™  is the best sprint manager; less conflicts, more fun.
         </div>
       </div>
     </div>
