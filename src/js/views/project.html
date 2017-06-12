@@ -16,11 +16,11 @@
       <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day && task.completed === false && task.blocked === false">
 
         <div id="{{task.id}}" class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true, onStart:'selectTask(task)', onDrag:'onDrag(task)', onStop:'hideDropZone'}">
-          <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)" data-toggle="modal" data-target="#taskModal">
+          <div class="taskColorTag col-sm-2" ng-style="{'background': '#{{task.color}}' }" ng-click="project.selectTaskToEdit(task.id)" data-toggle="modal" data-target="#taskModal">
           </div>
           <div class="taskContent col-sm-10">
             <div class="taskDescription row">
-              <p>{{task.description}}</p>
+              <p>{{task.description}} {{task.color}}</p>
             </div>
             <div class="row">
               <div class="col-sm-5 taskDueDay">
@@ -143,10 +143,12 @@
           <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.blocked === true" ng-click="project.unblockTask(task)">
             <div class="taskCard">
               <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
+
               </div>
               <div class="taskContent col-sm-10">
                 <div class="taskDescription row">
                   <p>{{task.description}}</p>
+
                   <!-- <a ng-click="project.unblockTask(task)">Unblock?</a> -->
                 </div>
                 <div class="row">
@@ -341,10 +343,8 @@
             </div>
             <div class="col-sm-6">
               <label for="color">Tag Color</label>
-              <select class="" name="color">
-                <option value="">red</option>
-                <option value="">green</option>
-                <option value="">blue</option>
+              <select class="" ng-model="project.taskToUpdate.color" name="color">
+                <option value="{{color.color}}" ng-repeat="color in project.taskColors">{{color.name}}</option>
               </select>
             </div>
               </div>

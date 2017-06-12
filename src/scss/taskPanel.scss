@@ -28,6 +28,8 @@
   }
 
   .taskDescInput {
+    padding: 5px;
+    border-radius: 5px;
     border: none;
     height: 60px;
     width: 200px;
@@ -48,7 +50,7 @@
 
     animation: rotateRight 0.2s 1;
     -webkit-animation-fill-mode: forwards;
-    border: 2px solid orange;
+    // border: 2px solid orange;
     .taskColorTag {
       border-radius: 0 !important;
     }
@@ -73,7 +75,7 @@
 
     animation: rotateLeft 0.2s 1;
     -webkit-animation-fill-mode: forwards;
-    border: 2px solid orange;
+    // border: 2px solid orange;
     .taskColorTag {
       border-radius: 0 !important;
     }
@@ -89,7 +91,7 @@
   }
 
   .addTaskCard {
-    background: #d0d0d0;
+    background: $veryLightPurple;
     border-radius: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
@@ -116,7 +118,8 @@
     color: white;
   }
   .taskColorTag {
-    background: orange;
+    // background: orange;
+    z-index: 10;
     height: 100%;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
