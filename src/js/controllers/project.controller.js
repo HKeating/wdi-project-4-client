@@ -374,23 +374,13 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $(ship).animate({
         left: shipLineWidth
       }, 1500);
-    } else {
-      console.log('Ship was animated');
     }
   }
 
   // This functions do HOVER on Task Cards
   vm.taskMouseOver = function taskMouseOver(task) {
 
-    let allDotsWidth = 0;
-    let lastDotWidth = 0;
     const startDay = task.start_day;
-
-    // Calculating starting position
-    for(var i = 0; i < startDay; i++) {
-      allDotsWidth = allDotsWidth + totalDotsLength[i];
-      lastDotWidth = totalDotsLength[i];
-    }
 
     // Calculating the total length of the line between two dots
     const dueDay = task.due_day;
@@ -400,16 +390,38 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     const startPosition = (startDay-1) * dotDistance;
 
     const linkLine = $('<div>');
+    const daysLabel = $('<div>');
     linkLine.addClass('lineLink');
+    daysLabel.addClass('daysLabel');
+
     linkLine.css({top: $scope.$lineContainer.height()-45, left: startPosition, position: 'absolute'});
-    linkLine.width(distanceBetweenDots);
-    console.log(linkLine);
+    daysLabel.css({top: $scope.$lineContainer.height()-65, left: startPosition, position: 'absolute'});
+    daysLabel.width(distanceBetweenDots);
+    daysLabel.html(`${totalDaysBetweenTwoDots} days`);
+
+    // linkLine.css('border-top-color', `#${color}`);
+    // linkLine.css('border-left-color', `#${color}`);
+    // linkLine.css('border-right-color', `#${color}`);
+    linkLine.width(0);
     $scope.$lineContainer.append(linkLine);
+    $scope.$lineContainer.append(daysLabel);
+    // $(daysLabel).fadeTo(0,0);
+
+    $(linkLine).animate({
+      'width': distanceBetweenDots
+    }, 500, function() {
+      $(linkLine).animate({
+        'height': '15px'
+      }, 300, function() {
+        $(daysLabel).fadeIn(300);
+      });
+    });
   };
 
 
   vm.taskMouseLeave = function taskMouseLeave() {
     $('.lineLink').remove();
+    $('.daysLabel').remove();
   };
 
   // vm.taskColors = ['#e74c3c', '#2ecc71', '#3498db', '#34495e', '#1abc9c', '#9b59b6', '#f1c40f', '#f39c12'];
