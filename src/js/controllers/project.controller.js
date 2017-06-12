@@ -179,9 +179,10 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         vm.userIsAdmin = true;
       }
       vm.milestones = data.milestones;
-      vm.projectLogs = data.logs;
-      console.log('Project logs: ', vm.projectLogs);
-      getStats(vm.projectLogs);
+      // vm.projectLogs = data.logs;
+      // orderLogs(vm.projectLogs);
+      orderLogs(data.logs);
+      getStats(data.logs);
       vm.currentDay = getCurrentDay(vm.project.start_date);
       $scope.selectedDay = vm.currentDay;
       vm.project.currentDay = vm.currentDay;
@@ -691,6 +692,15 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     return diffDays;
   }
 
+  vm.orderLogs = orderLogs;
+  function orderLogs(logs) {
+
+    vm.projectLogs = logs.sort((a, b) => {
+      return new Date(a.created_at) - new Date(b.created_at);
+
+    });
+  }
+
   $rootScope.$on('New Log', getProject);
 
   vm.getStats = getStats;
@@ -715,8 +725,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         (vm.activeUsers.find(x => x.id === log.user.id)).tasksDeleted ++;
         vm.totalTasksDeleted ++;
       }
-      console.log('Active users: ', vm.activeUsers);
-      console.log('log.user: ', log.user.id);
 
     });
   }
