@@ -451,7 +451,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     .then(data => {
       console.log('Task updated: ', data);
       $rootScope.$broadcast('Task Change');
-      $scope.$apply();
+      // $scope.$apply();
     });
   }
 

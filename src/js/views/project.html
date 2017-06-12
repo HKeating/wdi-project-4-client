@@ -15,8 +15,8 @@
       <h3 id="dayLabel">Day {{ selectedDay }}</h3>
       <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day && task.completed === false && task.blocked === false">
 
-        <div id="{{task.id}}" class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true, onStart:'selectTask(task)', onDrag:'onDrag(task)', onStop:'hideDropZone'}">
-          <div class="taskColorTag col-sm-2" ng-style="{'background': '#{{task.color}}' }" ng-click="project.selectTaskToEdit(task.id)" data-toggle="modal" data-target="#taskModal">
+        <div id="{{task.id}}" class="taskCard" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" jqyoui-draggable="{animate:true, onStart:'selectTask(task)', onDrag:'onDrag(task)', onStop:'hideDropZone'}" data-toggle="modal" data-target="#taskModal" ng-click="project.selectTaskToEdit(task.id)">
+          <div class="taskColorTag col-sm-2" ng-style="{'background': '#{{task.color}}' }">
           </div>
           <div class="taskContent col-sm-10">
             <div class="taskDescription row">
