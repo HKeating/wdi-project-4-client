@@ -1,5 +1,4 @@
 .sideBar {
-  margin-top: 10px;
   background: #666666;
   height: 450px;
 
@@ -16,28 +15,24 @@
     }
   }
   .statsButton {
-    background: #5aa1f1;
+    background: $darkPurple;
+    // border-left: 1px solid #000;
   }
   .tasksButton {
-    background: #5aa1f1;
-    border-bottom: 1px solid #000;
+    background: $darkPurple;
+    // border-bottom: 1px solid #000;
+    // border-left: 1px solid #000;
+
   }
   .logButton {
-    background: #5aa1f1;
-    border-bottom: 1px solid #000;
+    background: $darkPurple;
+    // border-bottom: 1px solid #000;
+    // border-left: 1px solid #000;
+
   }
   .selectedButton {
-    background: #467fc0;
+    background: $veryDarkPurple;
   }
 
-  .arrow-right {
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
 
-    border-left: 10px solid white;
-    z-index: 1;
-  }
 }
