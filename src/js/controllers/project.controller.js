@@ -395,9 +395,9 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     // Calculating the total length of the line between two dots
     const dueDay = task.due_day;
     const totalDaysBetweenTwoDots = dueDay-startDay;
-    const distanceBetweenDots = totalDaysBetweenTwoDots * dotDistance + allDotsWidth - (lastDotWidth/2);
+    const distanceBetweenDots = totalDaysBetweenTwoDots * dotDistance;
 
-    const startPosition = (startDay-1) * dotDistance + allDotsWidth;
+    const startPosition = (startDay-1) * dotDistance;
 
     const linkLine = $('<div>');
     linkLine.addClass('lineLink');
