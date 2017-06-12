@@ -7,8 +7,11 @@ let wasShipAnimated = false;
 ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task', 'Milestone', 'User'];
 
 function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone, User) {
+
   const vm = this;
+  let dotDistance = 0; // shows how far is the next dot
   var currentCardPosition;
+
   // vm.showDropZone = false;
   // Drag and Drop call backs
   // $scope.onDrop = function(target, source){
@@ -213,6 +216,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
     const lineWidth = $scope.$lineContainer.width();
     const distanceBetweenDots = (lineWidth / vm.deadline);
+    dotDistance = distanceBetweenDots;
     const ship = $('<div>');
     const firstDayLabel = $('<div>');
     const currentDayLabel = $('<div>');
@@ -262,7 +266,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
           if(!wasShipAnimated && vm.currentDay === i) {
             $(ship).attr('id', `icon`);
             shipLineWidth = 0;
-            $(ship).css({top: $scope.$lineContainer.height() - 80, left: 0, position: 'absolute'});
+            $(ship).css({top: $scope.$lineContainer.height() - 110, left: 0, position: 'absolute'});
             $scope.$lineContainer.append(ship);
           }
 
@@ -293,7 +297,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
           $(ship).attr('id', `icon`);
           shipLineWidth = currentLineWidth;
           if(!wasShipAnimated) {
-            $(ship).css({top: $scope.$lineContainer.height() - 80, left: 0, position: 'absolute'});
+            $(ship).css({top: $scope.$lineContainer.height() - 110, left: 0, position: 'absolute'});
             $scope.$lineContainer.append(ship);
           }
 
@@ -369,20 +373,25 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     }
   }
 
+  // This functions do HOVER on Task Cards
+  vm.taskMouseOver = function taskMouseOver(task) {
+    console.log('Hello There! ', task);
+    const startDay = task.start_day;
+    const dueDay = task.due_day;
+    const totalDaysBetweenTwoDots = dueDay-startDay;
+    const distanceBetweenDots = totalDaysBetweenTwoDots * dotDistance + ((15 * totalDaysBetweenTwoDots)/2);
 
+    const linkLine = $('<div>');
+    linkLine.addClass('lineLink');
+    linkLine.css({top: $scope.$lineContainer.height()-45, left: (startDay-1)*dotDistance+5, position: 'absolute'});
+    linkLine.width(distanceBetweenDots+5-(15*totalDaysBetweenTwoDots)/2);
+    console.log(linkLine);
+    $scope.$lineContainer.append(linkLine);
+  };
 
-
-
-
-
-
-
-
-
-
-
-
-
+  vm.taskMouseLeave = function taskMouseLeave() {
+    $('.lineLink').remove();
+  };
 
   vm.createTask = createTask;
   function createTask() {
