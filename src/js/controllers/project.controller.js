@@ -217,6 +217,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
     let currentLineWidth = 0;
     let shipLineWidth = 0;
+    let milestoneIndex = 0;
 
     for (let i = 1; i <= vm.deadline; i++) {
 
@@ -239,9 +240,11 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         // It is a milestone
         $(dayDot).addClass('lineMilestone');
         $(milestoneLabel).addClass('lineMilestoneLabel');
-        $(milestoneLabel).html('THIS IS A MILESTONE');
-        $(milestoneLabel).css({top: $scope.$lineContainer.height()-140, left: currentLineWidth-60, position: 'absolute'});
+        $(milestoneLabel).html(vm.milestones[milestoneIndex].title);
         $scope.$lineContainer.append(milestoneLabel);
+        $(milestoneLabel).css({top: $scope.$lineContainer.height()-150, left: currentLineWidth-30, position: 'absolute'});
+
+        milestoneIndex++;
 
       } else {
 
