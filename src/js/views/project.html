@@ -138,14 +138,14 @@
       </div>
     </div>
     <div class="blocked taskPanel row" ng-show="project.blockedShow">
-      <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.blocked === true">
+      <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="task.blocked === true" ng-click="project.unblockTask(task)">
         <div class="taskCard">
           <div class="taskColorTag col-sm-2" ng-click="project.selectTaskToEdit(task.id)">
           </div>
           <div class="taskContent col-sm-10">
             <div class="taskDescription row">
               <p>{{task.description}}</p>
-              <a ng-click="project.unblockTask(task)">Unblock?</a>
+              <!-- <a ng-click="project.unblockTask(task)">Unblock?</a> -->
             </div>
             <div class="row">
               <div class="col-sm-5 taskDueDay">
@@ -280,4 +280,131 @@
       <button type="button" ng-click="project.addCollaborator(user)">Add user</button>
     </div>
   </form>
+</div>
+
+
+
+<!-- MODAL XXXXXXXXXXXXXX -->
+<div class="DashboardCtrl as dashboard">
+  <div class="modal fade" id="projectModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <!-- Modal Header-->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Create Task</h4>
+        </div>
+        <!-- Modal Body-->
+        <div class="modal-body">
+
+          <div id="closeModal" class="">
+
+            <form ng-submit="project.createTask()">
+              <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" ng-model="project.newTask.description" name="description" value="">
+              </div>
+              <div class="form-group">
+                <label for="due_Day">Due Day</label>
+                <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.due_day" name="duration" value="">
+              </div>
+
+              <div class="form-group">
+                <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Save</button>
+              </div>
+
+            </form>
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Add MilestoneX</h4>
+            </div>
+            <div class="modal-body">
+
+              <form ng-submit="project.createMilestone()">
+                <div class="form-group">
+                  <label for="title">Title</label>
+                  <input type="text" ng-model="project.newMilestone.title" name="title" value="">
+                </div>
+                <div class="form-group">
+                  <label for="day">Complete By Day:</label>
+                  <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newMilestone.day" name="day" value="">
+                </div>
+                <div class="form-group">
+                  <input type="submit" name="submit" value="Add Milestone">
+                </div>
+                <!-- <h1 ng-click="project.showTaskNewForm = true" class="col-sm-3">+</h1> -->
+              </form>
+            </div>
+
+            <!-- FORM 3  -->
+            <div class="modal-header">
+              <h4 class="modal-title">Assign Task To Milestone</h4>
+            </div>
+            <div class="modal-body">
+              <select class="" name="" ng-model="project.milestoneToUpdateId" ng-change="project.selectMilestoneToUpdate(project.milestoneToUpdateId)">
+                <option value="" disabled>Select a milestone</option>
+                <option ng-repeat="milestone in project.project.milestones" value="{{milestone.id}}">{{ milestone.title }}, day: {{ milestone.day }}</option>
+              </select>
+              <div ng-show="project.milestoneToUpdate">
+                <div class="col-sm-6">
+                  <h3>{{ project.milestoneToUpdate.title }}</h3>
+                  <p>Due: day {{ project.milestoneToUpdate.day}}</p>
+                  <p>Tasks:</p>
+                  <ul>
+                    <li class="" ng-repeat="task in project.milestoneToUpdate.tasks">
+                      <ul>
+                        <li><strong>{{ task.description }}</strong></li>
+                        <li>Complete: {{ task.completed }}</li>
+                        <li>Due: day {{ task.due_day }}</li>
+                        <li><button type="button" ng-click="project.removeMilestoneTask(project.milestoneToUpdate, task)">Remove</button></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-sm-6">
+                  <h3>Add tasks:</h3>
+                  <div class="col-sm-4" ng-repeat="task in project.milestoneToUpdate.availableTasks"  ng-click="project.addMilestoneTask(project.milestoneToUpdate, task)">
+                    <p><strong>{{task.description}}</strong></p>
+                  </div>
+                  <button type="button" ng-click="project.deleteMilestone(project.milestoneToUpdate)">Remove Milestone</button>
+                </div>
+          </div>
+        </div>
+
+        <!-- FORM 4  -->
+        <div class="modal-header">
+          <h4 class="modal-title">Add Contributors</h4>
+        </div>
+        <div class="modal-body">
+          <h3 id="contributorsLabel">Contributors: </h3>
+
+          <div class="" ng-repeat="user in project.project.users">
+            <img class="contributorDiv" ng-src="{{ user.image }}" alt="{{ user.username }}">
+            <button ng-if="project.userIsAdmin" type="button" name="button" ng-click="project.removeCollaborator(user)">Remove</button>
+          </div>
+          <div class="" ng-if="project.userIsAdmin">
+            <form>
+              <input type="text" ng-model="project.collaboratorSearch" name="" value="">
+              <div class="" ng-repeat="user in project.allUsers | filter: { email: project.collaboratorSearch}">
+                <p>{{ user.username }}</p>
+                <button type="button" ng-click="project.addCollaborator(user)">Add user</button>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    </div>
+  </div>
+</div>
+</div>
 </div>

@@ -4,12 +4,12 @@
   height: 450px;
   .completed {
     height: 400px;
-    background: green;
+    background: #2ecc40;
     overflow: scroll;
   }
   .blocked {
     height: 400px;
-    background: red;
+    background: #ff5b58;
     overflow: scroll;
   }
   .taskTabs {
