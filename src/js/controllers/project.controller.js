@@ -388,6 +388,9 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     vm.newTask.start_day = $scope.selectedDay;
     vm.newTask.completed = false;
     vm.newTask.blocked = false;
+    if (!vm.newTask.due_day) {
+      vm.newTask.due_day = vm.project.duration;
+    }
     const taskObj = {
       'task': vm.newTask
     };
