@@ -499,6 +499,11 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     });
   }
 
+  vm.getTaskColor = getTaskColor;
+  function getTaskColor(task) {
+    return `#${task.color}`;
+  }
+
   vm.showTaskEditForm = false;
   vm.selectTaskToEdit = selectTaskToEdit;
   function selectTaskToEdit(taskId) {
