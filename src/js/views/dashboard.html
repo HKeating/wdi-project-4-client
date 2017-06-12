@@ -6,7 +6,14 @@
       <!--  Main project-->
       <div class="fl w-50 pointer" ng-repeat="project in dashboard.user.projects track by $index" ng-show="$first">
         <p class="ImageText ma4 endDateMainTitle">{{ project.title | limitTo : 15 | uppercase }}</p>
-        <p class="ImageText endDateMain ma4">{{ dashboard.daysLeft(project.end_date) }}<span class="endDateMainDL">DAYS LEFT</span></p>
+        <p class="ImageText endDateMain ma4">{{ dashboard.daysLeft(project.end_date) }}
+
+          <span class="endDateMainDL">DAYS LEFT</span></p>
+          <div class="tempB">
+            <button ng-click="dashboard.selectToEdit(project.id)" type="button" name="button">Edit Project</button>
+            <button type="button" ng-click="dashboard.deleteProject(project)" name="button"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+          </div>
+
 
         <a ui-sref="project({ id: project.id })" class="db aspect-ratio aspect-ratio--1x1 dim">
           <span role="img" style="background-image:url({{ project.image }});" class="bg-center cover aspect-ratio--object"></span>
@@ -20,6 +27,10 @@
     <div class="fl w-50 w-25-ns pointer" ng-repeat="project in dashboard.user.projects track by $index" ng-show="!$first">
       <p class="ImageText ma4 f1">{{ project.title | limitTo : 15 | uppercase }}</p>
       <p class="ImageText endDate ma4 ">{{ dashboard.daysLeft(project.end_date) }}<span class="f2"> DAYS LEFT</span></p>
+      <div class="tempB">
+        <button ng-click="dashboard.selectToEdit(project.id)" type="button" name="button">Edit Project</button>
+        <button type="button" ng-click="dashboard.deleteProject(project)" name="button"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+      </div>
       <a ui-sref="project({ id: project.id })" class="db aspect-ratio aspect-ratio--1x1 ">
         <span role="img" style="background-image:url({{ project.image }});" class="bg-center cover aspect-ratio--object"></span>
       </a>
@@ -31,25 +42,25 @@
   <!--  COLLAB-->
 
   <h1>Collab Projects</h1>
-    <article class="cf">
+    <article class="cf pb5">
       <!--  Main project-->
       <div class="fl w-50 pointer" ng-repeat="project in dashboard.collabProjects track by $index" ng-show="$first">
-        <div class="dashCardTitle f2 white mh4 mv4">{{ project.title | limitTo : 15 | uppercase }}</div>
+        <p class="ImageText ma4 endDateMainTitle">{{ project.title | limitTo : 15 | uppercase }}</p>
+        <p class="ImageText endDateMain ma4">{{ dashboard.daysLeft(project.end_date) }}<span class="endDateMainDL">DAYS LEFT</span></p>
 
-        <div class="dashCardTimer mv0 white mh4 mv4">{{ dashboard.daysLeft(project.end_date) }}<span class="f2">DAYS</span></div>
         <a ui-sref="project({ id: project.id })" class="db aspect-ratio aspect-ratio--1x1 dim">
           <span role="img" style="background-image:url({{ project.image }});" class="bg-center cover aspect-ratio--object"></span>
         </a>
+
       </div>
 
 
     <!--  Small projects-->
 
     <div class="fl w-50 w-25-ns pointer" ng-repeat="project in dashboard.collabProjects track by $index" ng-show="!$first">
-      <div class="dashCardTitle f2 white mh4 mv4">{{ project.title | limitTo : 15 | uppercase }}</div>
-
-      <div class="dashCardTimer mv0 white mh4 mv4">{{ dashboard.daysLeft(project.end_date) }}<span class="f2">DAYS</span></div>
-      <a ui-sref="project({ id: project.id })" class="db aspect-ratio aspect-ratio--1x1 dim">
+      <p class="ImageText ma4 f1">{{ project.title | limitTo : 15 | uppercase }}</p>
+      <p class="ImageText endDate ma4 ">{{ dashboard.daysLeft(project.end_date) }}<span class="f2"> DAYS LEFT</span></p>
+      <a ui-sref="project({ id: project.id })" class="db aspect-ratio aspect-ratio--1x1 ">
         <span role="img" style="background-image:url({{ project.image }});" class="bg-center cover aspect-ratio--object"></span>
       </a>
     </div>
@@ -65,7 +76,7 @@
 
 
 <div class="dashboard-container pb4">
-
+<!--
   <div class=" center home-font black bg-white br4 pa4">
     <h2>Your Projects:</h2>
     <article ng-repeat="project in dashboard.user.projects track by $index"  class="br2 ba dark-gray b--black-10 mv4 w-100 mw5 dib projectCard">
@@ -87,8 +98,8 @@
           Duration:<span class="fr">{{ project.duration }} days</span><br>
           Milestones: <span class="fr">{{ project.milestones.length }}</span><br>
           Tasks: <span class="fr">{{ project.tasks.length }}</span><br>
-          <!-- Started: <span class="">{{ project.start_date }}</span><br>
-          Ends: <span class="">{{ project.end_date }}</span><br> -->
+          Started: <span class="">{{ project.start_date }}</span><br>
+          Ends: <span class="">{{ project.end_date }}</span><br>
           <button ng-click="dashboard.selectToEdit(project.id)" type="button" name="button">Edit Project</button>
           <button type="button" ng-click="dashboard.deleteProject(project)" name="button"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
         </div>
@@ -96,7 +107,7 @@
     </article>
 
 
-    <!-- Add Project Card -->
+
     <div class="dib cursor: pointer" data-toggle="modal" data-target="#myModal">
       <article class="br2 b--black-10 mv4 w-100 mw5 dib projectCard">
         <img ng-src="http://www.public-domain-photos.com/free-cliparts-4/computer/actions/add.png" class="db w-100 br2 br--top" alt="">
@@ -135,7 +146,7 @@
           Milestones: <span class="fr">{{ project.milestones.length }}</span><br>
           Tasks: <span class="fr">{{ project.tasks.length }}</span><br>
           <!-- Started: <span class="">{{ project.start_date }}</span><br>
-          Ends: <span class="">{{ project.end_date }}</span><br> -->
+          Ends: <span class="">{{ project.end_date }}</span><br>
 
         </div>
       </div>

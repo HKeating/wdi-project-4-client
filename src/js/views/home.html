@@ -4,15 +4,15 @@
       <div class="w-100 pa2 tc logo">
         <img src="/images/FISI.png" alt="logo">
       </div>
-      <div ng-controller="MainCtrl as main" class=" w-100 dib tc homeLogin br3 pa3 cursor: pointer" ng-hide="main.user">
+      <div id="loginSection" ng-controller="MainCtrl as main" class=" w-100 dib tc homeLogin br3 pa3 cursor: pointer" ng-hide="main.user">
 
         <div ng-controller="LoginCtrl as login" class="loginPop black">
           <p class="loginHeads ">
-            <a id="loginform">Login</a>
+            <a ng-href="#loginSection" id="loginform">Login</a>
             <a> || </a>
             <a ng-href="#registerSection">Register</a>
           </p>
-          <div class="login w-100 dib tc">
+          <div  class="login w-100 dib tc">
             <div class="arrow-up w-50 dib tc"></div>
             <div class="formholder w-100 dib tc">
               <div class="randompad">

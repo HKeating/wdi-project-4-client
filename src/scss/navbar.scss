@@ -6,7 +6,7 @@
 }
 
 .navItems{
-  width: 80%;
+  width: 95%;
   margin: 0 auto;
 
 }
@@ -24,5 +24,9 @@
 }
 .loginHeads,.login{
   margin: 0 auto;
+  z-index: 100;
+}
+.tempB{
+  position: absolute;
   z-index: 100;
 }

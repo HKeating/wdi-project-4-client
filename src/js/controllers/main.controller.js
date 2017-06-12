@@ -54,7 +54,7 @@ function MainCtrl($rootScope, CurrentUserService, $state, $scope) {
     console.log(movingShip.style.left);
 
     // square1.style.left = scrollPercent * windowWidth + 'px';
-    movingShip.style.left = 0 - scrollPercent*windowWidth * 0.25 + 'px';
+    movingShip.style.left = 0 - scrollPercent*windowWidth * 0.35 + 'px';
 
     // if (parseInt(movingShip.style.left) > 870) {
     //   movingShip.style = 150 - scrollPercent*windowWidth;
