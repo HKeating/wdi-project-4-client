@@ -162,7 +162,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
 
 
-
+  $rootScope.$on('Project Change', getProject);
   getProject();
 
   function getProject() {
@@ -170,6 +170,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
       // Got the data about this project
       vm.project = data;
+      $rootScope.$project = data;
       vm.user = CurrentUserService.currentUser;
       console.log('Got the data', vm.project);
       $rootScope.$broadcast('project ready');
