@@ -100,7 +100,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   function completeTask() {
 
     $scope.$card.fadeOut(1000, () => {
-      console.log('Task completed: ', vm.draggedTask);
       vm.draggedTask.completed = true;
       $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'marked', model1: 'task', preposition: 'as', condition: 'completed'}, vm.draggedTask);
       updateTask(vm.draggedTask);
@@ -112,7 +111,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   $scope.taskBlocked = taskBlocked;
   function taskBlocked() {
-    console.log('Task blocked: ', vm.draggedTask);
     vm.draggedTask.blocked = true;
     $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'marked', model1: 'task', preposition: 'as', condition: 'blocked'}, vm.draggedTask);
     updateTask(vm.draggedTask);
@@ -131,7 +129,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   $scope.selectTask = selectTask;
   function selectTask(a, b, task) {
-    console.log('Task: ', task);
     vm.draggedTask = task;
     vm.showDropZone = true;
     vm.statsShow = false;
@@ -143,14 +140,12 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     $scope.$card.addClass('taskCardRotatedRight');
     currentCardPosition = $scope.$card.position().left;
 
-    console.log('Show drop zone? ', vm.showDropZone);
     $scope.$apply();
   }
 
 
   $scope.hideDropZone = hideDropZone;
   function hideDropZone() {
-    console.log('Hidedrop triggering');
     vm.showDropZone = false;
 
     // Moving card back
@@ -172,7 +167,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       vm.project = data;
       $rootScope.$project = data;
       vm.user = CurrentUserService.currentUser;
-      console.log('Got the data', vm.project);
       $rootScope.$broadcast('project ready');
       vm.deadline = vm.project.duration; // setting up deadline
       if (vm.project.user.id === vm.user.id) {
@@ -180,7 +174,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       }
       vm.milestones = data.milestones;
       vm.projectLogs = data.logs;
-      console.log('Project logs: ', vm.projectLogs);
       getStats(vm.projectLogs);
       vm.currentDay = getCurrentDay(vm.project.start_date);
       $scope.selectedDay = vm.currentDay;
@@ -214,7 +207,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   // This function draws dots on the line
   function drawLine() {
     $scope.$line.empty();
-    console.log(`Line Container width is ${$scope.$lineContainer.width()}`);
 
     const lineWidth = $scope.$lineContainer.width();
     const distanceBetweenDots = (lineWidth / vm.deadline);
@@ -263,7 +255,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
             $scope.$lineContainer.append(ship);
           }
 
-          $scope.$lineContainer.append(firstDayLabel);
+          if(!wasShipAnimated) $scope.$lineContainer.append(firstDayLabel);
 
 
         } else if (i === vm.deadline) {
@@ -273,7 +265,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
           $(finalDayLabel).addClass('lineLabel');
           $(finalDayLabel).html(`Day ${vm.deadline}`);
           $(finalDayLabel).css({top: $scope.$lineContainer.height()-5, left: currentLineWidth, position: 'absolute'});
-          $scope.$lineContainer.append(finalDayLabel);
+          if(!wasShipAnimated) $scope.$lineContainer.append(finalDayLabel);
+
 
 
 
@@ -284,7 +277,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
           $(currentDayLabel).addClass('lineLabel');
           $(currentDayLabel).html(`Day ${vm.currentDay}`);
           $(currentDayLabel).css({top: $scope.$lineContainer.height()-5, left: currentLineWidth, position: 'absolute'});
-          $scope.$lineContainer.append(currentDayLabel);
+          if(!wasShipAnimated) $scope.$lineContainer.append(currentDayLabel);
 
           $(ship).attr('id', `icon`);
           shipLineWidth = currentLineWidth;
@@ -311,7 +304,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $(dayDot).attr('index', `${i}`);
 
       $(dayDot).click(() =>  {
-        console.log('clicked');
 
         $scope.selectedDay = dayDot.attr('index');
         console.log('selectedDay: ', $scope.selectedDay);
