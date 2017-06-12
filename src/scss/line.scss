@@ -1,10 +1,4 @@
-$blue:  #0074D9;
-$green: #01FF70;
-$darkGreen: #2ecc40;
-$black: #111111;
-$grey: #AAAAAA;
-$red: #FF4136;
-$purple: #b10dc9;
+@import "colors";
 
 #icon {
 
@@ -37,8 +31,8 @@ $purple: #b10dc9;
 }
 
 .lineDayDot {
-  background-color: $black;
-  // border: 2px solid $black;
+  background-color: $lightPurple;
+  // border: 2px solid $lightPurple;
   border-radius: 50%;
   width: 15px;
   height: 15px;
@@ -47,7 +41,7 @@ $purple: #b10dc9;
 }
 
 .lineDayDot:hover {
-  background-color: $black;
+  background-color: $lightPurple;
   //border-style: solid;
   border-radius: 50%;
   width: 15px;
@@ -123,7 +117,7 @@ $purple: #b10dc9;
 
 #lineCurrentDot {
 
-  // border: 2px solid $black;
+  // border: 2px solid $lightPurple;
   background-color: $green;
   border-radius: 50%;
   width: 15px;
@@ -147,7 +141,7 @@ $purple: #b10dc9;
 }
 
 .lineFuture {
-  background-color: $black;
+  background-color: $lightPurple;
   height: 2px;
   display: inline-block;
   // position: absolute;
@@ -155,7 +149,7 @@ $purple: #b10dc9;
 
 .lineMilestone {
 
-  background-color: $blue;
+  background-color: $darkPurple;
   height: 100px;
   width: 5px;
   display: inline-block;

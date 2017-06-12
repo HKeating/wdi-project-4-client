@@ -1,5 +1,14 @@
+@import "colors";
+
+
+
+.mainTaskPanel {
+
+  padding-right: 5px;
+}
+
 .taskPanel {
-  background-color: #5aa1f1;
+  background-color: $darkPurple;
   height: 450px;
   // overflow-y: scroll;
   // overflow-x: visible;
@@ -16,6 +25,11 @@
     overflow: hidden;
     // transition: all .2s ease-in-out;
 
+  }
+
+  .taskDescInput {
+    height: 30px;
+    width: 180px;
   }
 
   .taskCard:hover {

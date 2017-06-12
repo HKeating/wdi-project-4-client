@@ -1,30 +1,56 @@
+@import "colors";
+
 .controlPanel {
-  background: #a0a0a0;
+  background-color: $lightPurple;
   height: 450px;
+  color: white;
+  // border-left: 1px solid black;
+
+
   .completed {
     height: 400px;
-    background: #2ecc40;
+    background-color: $green;
     overflow: scroll;
+    padding-top: 10px;
   }
   .blocked {
+    padding-top: 10px;
     height: 400px;
-    background: #ff5b58;
+    background: $red;
     overflow: scroll;
   }
   .taskTabs {
     height: auto;
+    text-align: center;
+
+    h4 {
+      // height: 40px;
+      position:absolute;
+      top:50%;
+      left:50%;
+      margin-top:-10px;
+      margin-left:-40px;
+    }
   }
 
   .completedHeader {
-    border-right: 1px solid black;
     height: 50px;
   }
   .blockedHeader {
     height: 50px;
   }
+  .completedHeaderSelected {
+    background: $green;
+    border-top-left-radius: 5px;
+  }
+  .blockedHeaderSelected {
+    background: $red;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+  }
 
   .completedBox {
-    background: #33ff99;
+    background: $green;
     height: 150px;
     position: relative;
     h2 {
@@ -54,12 +80,12 @@
       transform: translate(-50%, -50%);
     }
     @keyframes completedBoxAnimation {
-      from {background-color: #33ff99;}
+      from {background-color: $green;}
       to {background-color:  #60ff00;}
     }
   }
   .blockedBox {
-    background: #ff5b58;
+    background: $red;
     height: 150px;
     position: relative;
 
@@ -90,7 +116,7 @@
       transform: translate(-50%, -50%);
     }
     @keyframes blockedBoxAnimation {
-      from {background-color: #ff5b58;}
+      from {background-color: $red;}
       to {background-color: #ff0007;}
     }
   }
@@ -126,26 +152,32 @@
 
   .stats {
     height: 450px;
-    background: #995588;
+    background: $lightPurple;
   }
   .log {
     height: 450px;
-    background: white;
+    background: $lightPurple;
     flex: 1 1 0;
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
     .blockedText {
-      color: #FF4136;
+      color: $red;
       font-weight: bold;
     }
     .completedText {
-      color: #2ECC40;
+      color: $green;
       font-weight: bold;
     }
     .unblockedText {
       color: orange;
       font-weight: bold;
+    }
+    .logDayHeader {
+      margin-left: 10px;
+    }
+    .logContent {
+      margin-left: 20px;
     }
   }
 }

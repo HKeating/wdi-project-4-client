@@ -661,11 +661,15 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   function showCompleted() {
     vm.completedShow = true;
     vm.blockedShow = false;
+    $('.completedHeader').addClass('completedHeaderSelected');
+    $('.blockedHeader').removeClass('blockedHeaderSelected');
   }
   vm.showBlocked = showBlocked;
   function showBlocked() {
     vm.completedShow = false;
     vm.blockedShow = true;
+    $('.completedHeader').removeClass('completedHeaderSelected');
+    $('.blockedHeader').addClass('blockedHeaderSelected');
   }
 
 

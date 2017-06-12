@@ -9,7 +9,9 @@
   </div>
 
   <div class="row projectPanels">
-    <div class="taskPanel col-sm-6">
+
+
+    <div class="taskPanel mainTaskPanel col-sm-6">
       <h3 id="dayLabel">Day {{ selectedDay }}</h3>
       <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day && task.completed === false && task.blocked === false">
 
@@ -36,7 +38,7 @@
           <form ng-submit="project.createTask()">
             <div class="col-sm-9 addTaskForm">
               <div class="form-group">
-                <input type="text" ng-model="project.newTask.description" name="description" value="">
+                <input type="text-area" class="taskDescInput" ng-model="project.newTask.description" name="description" value="">
               </div>
               <div class="form-group">
                 <select ng-model="project.newTask.due_day" class="" name="">
@@ -57,7 +59,6 @@
         </div>
       </div>
     </div>
-
     <div class="controlPanel col-sm-5">
       <div class="dropZone" ng-show="project.showDropZone">
         <div id="completedBox" class="completedBox row" ng-model="done" data-drop="true" data-jqyoui-options jqyoui-droppable="{multiple:true, animate:true, onDrop:'completeTask', onOver:'onOverCompletedBox', onOut:'onOutCompletedBox'}">
@@ -95,12 +96,11 @@
 
       </div>
       <div class="log row" ng-show="project.logShow">
-        <h1>LOG</h1>
         <ul>
           <li ng-repeat="day in project.projectDays track by $index" ng-if="project.logDays.includes(day)">
-            <h4>Day: {{ day }}</h4>
+            <h4 class="logDayHeader">Day {{ day }}</h4>
             <ul>
-              <li ng-repeat="log in project.projectLogs" ng-if="log.day === day">
+              <li ng-repeat="log in project.projectLogs" ng-if="log.day === day" class="logContent">
                 <p>{{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
               </li>
             </ul>
@@ -110,11 +110,11 @@
   </div>
   <div class="blockedAndCompleted" ng-show="project.tasksShow">
     <div class="taskTabs row">
+      <div class="col-sm-6 blockedHeader blockedHeaderSelected" ng-click="project.showBlocked()">
+        <h4>Blocked</h4>
+      </div>
       <div class="col-sm-6 completedHeader" ng-click="project.showCompleted()">
         <h4>Completed</h4>
-      </div>
-      <div class="col-sm-6 blockedHeader" ng-click="project.showBlocked()">
-        <h4>Blocked</h4>
       </div>
     </div>
     <div class="completed taskPanel row" ng-show="project.completedShow">
@@ -174,7 +174,7 @@
     <img ng-src="/images/logs.png" alt="">
   </div>
   <div class="row sideBarOption statsButton" ng-click="project.showStats()">
-    <img ng-src="/images/settings.png" alt="">
+    <img ng-src="/images/stats.png" alt="">
   </div>
 
 
