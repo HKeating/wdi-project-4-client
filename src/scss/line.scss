@@ -160,3 +160,13 @@
 .lineLabel {
   font-size: 10px;
 }
+
+.lineMilestoneLabel {
+
+  text-align: center;
+  font-size: 13px;
+
+  -ms-transform: rotate(15deg); /* IE 9 */
+  -webkit-transform: rotate(15deg); /* Chrome, Safari, Opera */
+  transform: rotate(15deg);
+}
