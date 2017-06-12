@@ -13,6 +13,17 @@
   z-index: 1;
 }
 
+.lineLink {
+  background-color: transparent;
+  border-color: $red;
+  border-top: 3px solid;
+  border-right: 3px solid;
+  border-left: 3px solid;
+  // border-radius: 3px;
+  height: 15px;
+
+}
+
 .lineContainer {
   background-color: white;
   height:200px;
@@ -62,7 +73,7 @@
 }
 
 .linePastDayDot:hover {
-  background-color: $green;
+  background-color: $blue;
   //border-style: solid;
   border-radius: 50%;
   width: 15px;
@@ -157,6 +168,14 @@
 
 }
 
+.lineMilestone:hover {
+  background-color: $blue;
+  height: 100px;
+  width: 5px;
+  display: inline-block;
+  border-radius: 5px;
+}
+
 .lineLabel {
   font-size: 10px;
 }
@@ -169,4 +188,9 @@
   -ms-transform: rotate(15deg); /* IE 9 */
   -webkit-transform: rotate(15deg); /* Chrome, Safari, Opera */
   transform: rotate(15deg);
+}
+
+.lineMilestoneLabelHover {
+  transition: all .1s ease-in-out;
+  transform: scale(2.0);
 }

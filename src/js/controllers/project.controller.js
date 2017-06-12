@@ -7,8 +7,12 @@ let wasShipAnimated = false;
 ProjectCtrl.$inject = ['$scope', 'Project', '$stateParams', '$state', 'CurrentUserService', '$rootScope', 'Task', 'Milestone', 'User'];
 
 function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, $rootScope, Task, Milestone, User) {
+
   const vm = this;
+  let dotDistance = 0; // shows how far is the next dot
+  const totalDotsLength = [];
   var currentCardPosition;
+
   // vm.showDropZone = false;
   // Drag and Drop call backs
   // $scope.onDrop = function(target, source){
@@ -212,6 +216,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
     const lineWidth = $scope.$lineContainer.width();
     const distanceBetweenDots = (lineWidth / vm.deadline);
+    dotDistance = distanceBetweenDots;
     const ship = $('<div>');
     const firstDayLabel = $('<div>');
     const currentDayLabel = $('<div>');
@@ -220,7 +225,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     let currentLineWidth = 0;
     let shipLineWidth = 0;
     let milestoneIndex = 0;
-
+    $('.lineMilestoneLabel').remove();
     for (let i = 1; i <= vm.deadline; i++) {
 
       // Making a day dot and adding a class to it
@@ -239,6 +244,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       // console.log('Array of milestone indexes: ',arrayOfMilestoneIndexes);
 
       if($.inArray(i, arrayOfMilestoneIndexes) !== -1) {
+
         // It is a milestone
         $(dayDot).addClass('lineMilestone');
         $(milestoneLabel).addClass('lineMilestoneLabel');
@@ -247,6 +253,13 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
         $(milestoneLabel).css({top: $scope.$lineContainer.height()-150, left: currentLineWidth-30, position: 'absolute'});
 
         milestoneIndex++;
+
+        $(dayDot).hover(function() {
+          $(milestoneLabel).addClass('lineMilestoneLabelHover');
+        }, function() {
+          $(milestoneLabel).removeClass('lineMilestoneLabelHover');
+        }
+      );
 
       } else {
 
@@ -261,12 +274,11 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
           if(!wasShipAnimated && vm.currentDay === i) {
             $(ship).attr('id', `icon`);
             shipLineWidth = 0;
-            $(ship).css({top: $scope.$lineContainer.height() - 80, left: 0, position: 'absolute'});
+            $(ship).css({top: $scope.$lineContainer.height() - 110, left: 0, position: 'absolute'});
             $scope.$lineContainer.append(ship);
           }
 
           if(!wasShipAnimated) $scope.$lineContainer.append(firstDayLabel);
-
 
         } else if (i === vm.deadline) {
           // The Last dot
@@ -276,9 +288,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
           $(finalDayLabel).html(`Day ${vm.deadline}`);
           $(finalDayLabel).css({top: $scope.$lineContainer.height()-5, left: currentLineWidth, position: 'absolute'});
           if(!wasShipAnimated) $scope.$lineContainer.append(finalDayLabel);
-
-
-
 
         } else if (i === vm.currentDay) {
           // The Current dot
@@ -292,7 +301,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
           $(ship).attr('id', `icon`);
           shipLineWidth = currentLineWidth;
           if(!wasShipAnimated) {
-            $(ship).css({top: $scope.$lineContainer.height() - 80, left: 0, position: 'absolute'});
+            $(ship).css({top: $scope.$lineContainer.height() - 110, left: 0, position: 'absolute'});
             $scope.$lineContainer.append(ship);
           }
 
@@ -353,6 +362,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       console.log(`${i}) Dot width: `, dayDot.width());
       console.log(`${i}) Line width: `, connectionLine.width());
       currentLineWidth = currentLineWidth + connectionLine.width() + dayDot.width();
+      totalDotsLength.push(dayDot.width());
     }
 
     // After the loop
@@ -368,15 +378,38 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     }
   }
 
+  // This functions do HOVER on Task Cards
+  vm.taskMouseOver = function taskMouseOver(task) {
+
+    let allDotsWidth = 0;
+    let lastDotWidth = 0;
+    const startDay = task.start_day;
+
+    // Calculating starting position
+    for(var i = 0; i < startDay; i++) {
+      allDotsWidth = allDotsWidth + totalDotsLength[i];
+      lastDotWidth = totalDotsLength[i];
+    }
+
+    // Calculating the total length of the line between two dots
+    const dueDay = task.due_day;
+    const totalDaysBetweenTwoDots = dueDay-startDay;
+    const distanceBetweenDots = totalDaysBetweenTwoDots * dotDistance + allDotsWidth - (lastDotWidth/2);
+
+    const startPosition = (startDay-1) * dotDistance + allDotsWidth;
+
+    const linkLine = $('<div>');
+    linkLine.addClass('lineLink');
+    linkLine.css({top: $scope.$lineContainer.height()-45, left: startPosition, position: 'absolute'});
+    linkLine.width(distanceBetweenDots);
+    console.log(linkLine);
+    $scope.$lineContainer.append(linkLine);
+  };
 
 
-
-
-
-
-
-
-
+  vm.taskMouseLeave = function taskMouseLeave() {
+    $('.lineLink').remove();
+  };
 
   // vm.taskColors = ['#e74c3c', '#2ecc71', '#3498db', '#34495e', '#1abc9c', '#9b59b6', '#f1c40f', '#f39c12'];
   vm.taskColors = [{name: 'taskRed', color: 'e74c3c'},{name: 'taskGreen', color: '2ecc71'}, {name: 'taskBlue', color: '3498db'}, {name: 'taskDarkBlue', color: '34495e'}, {name: 'taskAqua', color: '1abc9c'}, {name: 'taskPurple', color: '9b59b6'}, {name: 'taskYellow', color: 'f1c40f'}, {name: 'taskOrange', color: 'f39c12'}, {name: 'taskDefault', color: 'ecf0f1'}];
