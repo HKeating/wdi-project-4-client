@@ -10,6 +10,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   const vm = this;
   let dotDistance = 0; // shows how far is the next dot
+  const totalDotsLength = [];
   var currentCardPosition;
 
   // vm.showDropZone = false;
@@ -358,6 +359,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       console.log(`${i}) Dot width: `, dayDot.width());
       console.log(`${i}) Line width: `, connectionLine.width());
       currentLineWidth = currentLineWidth + connectionLine.width() + dayDot.width();
+      totalDotsLength.push(dayDot.width());
     }
 
     // After the loop
@@ -375,16 +377,28 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   // This functions do HOVER on Task Cards
   vm.taskMouseOver = function taskMouseOver(task) {
-    console.log('Hello There! ', task);
+
+    let allDotsWidth = 0;
+    let lastDotWidth = 0;
+
+    // Calculating starting position
+    for(var i = 0; i < startDay; i++) {
+      allDotsWidth = allDotsWidth + totalDotsLength[i];
+      lastDotWidth = totalDotsLength[i];
+    }
+
+    // Calculating the total length of the line between two dots
     const startDay = task.start_day;
     const dueDay = task.due_day;
     const totalDaysBetweenTwoDots = dueDay-startDay;
-    const distanceBetweenDots = totalDaysBetweenTwoDots * dotDistance + ((15 * totalDaysBetweenTwoDots)/2);
+    const distanceBetweenDots = totalDaysBetweenTwoDots * dotDistance + allDotsWidth - (lastDotWidth/2);
+
+    const startPosition = (startDay-1) * dotDistance + allDotsWidth;
 
     const linkLine = $('<div>');
     linkLine.addClass('lineLink');
-    linkLine.css({top: $scope.$lineContainer.height()-45, left: (startDay-1)*dotDistance+5, position: 'absolute'});
-    linkLine.width(distanceBetweenDots+5-(15*totalDaysBetweenTwoDots)/2);
+    linkLine.css({top: $scope.$lineContainer.height()-45, left: startPosition, position: 'absolute'});
+    linkLine.width(distanceBetweenDots);
     console.log(linkLine);
     $scope.$lineContainer.append(linkLine);
   };

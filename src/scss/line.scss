@@ -15,9 +15,10 @@
 
 .lineLink {
   background-color: transparent;
-  border-top: 3px solid $red;
-  border-right: 3px solid $red;
-  border-left: 3px solid $red;
+  border-color: $red;
+  border-top: 3px solid;
+  border-right: 3px solid;
+  border-left: 3px solid;
   // border-radius: 3px;
   height: 15px;
 
