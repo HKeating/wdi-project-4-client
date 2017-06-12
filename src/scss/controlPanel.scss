@@ -5,15 +5,21 @@
   .completed {
     height: 400px;
     background: green;
+    overflow: scroll;
   }
   .blocked {
     height: 400px;
     background: red;
+    overflow: scroll;
   }
   .taskTabs {
-    height: 50px;
+    height: 100%;
   }
 
+  .completedHeader {
+    border-right: 1px solid black;
+    height: 50px;
+  }
 
   .completedBox {
     background: #33ff99;

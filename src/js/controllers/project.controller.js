@@ -105,6 +105,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'marked', model1: 'task', preposition: 'as', condition: 'completed'}, vm.draggedTask);
       updateTask(vm.draggedTask);
       vm.draggedTask = {};
+      vm.tasksShow = true;
+      showCompleted();
     });
   }
 
@@ -115,6 +117,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'marked', model1: 'task', preposition: 'as', condition: 'blocked'}, vm.draggedTask);
     updateTask(vm.draggedTask);
     vm.draggedTask = {};
+    vm.tasksShow = true;
+    showBlocked();
   }
 
   $scope.giveUpTask = giveUpTask;
@@ -623,21 +627,31 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     getProject();
   });
 
-
+  vm.tasksShow = true;
+  vm.blockedShow = true;
   vm.showStats = showStats;
   function showStats() {
+    $('.statsButton').addClass('selectedButton');
+    $('.tasksButton').removeClass('selectedButton');
+    $('.logButton').removeClass('selectedButton');
     vm.statsShow = true;
     vm.tasksShow = false;
     vm.logShow = false;
   }
   vm.showTasks = showTasks;
   function showTasks() {
+    $('.statsButton').removeClass('selectedButton');
+    $('.tasksButton').addClass('selectedButton');
+    $('.logButton').removeClass('selectedButton');
     vm.statsShow = false;
     vm.tasksShow = true;
     vm.logShow = false;
   }
   vm.showLog = showLog;
   function showLog() {
+    $('.statsButton').removeClass('selectedButton');
+    $('.tasksButton').removeClass('selectedButton');
+    $('.logButton').addClass('selectedButton');
     vm.statsShow = false;
     vm.tasksShow = false;
     vm.logShow = true;

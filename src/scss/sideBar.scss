@@ -26,4 +26,18 @@
     background: #5aa1f1;
     border-bottom: 1px solid #000;
   }
+  .selectedButton {
+    background: #467fc0;
+  }
+
+  .arrow-right {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+
+    border-left: 10px solid white;
+    z-index: 1;
+  }
 }
