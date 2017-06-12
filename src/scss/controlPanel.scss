@@ -1,5 +1,4 @@
 .controlPanel {
-  margin-top: 10px;
   background: #a0a0a0;
   height: 450px;
   .completed {
@@ -13,11 +12,14 @@
     overflow: scroll;
   }
   .taskTabs {
-    height: 100%;
+    height: auto;
   }
 
   .completedHeader {
     border-right: 1px solid black;
+    height: 50px;
+  }
+  .blockedHeader {
     height: 50px;
   }
 

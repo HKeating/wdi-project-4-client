@@ -8,7 +8,7 @@
     <div class="line"></div>
   </div>
 
-  <div class="row">
+  <div class="row projectPanels">
     <div class="taskPanel col-sm-6">
       <h3 id="dayLabel">Day {{ selectedDay }}</h3>
       <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day && task.completed === false && task.blocked === false">
@@ -104,6 +104,7 @@
                 <p>{{ project.convertDate(log.created_at) }} <span ng-bind-html="log.content"></span></p>
               </li>
             </ul>
+            <hr>
           </li>
         </ul>
   </div>
