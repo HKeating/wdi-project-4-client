@@ -67,22 +67,52 @@
           <h2>DESTROY</h2>
         </div>
       </div>
-      <div class="stats row" ng-show="project.statsShow">
-        <h1>{{ project.project.title }} STATS</h1>
-        <h2>Tasks</h2>
-        <ul>
-          <li ng-if="project.totalTasks">Total Tasks Created: {{ project.totalTasks }}</li>
-          <li ng-if="project.totalTasksCompleted">Tasks Completed: {{ project.totalTasksCompleted }}</li>
-          <li ng-if="project.totalTasksDeleted">Tasks Deleted: {{ project.totalTasksDeleted }}</li>
-        </ul>
-        <h2>Active Users</h2>
-        <ul>
-          <li ng-repeat="user in project.activeUsers">
-            <p>{{ user.username }}</p>
-            <p ng-if="user.tasksCompleted">Tasks completed: {{ user.tasksCompleted }}</p>
-            <p ng-if="user.tasksDeleted">Tasks deleted: {{ user.tasksDeleted }}</p>
-          </li>
-        </ul>
+      <div class="row stats" ng-show="project.statsShow">
+        <div class="col-sm-12 statsTopRow">
+          <div class="col-sm-6 taskStats">
+            <h3>Tasks</h3>
+            <ul>
+              <li ng-if="project.totalTasks">Total Tasks Created: <span>{{ project.totalTasks }}</span></li>
+              <li ng-if="project.totalTasksCompleted">Tasks Completed: <span>{{ project.totalTasksCompleted }}</span></li>
+              <li ng-if="project.totalTasksDeleted">Tasks Deleted: <span>{{ project.totalTasksDeleted }}</span></li>
+              <li ng-if="project.totalTasksDeleted">Tasks Blocked: <span>{{ project.totalTasksBlocked }}</span></li>
+              <li ng-if="project.totalTasksUnblocked">Tasks Unblocked: <span>{{ project.totalTasksUnblocked }}</span></li>
+
+            </ul>
+          </div>
+
+          <div class="col-sm-6 milestoneStats">
+            <h3>Milestones</h3>
+            <ul>
+              <li ng-if="project.numberOfMilestones">Milestones: <span>{{project.numberOfMilestones}}</span></li>
+              <li ng-if="project.totalTasksAddedToMilestones">Milestones: <span>{{project.totalTasksAddedToMilestones}}</span></li>
+              <li ng-if="project.totalTasksRemovedFromMilestones">Milestones: <span>{{project.totalTasksRemovedFromMilestones}}</span></li>
+            </ul>
+
+          </div>
+        </div>
+        <div class="col-sm-12 userStats" ng-if="project.activeUsers">
+
+
+
+          <h3>Active Users</h3>
+
+            <div class="col-sm-5 userStatDiv" ng-repeat="user in project.activeUsers">
+              <img class="contributorDiv" ng-src="{{ user.image }}" alt="{{ user.username }}">
+
+              <ul>
+                <li ng-if="user.tasksCompleted">Tasks completed: <span>{{ user.tasksCompleted }}</span></li>
+                <li ng-if="user.tasksDeleted">Tasks deleted: <span>{{ user.tasksDeleted }}</span></li>
+                <li ng-if="user.tasksBlocked">Tasks blocked: <span>{{ user.tasksBlocked }}</span></li>
+                <li ng-if="user.tasksUnblocked">Tasks unblocked: <span>{{ user.tasksUnblocked }}</span></li>
+                <li ng-if="user.tasksAddedToMilestones">Milestone tasks added: <span>{{ user.tasksAddedToMilestones }}</span></li>
+                <li ng-if="user.tasksRemovedFromMilestones">Milestone tasks removed: <span>{{ user.tasksRemovedFromMilestones }}</span></li>
+              </ul>
+            </div>
+
+
+        </div>
+
 
 
 
