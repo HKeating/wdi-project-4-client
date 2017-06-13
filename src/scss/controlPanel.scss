@@ -151,8 +151,47 @@
   }
 
   .stats {
+    padding: 10px;
     height: 450px;
     background: $lightPurple;
+    overflow: scroll;
+  }
+  .statsTopRow {
+    background: $veryLightPurple;
+    border: 10px solid $lightPurple;
+    border-radius: 15px;
+
+    li {
+      font-size: 12px;
+    }
+    span {
+      float: right;
+      font-weight: bold;
+    }
+  }
+  .userStats {
+    h3 {
+      margin-left: 10px;
+    }
+    background: $veryLightPurple;
+    border: 10px solid $lightPurple;
+    border-radius: 15px;
+  }
+  .userStatDiv {
+    background: $darkPurple;
+    border-radius: 5px;
+    margin: 5px 15px;
+    font-size: 12px;
+    min-height: 150px;
+    img {
+      position: relative;
+      margin: 5px;
+      left: 30%;
+    }
+    span {
+      float: right;
+      font-weight: bold;
+    }
   }
   .log {
     height: 450px;

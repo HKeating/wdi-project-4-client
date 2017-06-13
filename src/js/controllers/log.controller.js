@@ -70,7 +70,6 @@ function LogCtrl($rootScope, Log) {
       }
     }
 
-    console.log('New log: ', vm.newLog);
     createLog(vm.newLog, project, subject, params);
   });
 
@@ -79,7 +78,7 @@ function LogCtrl($rootScope, Log) {
   function createLog(content, project, user, params) {
 
     const logObj = {'log': { 'project_id': project.id, 'user_id': user.id, 'content': content , 'day': project.currentDay, 'details': params}};
-    console.log('Sending this as log: ', logObj);
+
     Log
       .save(logObj)
       .$promise

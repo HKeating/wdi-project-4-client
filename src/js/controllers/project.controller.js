@@ -179,6 +179,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       vm.milestones = data.milestones;
       // vm.projectLogs = data.logs;
       // orderLogs(vm.projectLogs);
+      // console.log('project logs: ', data.logs);
       orderLogs(data.logs);
       getStats(data.logs);
       vm.currentDay = getCurrentDay(vm.project.start_date);
@@ -749,24 +750,47 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   vm.getStats = getStats;
   function getStats(logs) {
     console.log('Number of logs: ', logs.length);
+    vm.numberOfMilestones = vm.project.milestones.length;
     vm.totalTasks = 0;
     vm.totalTasksCompleted = 0;
     vm.totalTasksDeleted = 0;
+    vm.totalTasksBlocked = 0;
+    vm.totalTasksUnblocked = 0;
+    vm.totalTasksRemovedFromMilestones = 0;
+    vm.totalTasksAddedToMilestones = 0;
     vm.activeUsers = [];
     logs.map(log => {
       if (!vm.activeUsers.find(x => x.id === log.user.id)) {
         log.user.tasksCompleted = 0;
         log.user.tasksDeleted = 0;
+        log.user.tasksBlocked = 0;
+        log.user.tasksUnblocked = 0;
+        log.user.tasksRemovedFromMilestones = 0;
+        log.user.tasksAddedToMilestones = 0;
         vm.activeUsers.push(log.user);
       }
       if (log.details.action === 'created' && log.details.model1 === 'task') {
         vm.totalTasks ++;
-      } else if (log.details.action === 'marked' && log.details.condition === 'completed') {
-        (vm.activeUsers.find(x => x.id === log.user.id)).tasksCompleted ++;
-        vm.totalTasksCompleted ++ ;
-      } else if (log.details.action === 'removed' && log.details.model1 === 'task') {
+      } else if (log.details.action === 'marked') {
+        if (log.details.condition === 'completed') {
+          (vm.activeUsers.find(x => x.id === log.user.id)).tasksCompleted ++;
+          vm.totalTasksCompleted ++ ;
+        } else if (log.details.condition === 'blocked') {
+          (vm.activeUsers.find(x => x.id === log.user.id)).tasksBlocked ++;
+          vm.totalTasksBlocked ++ ;
+        } else if (log.details.condition === 'unblocked') {
+          (vm.activeUsers.find(x => x.id === log.user.id)).tasksUnblocked ++;
+          vm.totalTasksUnblocked ++ ;
+        }
+      } else if (log.details.action === 'removed' && log.details.model1 === 'task' && !log.details.preposition) {
         (vm.activeUsers.find(x => x.id === log.user.id)).tasksDeleted ++;
         vm.totalTasksDeleted ++;
+      } else if (log.details.action === 'removed' && log.details.model1 === 'task' && log.details.model2 === 'milestone') {
+        (vm.activeUsers.find(x => x.id === log.user.id)).tasksRemovedFromMilestones ++;
+        vm.totalTasksRemovedFromMilestones ++;
+      } else if (log.details.action === 'added' && log.details.model1 === 'task' && log.details.model2 === 'milestone') {
+        (vm.activeUsers.find(x => x.id === log.user.id)).tasksAddedToMilestones ++;
+        vm.totalTasksAddedToMilestones ++;
       }
 
     });
