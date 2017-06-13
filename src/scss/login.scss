@@ -21,7 +21,7 @@
     border-right: 20px solid transparent;
 
     border-bottom: 15px solid #ECF0F1;
-    left: 10%;
+    left: 40%;
     position: absolute;
     top: -10px;
   }
@@ -46,7 +46,7 @@
 
       &:focus {
         outline: none;
-        box-shadow: 0 0 1px 1px #1abc9c;
+        box-shadow: 0 0 1px 1px #56E39F;
       }
       -webkit-transition: 0.3s linear;
       -moz-transition: 0.3s linear;
@@ -55,7 +55,7 @@
     }
 
     input[type="submit"] {
-      background: #1abc9c;
+      background:#56E39F;
       padding: 10px;
       font-size: 20px;
       display: block;
@@ -64,7 +64,7 @@
       color: #fff;
       border-radius: 5px;
       &:hover {
-        background: #1bc6a4;
+        background: #56E39F;
       }
     }
 
@@ -75,7 +75,7 @@
   }
 
   .green {
-    color: #1abc9c;
+    color: #56E39F;
   }
 
   a {
@@ -84,7 +84,7 @@
     font-size: 30px;
 
     &:hover {
-      color: #1abc9c;
+      color: #56E39F;
     }
   }
 }
