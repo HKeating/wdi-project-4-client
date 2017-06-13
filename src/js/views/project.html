@@ -9,8 +9,7 @@
   </div>
 
   <div class="row projectPanels">
-
-
+    
     <div class="taskPanel mainTaskPanel col-sm-6">
       <h3 id="dayLabel">Day {{ selectedDay }}</h3>
       <div class="task col-sm-6" ng-repeat="task in project.project.tasks track by $index" ng-mouseover="project.taskMouseOver(task)" ng-mouseleave="project.taskMouseLeave()" ng-if="selectedDay>=task.start_day && selectedDay<=task.due_day && task.completed === false && task.blocked === false">
