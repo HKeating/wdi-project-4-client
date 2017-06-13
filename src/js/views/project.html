@@ -1,7 +1,7 @@
 <div ng-controller="LogCtrl as log">
 
 
-  <h1>{{project.project.title}}</h1>
+  <h1 class="ml4">{{project.project.title}}</h1>
   <!-- <p>{{ project.project }}</p> -->
 
   <div class="lineContainer">
@@ -388,7 +388,7 @@
 
           <input ng-click="project.updateTask(project.taskToUpdate)" type="submit" class="btn btn-primary" value="Update Task" data-dismiss="modal">
 
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default closeBtn" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
