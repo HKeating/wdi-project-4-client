@@ -254,18 +254,18 @@
 
 
               </div>
-              <div class="contributorSearch">
+              <div class="contributorSearch" ng-if="project.userIsAdmin">
                 <div class="modal-header">
                   <h4 class="modal-title">Add Contributors</h4>
                 </div>
-                <div class=" col-sm-12" ng-if="project.userIsAdmin">
+                <div class="modal-body col-sm-12">
                   <form>
-                    <input type="text" ng-model="project.collaboratorSearch" name="" value="">
-                    <div class="" ng-repeat="user in project.allUsers | filter: { email: project.collaboratorSearch}" ng-if="project.collaboratorSearch">
-                      <p>{{ user.username }}</p>
-                      <button type="button" ng-click="project.addCollaborator(user)">Add user</button>
-                    </div>
+                    <input type="text" ng-model="project.collaboratorSearch" name="" value="" placeholder="Find some help...">
                   </form>
+                  <div class="col-sm-4 contributorResult" ng-repeat="user in project.allUsers | filter: { email: project.collaboratorSearch}" ng-if="project.collaboratorSearch">
+                    <p>{{ user.username }}</p>
+                    <button type="button" class="btn" ng-click="project.addCollaborator(user)">Add user</button>
+                  </div>
                 </div>
               </div>
 
@@ -274,7 +274,7 @@
               <div class="modal-header">
                 <h4 class="modal-title">Add Milestone</h4>
               </div>
-              <div class="modal-body">
+              <div class="modal-body newMilestone">
 
                 <form ng-submit="project.createMilestone()">
                   <div class="form-group">
@@ -283,10 +283,13 @@
                   </div>
                   <div class="form-group">
                     <label for="day">Complete By Day:</label>
-                    <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newMilestone.day" name="day" value="">
+                    <!-- <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newMilestone.day" name="day" value=""> -->
+                    <select ng-model="project.newMilestone.day" class="" name="day">
+                      <option value="{{ day }}" ng-repeat="day in project.projectDays" ng-if="day >= selectedDay">{{ day }}</option>
+                    </select>
                   </div>
                   <div class="form-group">
-                    <input type="submit" name="submit" value="Add Milestone">
+                    <input class="btn" type="submit" name="submit" value="Add Milestone">
                   </div>
                   <!-- <h1 ng-click="project.showTaskNewForm = true" class="col-sm-3">+</h1> -->
                 </form>
@@ -303,9 +306,7 @@
                 </select>
                 <div ng-show="project.milestoneToUpdate">
                   <div class="col-sm-6">
-                    <h3>{{ project.milestoneToUpdate.title }}</h3>
-                    <p>Due: day {{ project.milestoneToUpdate.day}}</p>
-                    <p>Tasks:</p>
+                    <p>Current tasks:</p>
                     <ul>
                       <li class="" ng-repeat="task in project.milestoneToUpdate.tasks">
                         <ul>
@@ -318,7 +319,7 @@
                     </ul>
                   </div>
                   <div class="col-sm-6">
-                    <h3>Add tasks:</h3>
+                    <p>Add tasks:</p>
                     <div class="col-sm-4" ng-repeat="task in project.milestoneToUpdate.availableTasks"  ng-click="project.addMilestoneTask(project.milestoneToUpdate, task)">
                       <p><strong>{{task.description}}</strong></p>
                     </div>
@@ -327,7 +328,6 @@
                 </div>
               </div>
 
-              <!-- FORM 4  -->
 
 
             </div>

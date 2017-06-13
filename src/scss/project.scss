@@ -29,13 +29,34 @@ body {
 }
 
 .contributorSearch {
-  // text-align: center;
   padding-top: 20px;
-  margin-top: 50px;
-  // background: $grey;
-  input {
-    width: 100%;
+  margin-top: 60px;
+form {
+    text-align: center;
+    input {
+      width: 50%;
+    }
+}
+  .contributorResult {
+    text-align: center;
+    background: lightgrey;
+    border-radius: 15px;
+    border: 10px solid white;
+    p {
+      text-transform: capitalize;
+    }
   }
+}
+
+.newMilestone {
+
+  input, select {
+    // border: none;
+    // border-radius: 5px;
+    float: right;
+    width: 50%;
+  }
+
 }
 
 .projectPanels {
