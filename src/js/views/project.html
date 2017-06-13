@@ -230,32 +230,49 @@
           <!-- Modal Header-->
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Create Task</h4>
+            <h4 class="modal-title">Manage Project</h4>
           </div>
           <!-- Modal Body-->
           <div class="modal-body">
-
             <div id="closeModal" class="">
-
-              <form ng-submit="project.createTask()">
-                <div class="form-group">
-                  <label for="description">Description</label>
-                  <input type="text" ng-model="project.newTask.description" name="description" value="">
-                </div>
-                <div class="form-group">
-                  <label for="due_Day">Due Day</label>
-                  <input type="text" onkeypress="return event.charCode >= 48 && event.charCode <= 57" ng-model="project.newTask.due_day" name="duration" value="">
-                </div>
-
-                <div class="form-group">
-                  <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Save</button>
-                </div>
-
-              </form>
-
-              <!-- Modal Header -->
+              <!-- Contributors -->
               <div class="modal-header">
-                <h4 class="modal-title">Add MilestoneX</h4>
+                <h4 class="modal-title">Contributors</h4>
+              </div>
+              <div class="modal-body">
+                <!-- <h5 id="contributorsLabel">Contributors: </h5> -->
+
+
+
+                <div class="col-sm-4 contributor" ng-repeat="user in project.project.users">
+                  <img class="contributorDiv col-sm-6" ng-src="{{ user.image }}" alt="{{ user.username }}">
+                  <h5 class="col-sm-6">{{user.username}}</h5>
+                  <button class="btn removeBtn" ng-if="project.userIsAdmin" type="button" name="button" ng-click="project.removeCollaborator(user)">Remove</button>
+
+                </div>
+
+
+
+              </div>
+              <div class="contributorSearch">
+                <div class="modal-header">
+                  <h4 class="modal-title">Add Contributors</h4>
+                </div>
+                <div class=" col-sm-12" ng-if="project.userIsAdmin">
+                  <form>
+                    <input type="text" ng-model="project.collaboratorSearch" name="" value="">
+                    <div class="" ng-repeat="user in project.allUsers | filter: { email: project.collaboratorSearch}" ng-if="project.collaboratorSearch">
+                      <p>{{ user.username }}</p>
+                      <button type="button" ng-click="project.addCollaborator(user)">Add user</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+
+              <!-- Milestones -->
+              <div class="modal-header">
+                <h4 class="modal-title">Add Milestone</h4>
               </div>
               <div class="modal-body">
 
@@ -311,27 +328,7 @@
               </div>
 
               <!-- FORM 4  -->
-              <div class="modal-header">
-                <h4 class="modal-title">Add Contributors</h4>
-              </div>
-              <div class="modal-body">
-                <h3 id="contributorsLabel">Contributors: </h3>
 
-                <div class="" ng-repeat="user in project.project.users">
-                  <img class="contributorDiv" ng-src="{{ user.image }}" alt="{{ user.username }}">
-                  <button ng-if="project.userIsAdmin" type="button" name="button" ng-click="project.removeCollaborator(user)">Remove</button>
-                </div>
-                <div class="" ng-if="project.userIsAdmin">
-                  <form>
-                    <input type="text" ng-model="project.collaboratorSearch" name="" value="">
-                    <div class="" ng-repeat="user in project.allUsers | filter: { email: project.collaboratorSearch}">
-                      <p>{{ user.username }}</p>
-                      <button type="button" ng-click="project.addCollaborator(user)">Add user</button>
-                    </div>
-                  </form>
-                </div>
-
-              </div>
 
             </div>
 

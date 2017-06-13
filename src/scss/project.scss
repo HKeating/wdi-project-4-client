@@ -4,12 +4,38 @@ body {
   background-color: white;
 }
 
+
+.contributor {
+  text-align: center;
+
+  h5 {
+    text-transform: capitalize;
+  }
+  img {
+    margin-bottom: 5px;
+  }
+  .removeBtn {
+    background: $red !important;
+    color: white;
+  }
+}
+
 .contributorDiv {
   border-radius: 50%;
   width: 50px;
   display: inline;
   //float: left;
-  margin: 0 5px;
+  // margin: 0 5px;
+}
+
+.contributorSearch {
+  // text-align: center;
+  padding-top: 20px;
+  margin-top: 50px;
+  // background: $grey;
+  input {
+    width: 100%;
+  }
 }
 
 .projectPanels {
