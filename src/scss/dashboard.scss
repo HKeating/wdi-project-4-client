@@ -20,7 +20,7 @@
   font-weight: bold;
   .ImageText{
     position: absolute;
-    z-index: 100;
+    z-index: 1;
   }
   a{
     opacity: 0.7
@@ -41,12 +41,29 @@
     z-index: 2;
   }
   .endDate{
-    margin-top: 10%;
+    margin-top: 7%;
     font-size: 110px;
+  }
+  .smallPText{
+    position: absolute;
+    margin-top: 15%;
+    margin-left: 10%;
+    font-size: 20px;
+    z-index: 2;
   }
 
 }
 .btn{
   background-color: #56E39F!important;
   border: none!important;
+}
+.dropdown-menu{
+  z-index: 101!important;
+  position: fixed;
+}
+
+.projModal{
+  input{
+    width: 100%
+  }
 }

@@ -7,7 +7,6 @@
     <div class="fl w-50 pointer" ng-repeat="project in dashboard.user.projects track by $index" ng-show="$first">
 
       <p class="ImageText ma4 endDateMainTitle bg-black-80 white">{{ project.title | limitTo : 15 | uppercase }}</p>
-
       <p class="ImageText endDateMain ma4 bg-black-80 white">{{ dashboard.daysLeft(project.end_date) }}</p>
       <p class="endDateMainDL bg-black-80 white">DAYS LEFT</p>
 
@@ -29,8 +28,9 @@
     <!--  Small projects-->
 
     <div class="fl w-50 w-25-ns pointer" ng-repeat="project in dashboard.user.projects track by $index" ng-show="!$first">
-      <p class="ImageText ma4 f1">{{ project.title | limitTo : 15 | uppercase }}</p>
-      <p class="ImageText endDate ma4 ">{{ dashboard.daysLeft(project.end_date) }}<span class="f2"> DAYS LEFT</span></p>
+      <p class="ImageText ma4 f1 ">{{ project.title | limitTo : 15 | uppercase }}</p>
+      <p class="ImageText endDate ma4 ">{{ dashboard.daysLeft(project.end_date) }}</p>
+      <p class="f2 smallPText ma4"> DAYS LEFT</p>
       <div class="tempB">
         <button ng-click="dashboard.selectToEdit(project.id)" type="button" name="button">Edit Project</button>
         <button type="button" ng-click="dashboard.deleteProject(project)" name="button"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
@@ -49,8 +49,18 @@
   <article class="cf pb5">
     <!--  Main project-->
     <div class="fl w-50 pointer" ng-repeat="project in dashboard.collabProjects track by $index" ng-show="$first">
-      <p class="ImageText ma4 endDateMainTitle">{{ project.title | limitTo : 15 | uppercase }}</p>
-      <p class="ImageText endDateMain ma4">{{ dashboard.daysLeft(project.end_date) }}<span class="endDateMainDL">DAYS LEFT</span></p>
+
+      <p class="ImageText ma4 endDateMainTitle bg-black-80 white">{{ project.title | limitTo : 15 | uppercase }}</p>
+      <p class="ImageText endDateMain ma4 bg-black-80 white">{{ dashboard.daysLeft(project.end_date) }}</p>
+      <p class="endDateMainDL bg-black-80 white">DAYS LEFT</p>
+
+
+
+      <div class="tempB">
+        <button ng-click="dashboard.selectToEdit(project.id)" type="button" name="button">Edit Project</button>
+        <button type="button" ng-click="dashboard.deleteProject(project)" name="button"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+      </div>
+
 
       <a ui-sref="project({ id: project.id })" class="db aspect-ratio aspect-ratio--1x1 dim">
         <span role="img" style="background-image:url({{ project.image }});" class="bg-center cover aspect-ratio--object"></span>
@@ -158,7 +168,7 @@ Ends: <span class="">{{ project.end_date }}</span><br>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
+<div class="modal fade projModal" id="myModal" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
