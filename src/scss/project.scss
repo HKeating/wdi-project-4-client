@@ -22,10 +22,12 @@ body {
 
 .contributorDiv {
   border-radius: 50%;
-  width: 50px;
-  display: inline;
-  //float: left;
-  // margin: 0 5px;
+  width: 35px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-5%);
+  border: 1px solid white;
+
 }
 
 .contributorSearch {
