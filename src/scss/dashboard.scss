@@ -27,13 +27,18 @@
   }
   .endDateMain{
     margin-top: 10%;
-    font-size: 300px;
+    font-size: 250px;
+    vertical-align: bottom;
   }
   .endDateMainTitle{
     font-size: 60px;
   }
   .endDateMainDL{
+    position: absolute;
+    margin-top: 30%;
+    margin-left: 20%;
     font-size: 40px;
+    z-index: 2;
   }
   .endDate{
     margin-top: 10%;
