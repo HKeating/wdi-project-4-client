@@ -84,8 +84,8 @@
             <h3>Milestones</h3>
             <ul>
               <li ng-if="project.numberOfMilestones">Milestones: <span>{{project.numberOfMilestones}}</span></li>
-              <li ng-if="project.totalTasksAddedToMilestones">Milestones: <span>{{project.totalTasksAddedToMilestones}}</span></li>
-              <li ng-if="project.totalTasksRemovedFromMilestones">Milestones: <span>{{project.totalTasksRemovedFromMilestones}}</span></li>
+              <li ng-if="project.totalTasksAddedToMilestones">Milestone tasks added: <span>{{project.totalTasksAddedToMilestones}}</span></li>
+              <li ng-if="project.totalTasksRemovedFromMilestones">Milestone tasks removed: <span>{{project.totalTasksRemovedFromMilestones}}</span></li>
             </ul>
 
           </div>
@@ -97,7 +97,11 @@
           <h3>Active Users</h3>
 
             <div class="col-sm-5 userStatDiv" ng-repeat="user in project.activeUsers">
-              <img class="contributorDiv" ng-src="{{ user.image }}" alt="{{ user.username }}">
+              <div class="">
+                <img class="contributorDiv" ng-src="{{ user.image }}" alt="{{ user.username }}">
+                <p class="statsUsername">{{ user.username }}</p>
+              </div>
+
 
               <ul>
                 <li ng-if="user.tasksCompleted">Tasks completed: <span>{{ user.tasksCompleted }}</span></li>

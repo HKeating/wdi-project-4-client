@@ -183,10 +183,19 @@
     margin: 5px 15px;
     font-size: 12px;
     min-height: 150px;
+    .statsUsername {
+      // text-align: center;
+      float: right;
+      position: relative;
+      top: 20px;
+      right: 30px;
+      font-weight: bold;
+      text-transform: capitalize;
+    }
     img {
       position: relative;
       margin: 5px;
-      left: 30%;
+      left: 10%;
     }
     span {
       float: right;
