@@ -23,7 +23,7 @@
     <!--  Small projects-->
 
     <div class="fl w-50 w-25-ns pointer" ng-repeat="project in dashboard.user.projects track by $index" ng-show="!$first">
-      <p class="ImageText ma4 f1 white">{{ project.title | limitTo : 15 | uppercase }}</p>
+      <p class="ImageText ma4 f1 white">{{ project.title | limitTo : 10 | uppercase }}</p>
       <p class="ImageText endDate ma4 white">{{ dashboard.daysLeft(project.end_date) }}</p>
       <p class="f2 smallPText ma4 white"> DAYS LEFT</p>
       <div class="tempB">
