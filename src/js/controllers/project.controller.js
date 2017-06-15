@@ -480,6 +480,13 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     updateTask(task);
   }
 
+  vm.userNotOnTask = userNotOnTask;
+  function userNotOnTask(task, user) {
+    return !task.users.find(x => x.id === user.id);
+    // console.log('Task, user', task, user);
+    // return true;
+  }
+
   vm.unblockTask = unblockTask;
   function unblockTask(task) {
     task.blocked = false;
