@@ -8,9 +8,27 @@ A collaboration between Harry Sterling, Maxim Kartuzov and Horace Keating
 --
 ## What is it?
 
-Fck It Shp It is a sprint management tool for developers who want a simple means of visualising the flow of a project. It allows users to quickly and easily track the amount of time left, the progress that has been made and the main blockers for a project.
+Fck It Shp It is a sprint management tool for developers who want a simple means of visualising the flow of a project. It allows users to quickly and easily track the amount of time left, the progress that has been made, and the main blockers for a project.
 
 ![project-page](./src/images/project-view.png)
+
+On registration the user is taken to their dashboard, where they can view any projects that they have created or been invited to collaborate on, as well as how long is left before each deadline.
+
+On loading the view page for a project the first part of the screen shows a timeline of the project including any specific milestones that the project creator may have set.
+Below this is the control panel where users can manage their tasks: you can view the tasks for a selected day, assign collaborators to specific tasks, mark tasks as blocked or completed with a simple drag-and-drop, and update their descriptions and colour-tags.
+The right hand side of the control panel has three tabs: the blocked/completed tasks tab, the project log, and the stats page. By default the blocked tasks are shown, but you can also view all completed tasks instead if you need a little pick-me-up at the end of a hard day!
+The project log records all actions taken by the collaborators on a project and is searchable, making it easier than ever to pinpoint who did what at 4pm last Tuesday.
+![log-page](./src/images/log.png)
+
+Alongside the project log, the stats page gives detailed coverage of overall project statistics, as well as an individual breakdown for each collaborator:
+
+![stats-page](./src/images/statistics.png)
+
+--
+
+## How is it built?
+
+Fck It Ship It is built with Rails on the back-end and an AngularJS front-end. 
 
 ### Using this Angular Gulp Setup
 
