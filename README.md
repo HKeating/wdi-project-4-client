@@ -1,3 +1,13 @@
+# Fck It Shp It
+---
+
+A collaboration between Harry Sterling, Maxim Kartuzov and Horace Keating
+
+--
+## What is it?
+
+
+
 ### Using this Angular Gulp Setup
 
 To get setup with the starter-code, you first need to run:
