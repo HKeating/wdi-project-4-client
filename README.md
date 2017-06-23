@@ -4,9 +4,13 @@
 A collaboration between Harry Sterling, Maxim Kartuzov and Horace Keating
 
 --
+![landing-page](./src/images/homepage.png)
+--
 ## What is it?
 
+Fck It Shp It is a sprint management tool for developers who want a simple means of visualising the flow of a project. It allows users to quickly and easily track the amount of time left, the progress that has been made and the main blockers for a project.
 
+![project-page](./src/images/project-view.png)
 
 ### Using this Angular Gulp Setup
 
