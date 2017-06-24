@@ -155,7 +155,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     // Moving card back
     $scope.$card.removeClass('taskCardRotatedLeft');
     $scope.$card.removeClass('taskCardRotatedRight');
-
+    showTasks();
     $scope.$apply();
   }
 
@@ -505,6 +505,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     .then(data => {
       console.log('Task updated: ', data);
       $rootScope.$broadcast('Task Change');
+      showTasks();
       // $scope.$apply();
     });
   }
@@ -532,10 +533,9 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     vm.taskToUpdate = Task.get({id: taskId});
   }
 
-  vm.hideTaskEditForm = hideTaskEditForm;
-  function hideTaskEditForm() {
-    vm.showTaskEditForm = false;
-    vm.taskToUpdate = {};
+  vm.openTaskModal = openTaskModal;
+  function openTaskModal() {
+    $('#taskModal').modal('show');
   }
 
   $rootScope.$on('Task Change', () => {

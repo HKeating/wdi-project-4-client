@@ -159,6 +159,16 @@
   .taskContent {
     color: black;
   }
+  .taskOptions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 15px;
+    height: 15px;
+    &:hover {
+    }
+  }
+
 }
 
 .updateTask {
