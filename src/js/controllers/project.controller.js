@@ -448,7 +448,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
     .$promise
     .then((data) => {
       console.log('New task created: ', data);
-      console.log('************************************************** THIS FIRES TWICE? *******************************************************');
       $rootScope.$broadcast('Log', vm.project, vm.user, {action: 'created', model1: 'task'}, data);
       $rootScope.$broadcast('Task Change');
     });
@@ -484,8 +483,6 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   vm.userNotOnTask = userNotOnTask;
   function userNotOnTask(task, user) {
     return !task.users.find(x => x.id === user.id);
-    // console.log('Task, user', task, user);
-    // return true;
   }
 
   vm.unblockTask = unblockTask;
@@ -523,7 +520,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
   vm.getTaskColor = getTaskColor;
   function getTaskColor(task) {
     console.log('Getting task color', task.color);
-    return `#${task.color}`;
+    return task.color ? `#${task.color}` : '#ecf0f1';
   }
 
   vm.showTaskEditForm = false;
