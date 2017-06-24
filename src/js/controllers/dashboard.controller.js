@@ -65,10 +65,8 @@ function DashboardCtrl(CurrentUserService, $rootScope, Project, User, $state, $s
 
   function createProject() {
     vm.newProject.user_id = vm.user.id;
-    // vm.newProject.user_ids = [];
     vm.newProject.user_ids.push(vm.user.id);
     vm.newProject.start_date = new Date;
-    // console.log('Duration: ', vm.newProject.duration);
     const endDate = addDays(vm.newProject.start_date, parseInt(vm.newProject.duration));
     vm.newProject.end_date = endDate;
     if (!vm.newProject.image) vm.newProject.image = 'http://www.fillmurray.com/180/180';

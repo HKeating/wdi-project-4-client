@@ -360,8 +360,8 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
       $scope.$line.append(dayDot);
       if (i !== vm.deadline)  $scope.$line.append(connectionLine);
 
-      console.log(`${i}) Dot width: `, dayDot.width());
-      console.log(`${i}) Line width: `, connectionLine.width());
+      // console.log(`${i}) Dot width: `, dayDot.width());
+      // console.log(`${i}) Line width: `, connectionLine.width());
       currentLineWidth = currentLineWidth + connectionLine.width() + dayDot.width();
       totalDotsLength.push(dayDot.width());
     }
@@ -482,7 +482,10 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   vm.userNotOnTask = userNotOnTask;
   function userNotOnTask(task, user) {
-    return !task.users.find(x => x.id === user.id);
+    if (task && task.users) {
+      return !task.users.find(x => x.id === user.id);
+    }
+
   }
 
   vm.unblockTask = unblockTask;
@@ -519,8 +522,7 @@ function ProjectCtrl($scope, Project, $stateParams, $state, CurrentUserService, 
 
   vm.getTaskColor = getTaskColor;
   function getTaskColor(task) {
-    console.log('Getting task color', task.color);
-    return task.color ? `#${task.color}` : '#ecf0f1';
+    return task ? `#${task.color}` : '#ecf0f1';
   }
 
   vm.showTaskEditForm = false;

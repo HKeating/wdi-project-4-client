@@ -48,19 +48,28 @@ function MainCtrl($rootScope, CurrentUserService, $state, $scope) {
 
   // update position of square 1 and square 2 when scroll event fires.
 
-  window.addEventListener('scroll', function() {
-    if ($state === 'home') {
-      var scrollTop = window.pageYOffset || window.scrollTop;
-      var scrollPercent = scrollTop/scrollArea || 0;
-      // console.log(movingShip.style.left);
 
+
+  window.addEventListener('scroll', function() {
+
+    var scrollTop = window.pageYOffset || window.scrollTop;
+    var scrollPercent = scrollTop/scrollArea || 0;
+      // console.log(movingShip.style.left);
+      // var ship = movingShip || null;
       // square1.style.left = scrollPercent * windowWidth + 'px';
+
+    if ($state.$current.name === 'home') {
       movingShip.style.left = 0 - scrollPercent*windowWidth * 0.35 + 'px';
+    }
+
+    // }
+
+
 
       // if (parseInt(movingShip.style.left) > 870) {
       //   movingShip.style = 150 - scrollPercent*windowWidth;
       // }
-    }
+
   });
 
   $('input[type="submit"]').mousedown(function(){
